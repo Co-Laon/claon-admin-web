@@ -1,6 +1,5 @@
 import React from 'react';
-import './button.css';
-
+import { Button as MUIButton } from '@mui/material';
 interface ButtonProps {
   /**
    * Is this the principal call to action on the page?
@@ -27,6 +26,7 @@ interface ButtonProps {
 /**
  * Primary UI component for user interaction
  */
+
 export const Button = ({
   primary = false,
   size = 'medium',
@@ -36,7 +36,7 @@ export const Button = ({
 }: ButtonProps) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
-    <button
+    <MUIButton
       type="button"
       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
       {...props}
@@ -47,6 +47,6 @@ export const Button = ({
           background-color: ${backgroundColor};
         }
       `}</style>
-    </button>
+    </MUIButton>
   );
 };
