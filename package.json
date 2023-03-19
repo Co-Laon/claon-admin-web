@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "analyze": "ANALYZE=true next dev",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
@@ -31,6 +32,7 @@
     "typescript": "5.0.2"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^13.2.4",
     "@storybook/addon-essentials": "^7.0.0-rc.4",
     "@storybook/addon-interactions": "^7.0.0-rc.4",
     "@storybook/addon-links": "^7.0.0-rc.4",
