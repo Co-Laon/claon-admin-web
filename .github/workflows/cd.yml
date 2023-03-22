@@ -17,6 +17,9 @@ jobs:
       # 브랜치 체크아웃
       - name: branch checkout
         uses: actions/checkout@v3
+      # 파일 확인
+      - name: check files
+        run: ls -la
       # pnpm 적용
       - name: use pnpm
         uses: pnpm/action-setup@v2
@@ -60,4 +63,5 @@ jobs:
           script: |
             cd /home/${{ secrets.USERNAME }}/claon-admin-web
             rm -rf ./.next
+            mkdir ./.next
             pm2 restart claon-admin-web
