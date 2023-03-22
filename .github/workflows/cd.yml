@@ -35,6 +35,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
+            nvm use lts/hydrogen
             cd /home/${{ secrets.USERNAME }}/claon-admin-web
             pnpm install
             pnpm build
