@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: ["main"]
+    branches: ["deploy"]
   pull_request:
     branches: ["main"]
 
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
       # pnpm 적용
       - name: use pnpm
-        uses: pnpm/actions-setup@v2
+        uses: pnpm/action-setup@v2
       # 노드 설치
       - name: install node version ${{ matrix.node-version }}
         uses: actions/setup-node@v3
