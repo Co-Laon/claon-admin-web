@@ -47,7 +47,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: "claon-admin-web/*"
+          source: "./*"
           target: "/home/ubuntu/claon-admin-web"
           strip_components: 1
       # build 파일 배포하기 전 확인하기
