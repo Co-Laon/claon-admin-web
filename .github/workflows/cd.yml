@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [18.x]
 
     steps:
       # 브랜치 체크아웃
@@ -20,6 +20,8 @@ jobs:
       # pnpm 적용
       - name: use pnpm
         uses: pnpm/action-setup@v2
+        with:
+          version: 7
       # 노드 설치
       - name: install node version ${{ matrix.node-version }}
         uses: actions/setup-node@v2
