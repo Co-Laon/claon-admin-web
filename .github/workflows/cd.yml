@@ -34,6 +34,9 @@ jobs:
       # 빌드
       - name: build project
         run: pnpm build
+      # 현재 위치 체크
+      - name: where am i
+        run: echo $PWD
       # 빌드 생성 체크
       - name: check build output
         run: ls -la
