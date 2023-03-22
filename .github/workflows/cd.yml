@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           source: "./*"
-          target: "/home/${{ secrets.USERNAME }}/claon-admin-web"
+          target: "/home/${{ secrets.USERNAME }}/claon-admin-web/.next"
           strip_components: 1
       # build 파일 배포하기
       - name: deploy project
@@ -59,4 +59,4 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             cd /home/${{ secrets.USERNAME }}/claon-admin-web
-            pnpm next start
+            npm start
