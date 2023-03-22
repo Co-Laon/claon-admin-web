@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           source: "dist/*"
-          target: "/home/ubuntu/claon/dist"
+          target: "/home/ubuntu/claon-admin-web"
           strip_components: 1
       # build 파일 배포하기 전 확인하기
       - name: deploy project
@@ -58,5 +58,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            cd /home/ubuntu/claon/dist
+            cd /home/ubuntu/claon-admin-web
             ls -la
