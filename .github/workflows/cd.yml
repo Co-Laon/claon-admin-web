@@ -1,0 +1,57 @@
+name: CD
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      # 브랜치 체크아웃
+      - name: branch checkout
+        uses: actions/checkout@v3
+      # pnpm 적용
+      - name: use pnpm
+        uses: pnpm/actions-setup@v2
+      # 노드 설치
+      - name: install node version ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      # 의존성 설치
+      - name: install dependencies
+        run: pnpm install
+      # 빌드
+      - name: build project
+        run: pnpm build
+      # 빌드 생성 체크
+      - name: check build output
+        run: ls -la
+      # lightsail 에 build 파일 떨구기
+      - name: get project output
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          source: "dist/*"
+          strip_components: 1
+          target: "/home/ubuntu/claon-admin-web/dist"
+      # build 파일 배포하기 전 확인하기
+      - name: deploy project
+        uses: applyboy/sshaction@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            cd /home/ubuntu/claon-admin-web/dist
+            ls -la
