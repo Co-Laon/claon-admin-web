@@ -59,4 +59,5 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             cd /home/${{ secrets.USERNAME }}/claon-admin-web
-            npm start
+            rm -rf ./.next
+            pm2 restart claon-admin-web
