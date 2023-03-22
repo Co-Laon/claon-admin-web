@@ -48,9 +48,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           source: "./*"
-          target: "/home/ubuntu/claon-admin-web"
+          target: "/home/${{ secrets.USERNAME }}/claon-admin-web"
           strip_components: 1
-      # build 파일 배포하기 전 확인하기
+      # build 파일 배포하기
       - name: deploy project
         uses: appleboy/ssh-action@master
         with:
@@ -58,5 +58,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            cd /home/ubuntu/claon-admin-web
-            ls -la
+            cd /home/${{ secrets.USERNAME }}/claon-admin-web
+            pnpm next start
