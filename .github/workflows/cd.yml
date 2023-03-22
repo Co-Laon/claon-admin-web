@@ -40,16 +40,6 @@ jobs:
       # 빌드 생성 체크
       - name: check build output
         run: ls -la
-      # build 파일 폴더 비우기
-      - name: flush build folder
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          script: |
-            cd /home/${{ secrets.USERNAME }}/claon-admin-web
-            rm ./.next/*
       # lightsail 에 build 파일 떨구기
       - name: get project output
         uses: appleboy/scp-action@master
