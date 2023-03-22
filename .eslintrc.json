@@ -1,6 +1,48 @@
 {
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "createDefaultProgram": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  // node_modules, config 파일은 eslint 검사에서 제외
+  "ignorePatterns": ["node_modules/", "**.config.**"],
   "extends": [
     "next/core-web-vitals",
-    "plugin:storybook/recommended"
-  ]
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:storybook/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "rules": {
+    // jsx 태그 문법 사용시 react import 하지 않아도 되도록 설정
+    "react/react-in-jsx-scope": "off",
+    // 테스트 또는 개발환경을 구성하는 파일에서는 devDependency 사용을 허용
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.test.ts",
+          "**/*.spec.ts",
+          "**/*.stories.ts",
+          "**/*.test.tsx",
+          "**/*.spec.tsx",
+          "**/*.stories.tsx"
+        ]
+      }
+    ],
+    // default props를 사용하지 않아도 되도록 설정, 함수형에서는 잘 사용하지 않음
+    "react/require-default-props": "off",
+    // jsx 문법에서 props spreading을 허용,  props가 너무 많으면 해당 rule이 가독성을 해칠 수 있음
+    "react/jsx-props-no-spreading": "off"
+  }
 }
