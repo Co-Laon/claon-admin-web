@@ -47,7 +47,7 @@ jobs:
           target: "/home/ubuntu/claon-admin-web/dist"
       # build 파일 배포하기 전 확인하기
       - name: deploy project
-        uses: applyboy/sshaction@master
+        uses: applyboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
