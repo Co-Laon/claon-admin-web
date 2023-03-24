@@ -15,23 +15,6 @@ jobs:
       # 브랜치 체크아웃
       - name: branch checkout
         uses: actions/checkout@v3
-      # pnpm 적용
-      - name: use pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
-      # 노드 설치
-      - name: install node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
-      # 의존성 설치
-      - name: install dependencies
-        run: pnpm install
-      # 빌드
-      - name: build project
-        run: pnpm build
       # lightsail 에 build 파일 전송
       - name: push project output to server
         uses: appleboy/scp-action@master
@@ -40,16 +23,16 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           rm: true
-          source: "./*"
+          source: "./"
           target: "/home/${{ secrets.USERNAME }}/claon-admin-web/.next"
           strip_components: 1
-      # build 파일 배포하기
-      - name: deploy project
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          script: |
-            cd /home/${{ secrets.USERNAME }}/claon-admin-web
-            pm2 restart claon-admin-web
+      # # build 파일 배포하기
+      # - name: deploy project
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     script: |
+      #       cd /home/${{ secrets.USERNAME }}/claon-admin-web
+      #       pm2 restart claon-admin-web
