@@ -25,16 +25,16 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: "./*"
+          source: "./dist"
           target: "/home/${{ secrets.USERNAME }}/claon-admin-web"
           strip_components: 1
-      # # build 파일 배포하기
-      # - name: deploy project
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     script: |
-      #       cd /home/${{ secrets.USERNAME }}/claon-admin-web
-      #       pm2 restart claon-admin-web
+      # build 파일 배포하기
+      - name: deploy project
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            cd /home/${{ secrets.USERNAME }}/claon-admin-web
+            ls -la
