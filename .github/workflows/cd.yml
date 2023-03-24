@@ -15,17 +15,20 @@ jobs:
       # 브랜치 체크아웃
       - name: branch checkout
         uses: actions/checkout@v3
-      # lightsail 에 build 파일 전송
-      - name: push project output to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          source: "./*"
-          target: "/home/${{ secrets.USERNAME }}/claon-admin-web"
-          strip_components: 1
-      # build 파일 배포하기
+      # 브랜치 내 파일 확인
+      - name: check branch files
+        run: ls -la
+      # # lightsail 에 build 파일 전송
+      # - name: push project output to server
+      #   uses: appleboy/scp-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     source: "./*"
+      #     target: "/home/${{ secrets.USERNAME }}/claon-admin-web/.next"
+      #     strip_components: 1
+      # # build 파일 배포하기
       # - name: deploy project
       #   uses: appleboy/ssh-action@master
       #   with:
