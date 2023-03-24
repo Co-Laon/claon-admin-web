@@ -39,6 +39,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
+          rm: true
           source: "./"
           target: "/home/${{ secrets.USERNAME }}/claon-admin-web"
           strip_components: 1
