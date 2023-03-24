@@ -25,9 +25,11 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: "./dist"
+          source: "./*"
           target: "/home/${{ secrets.USERNAME }}/claon-admin-web"
           strip_components: 1
+          # remove target folder before upload data
+          rm: true
       # build 파일 배포하기
       - name: deploy project
         uses: appleboy/ssh-action@master
