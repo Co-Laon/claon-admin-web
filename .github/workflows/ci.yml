@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["develop"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      # 해당 브랜치 checkout
+      - uses: actions/checkout@v3
+      # pnpm 적용
+      - name: use pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      # 노드 설치
+      - name: install node version ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      # pnpm 으로 의존성 설치
+      - name: Install PNPM dependencies
+        run: pnpm install
+      # lint 설정
+      - name: lint
+        run: pnpm lint
