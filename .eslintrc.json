@@ -18,10 +18,10 @@
     "airbnb",
     "airbnb-typescript",
     "airbnb/hooks",
-    "plugin:storybook/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier"
+    "plugin:storybook/recommended", // storybook 권장 사항 사용
+    "plugin:@typescript-eslint/recommended", // ts 권장 사항 사용
+    "plugin:prettier/recommended", // eslint의 포매팅을 prettier로 사용.
+    "prettier" // eslint-config-prettier prettier와 중복된 eslint 규칙 제거
   ],
   "rules": {
     // jsx 태그 문법 사용시 react import 하지 않아도 되도록 설정
