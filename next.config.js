@@ -61,6 +61,14 @@ const nextConfig = {
     // production 빌드에서만 적용됨
     dirs: ['src', 'pages'],
   },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    });
+    return config;
+  },
   async headers() {
     return [
       {
