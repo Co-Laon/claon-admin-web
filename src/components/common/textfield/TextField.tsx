@@ -1,5 +1,5 @@
 import { FormControl, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { TextFieldProps } from './type';
 
 const EssentialStar = styled.span`
@@ -21,7 +21,8 @@ function TextField({ helperText, label, isRequire, ...props }: TextFieldProps) {
           {label}
           {isRequire && <EssentialStar> *</EssentialStar>}
         </StyledInputLabel>
-        <StyledOutlinedInput label={label} />
+        <StyledOutlinedInput label={label} {...props} />
+
         {helperText && <FormHelperText>{helperText}</FormHelperText>}
       </FormControl>
     </>

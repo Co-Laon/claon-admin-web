@@ -1,10 +1,12 @@
 import { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Checkbox from '../common/checkbox/Checkbox';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface CheckboxGroupInputProps {
   title: string;
   checkboxes: string[];
+  ref?: UseFormRegister<FieldValues>;
 }
 const ComponentWrapper = styled.div`
   margin-top: 12px;
@@ -21,7 +23,7 @@ const StyledTitle = styled.p`
   line-height: 20px;
 `;
 
-function CheckboxGroupInput({ title, checkboxes }: CheckboxGroupInputProps) {
+function CheckboxGroupInput({ title, checkboxes, ref }: CheckboxGroupInputProps) {
   const [checked, setChecked] = useState(-1);
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
@@ -34,7 +36,7 @@ function CheckboxGroupInput({ title, checkboxes }: CheckboxGroupInputProps) {
       <StyledTitle>{title}</StyledTitle>
       <CheckboxesWrapper>
         {checkboxes.map((checkbox, idx) => (
-          <Checkbox key={idx} label={checkbox} checked={checked == idx} onChange={(e) => onChange(e, idx)} />
+          <Checkbox key={idx} label={checkbox} checked={checked == idx} onChange={(e) => onChange(e, idx)} ref={ref} />
         ))}
       </CheckboxesWrapper>
     </ComponentWrapper>

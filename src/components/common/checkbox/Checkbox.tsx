@@ -1,5 +1,5 @@
-import { Checkbox as MuiCheckbox } from '@mui/material';
-import styled from 'styled-components';
+import { Checkbox as MuiCheckbox, FormControlLabel } from '@mui/material';
+import styled from '@emotion/styled';
 import { CheckboxProps } from './type';
 
 const CheckBoxWrapper = styled.div<{ isChecked: boolean }>`
@@ -21,11 +21,10 @@ const StyledLabel = styled.span`
   line-height: 20px;
 `;
 
-function Checkbox({ label, checked, ...props }: CheckboxProps) {
+function Checkbox({ label, checked, ref, ...props }: CheckboxProps) {
   return (
     <CheckBoxWrapper isChecked={checked || false}>
-      <StyledCheckbox {...props} checked={checked} />
-      <StyledLabel>{label}</StyledLabel>
+      <FormControlLabel value={label} label={label} control={<StyledCheckbox {...props} checked={checked} />} inputRef={ref} />
     </CheckBoxWrapper>
   );
 }

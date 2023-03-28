@@ -1,7 +1,7 @@
 import CameraGray from '@/assets/CameraGray';
 import ProfileSkeleton from '@/assets/ProfileSkeleton';
 import { IconButton } from '@mui/material';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const CameraIcon = styled(CameraGray)`
   position: absolute;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { LinearProgress } from '@mui/material';
 
