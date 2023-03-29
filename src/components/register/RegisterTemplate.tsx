@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { LinearProgress } from '@mui/material';
 
+/*----------------Style---------------- */
 const TemplateWrapper = styled.div`
   width: 560px;
 `;
@@ -23,10 +24,25 @@ const CustomLinearProgress = styled(LinearProgress)`
   }
 `;
 
-function RegisterTemplate({ children, step }: { children: ReactNode; step: number }) {
+/**
+ * 회원가입 레이아웃 템플릿
+ * @param param0
+ * @returns
+ */
+function RegisterTemplate({
+  children,
+  step,
+}: {
+  children: ReactNode;
+  step: number;
+}) {
   return (
     <TemplateWrapper>
-      <CustomLinearProgress variant="determinate" value={step} color="secondary" />
+      <CustomLinearProgress
+        variant="determinate"
+        value={step}
+        color="secondary"
+      />
       <Template>{children}</Template>
     </TemplateWrapper>
   );

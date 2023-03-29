@@ -7,7 +7,9 @@ import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import { useForm } from 'react-hook-form';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { OutlinedInput as MuiTextField } from '@mui/material';
+import { useRouter } from 'next/router';
 
 const ComponentWrapper = styled.div`
   width: 100%;
@@ -43,10 +45,16 @@ const StyledButton = styled(Button)`
 
 function RegisterMainPage() {
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
 
-  const onSubmit = useCallback((data: any) => {
-    console.log(data);
-  }, []);
+  const onSubmit = useCallback(
+    (data: { [key: string]: string | Array<string> }) => {
+      if (data.type[0] === '강사') router.push('/register/teacher/step1');
+      else if (data.type[0] === '암장 관리자')
+        router.push('/register/manager/step1');
+    },
+    []
+  );
 
   return (
     <ComponentWrapper>
@@ -54,10 +62,30 @@ function RegisterMainPage() {
         <Title>프로필을 등록해주세요.</Title>
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <ProfileButton />
-          <TextField label="닉네임" isRequire ref={register} />
-          <TextField label="이메일" helperText="연락 가능한 이메일을 적어주세요." ref={register} />
-          <TextField label="인스타그램 계정" ref={register} />
-          <CheckboxGroupInput title="사용자 유형을 선택해주세요." checkboxes={['강사', '암장 관리자']} ref={register} />
+          <TextField
+            label="닉네임"
+            isRequire
+            register={register}
+            formKey="nickname"
+          />
+          <TextField
+            label="이메일"
+            helperText="연락 가능한 이메일을 적어주세요."
+            register={register}
+            formKey="email"
+          />
+          <TextField
+            label="인스타그램 계정"
+            register={register}
+            formKey="instagram"
+          />
+          <CheckboxGroupInput
+            title="사용자 유형을 선택해주세요."
+            checkboxes={['강사', '암장 관리자']}
+            register={register}
+            formKey="type"
+          />
+
           <StyledButton type="submit">다음</StyledButton>
         </StyledForm>
       </RegisterTemplate>

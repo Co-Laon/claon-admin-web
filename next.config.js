@@ -6,7 +6,7 @@ const securityHeaders = [
     value: 'on',
   },
   {
-    //HTTPS를 최적화
+    // HTTPS를 최적화
     // HTTP를 사용하는 대신 HTTPS를 사용해서만 액세스해야 함을 브라우저에 알림
     key: 'Strict-Transport-Security',
     value: 'max-age=63072000; includeSubDomains; preload',
@@ -38,7 +38,8 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
-    emotion: true, // prod 환경에서 에러 이외의 콘솔 제거
+    emotion: true,
+    // prod 환경에서 에러 이외의 콘솔 제거
     removeConsole: isProd
       ? {
           exclude: ['error'],
@@ -54,6 +55,11 @@ const nextConfig = {
     '@mui/material/?(((\\w*)?/?)*)': {
       transform: '@mui/material/{{ matches.[1] }}/{{member}}',
     },
+  },
+  eslint: {
+    // ESLint 룰을 적용할 파일의 경로를 지정
+    // production 빌드에서만 적용됨
+    dirs: ['src', 'pages'],
   },
   async headers() {
     return [
@@ -71,7 +77,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 module.exports = async () => {
-  const plugins = [withBundleAnalyzer]; //All your plugins go into this array
+  const plugins = [withBundleAnalyzer]; // All your plugins go into this array
 
   return plugins.reduce((acc, next) => next(acc), nextConfig);
 };
