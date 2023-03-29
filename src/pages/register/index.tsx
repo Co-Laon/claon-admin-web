@@ -1,5 +1,3 @@
-import CameraGray from '@/assets/CameraGray';
-import ProfileSkeleton from '@/assets/ProfileSkeleton';
 import ProfileButton from '@/components/common/profile/ProfileButton';
 import RegisterTemplate from '@/components/register/RegisterTemplate';
 import { Button } from '@mui/material';
@@ -7,8 +5,7 @@ import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import { useForm } from 'react-hook-form';
-import { useCallback, useEffect } from 'react';
-import { OutlinedInput as MuiTextField } from '@mui/material';
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 const ComponentWrapper = styled.div`
