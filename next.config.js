@@ -12,7 +12,7 @@ const securityHeaders = [
     value: 'max-age=63072000; includeSubDomains; preload',
   },
   {
-    // XSS(교차 사이트 스크립팅) 공격으로부터 보호
+    //XSS(교차 사이트 스크립팅) 공격으로부터 보호
     key: 'X-XSS-Protection',
     value: '1; mode=block',
   },
