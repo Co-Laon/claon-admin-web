@@ -1,5 +1,6 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { useCallback, useState } from 'react';
+import { v4 as uuid4 } from 'uuid';
 import styled from '@emotion/styled';
 import CheckboxForm from '../common/checkbox/CheckboxForm';
 
@@ -54,7 +55,7 @@ function CheckboxGroupInput({
       <CheckboxesWrapper>
         {checkboxes.map((checkbox, idx) => (
           <CheckboxForm
-            key={`checkbox_${idx}`}
+            key={uuid4()}
             label={checkbox}
             checked={checked === idx}
             onChange={(e) => onChange(e, idx)}

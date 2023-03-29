@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { ChangeEvent, useCallback, useState } from 'react';
+import { v4 as uuid4 } from 'uuid';
 import DragDrop from '../common/file/DragDrop';
 import FileList from '../common/file/FileList';
 
@@ -94,11 +95,7 @@ function Certificate({ type, name, onClickNext }: CertificateProps) {
       <FileWrapper>
         <DragDrop onChange={onFileChange} />
         {files.map((file, idx) => (
-          <FileList
-            name={file.name}
-            onDelete={onDelete(idx)}
-            key={`fileList_${idx}`}
-          />
+          <FileList name={file.name} onDelete={onDelete(idx)} key={uuid4()} />
         ))}
       </FileWrapper>
       <StyledButton onClick={onClickNext}>다음</StyledButton>

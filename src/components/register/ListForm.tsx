@@ -1,6 +1,7 @@
 import AddIcon from '@/assets/AddIcon';
 import DeleteWhiteIcon from '@/assets/DeleteWhiteIcon';
 import styled from '@emotion/styled';
+import { v4 as uuid4 } from 'uuid';
 import { Checkbox } from '@mui/material';
 import { ChangeEvent, cloneElement, useCallback, useState } from 'react';
 import {
@@ -131,8 +132,8 @@ function ListForm({
       </TitleWrapper>
       <StyledUl>
         {itemList.map((item, idx) => (
-          <StyledLi key={idx}>
-            <ItemWrapper key={`itemWrapper_${idx}`}>
+          <StyledLi key={uuid4()}>
+            <ItemWrapper key={uuid4()}>
               <StyledCheckbox
                 onChange={(e) => onChangeCheckbox(e, idx)}
                 checked={checked.includes(idx)}
