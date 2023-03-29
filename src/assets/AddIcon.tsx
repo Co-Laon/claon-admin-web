@@ -1,4 +1,3 @@
-import { props } from 'cypress/types/bluebird';
 import { SVGProps } from 'react';
 
 function AddIcon({ width, height, ...props }: SVGProps<SVGSVGElement>) {

@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { IconButton } from '@mui/material';
 import { FileListProps } from './type';
 
-/*-----------------------Styles----------------------- */
+// -----------------------Styles-----------------------
 const StyledFileListWrapper = styled.div`
   display: flex;
   align-items: center;

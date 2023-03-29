@@ -15,7 +15,7 @@ const StyledIconButton = styled(IconButton)`
   height: 72px;
 `;
 
-/**임시 프로파일 버튼 */
+// 임시 프로파일 버튼
 
 function ProfileButton() {
   return (

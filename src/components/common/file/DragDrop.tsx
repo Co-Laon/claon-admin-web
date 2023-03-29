@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useCallback, useRef } from 'react';
 import { DragDropProps } from './type';
 
-/*-----------------------Styles----------------- */
+// -----------------------Styles-----------------
 const DragDropWrapper = styled.div`
   width: 360px;
   background-color: rgba(103, 80, 164, 0.12);
@@ -37,9 +37,9 @@ const StyledButton = styled(Button)`
 `;
 
 /**
- * File Drag Drop 
- * @param param0 
- * @returns 
+ *  File Drag Drop
+ * @param param0
+ * @returns
  */
 function DragDrop({ onChange }: DragDropProps) {
   const fileRef = useRef<HTMLInputElement>(null);

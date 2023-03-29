@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { LinearProgress } from '@mui/material';
 
-/*----------------Style---------------- */
+// ----------------Style----------------
 const TemplateWrapper = styled.div`
   width: 560px;
 `;

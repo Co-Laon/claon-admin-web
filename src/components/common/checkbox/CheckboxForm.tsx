@@ -1,7 +1,7 @@
 import { Checkbox as MuiCheckbox, FormControlLabel } from '@mui/material';
 import styled from '@emotion/styled';
 import { CheckboxProps } from './type';
-/*----------------------------Styles-------------------------- */
+// ----------------------------Styles--------------------------
 const CheckBoxWrapper = styled.div<{ isChecked: boolean }>`
   padding: 20px;
   background-color: ${({ isChecked }) =>
@@ -23,9 +23,9 @@ const StyledLabel = styled.span`
 `;
 
 /**
- * Label 과 같이 사용하는 Checkbox 
- * @param param0 
- * @returns 
+ * Label 과 같이 사용하는 Checkbox
+ * @param param0
+ * @returns
  */
 function CheckboxForm({
   label,

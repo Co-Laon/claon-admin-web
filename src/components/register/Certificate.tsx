@@ -4,14 +4,14 @@ import { ChangeEvent, useCallback, useState } from 'react';
 import DragDrop from '../common/file/DragDrop';
 import FileList from '../common/file/FileList';
 
-/* ----------Props------------*/
+// ----------Props------------
 interface CertificateProps {
   type: string;
   name: string;
   onClickNext: () => void;
 }
 
-/*------------Style------------- */
+// ------------Style-------------
 const TitleWrapper = styled.div`
   margin-bottom: 32px;
 `;
@@ -60,7 +60,7 @@ function Certificate({ type, name, onClickNext }: CertificateProps) {
   const onFileChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       let uploadFile: File[] = [];
-      if (files.length == 5) alert('파일 개수는 최대 5개 입니다.');
+      if (files.length === 5) alert('파일 개수는 최대 5개 입니다.');
 
       if (e.target.files) {
         uploadFile = Array.from(e.target.files);
@@ -94,7 +94,11 @@ function Certificate({ type, name, onClickNext }: CertificateProps) {
       <FileWrapper>
         <DragDrop onChange={onFileChange} />
         {files.map((file, idx) => (
-          <FileList name={file.name} onDelete={onDelete(idx)} key={idx} />
+          <FileList
+            name={file.name}
+            onDelete={onDelete(idx)}
+            key={`fileList_${idx}`}
+          />
         ))}
       </FileWrapper>
       <StyledButton onClick={onClickNext}>다음</StyledButton>

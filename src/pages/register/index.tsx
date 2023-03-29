@@ -50,7 +50,7 @@ function RegisterMainPage() {
       else if (data.type[0] === '암장 관리자')
         router.push('/register/manager/step1');
     },
-    []
+    [router]
   );
 
   return (

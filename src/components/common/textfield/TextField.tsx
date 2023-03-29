@@ -7,7 +7,7 @@ import {
 import styled from '@emotion/styled';
 import { TextFieldProps } from './type';
 
-/*-----------------------------Styles---------------------- */
+// -----------------------------Styles----------------------
 const EssentialStar = styled.span`
   color: red;
 `;
@@ -31,7 +31,7 @@ function TextField({
   ...props
 }: TextFieldProps) {
   return (
-    <>
+    <div>
       <FormControl>
         <StyledInputLabel htmlFor="outlined-adornment-password">
           {label}
@@ -41,7 +41,7 @@ function TextField({
 
         {helperText && <FormHelperText>{helperText}</FormHelperText>}
       </FormControl>
-    </>
+    </div>
   );
 }
 

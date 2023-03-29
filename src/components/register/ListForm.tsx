@@ -2,15 +2,14 @@ import AddIcon from '@/assets/AddIcon';
 import DeleteWhiteIcon from '@/assets/DeleteWhiteIcon';
 import styled from '@emotion/styled';
 import { Checkbox } from '@mui/material';
-import React from 'react';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, cloneElement, useCallback, useState } from 'react';
 import {
   FieldValues,
   UseFormRegister,
   UseFormUnregister,
 } from 'react-hook-form';
 
-/*-------------------Types--------------- */
+// -------------------Types---------------
 interface ListFormProps {
   title: string;
   items: JSX.Element;
@@ -24,7 +23,7 @@ interface ItemType {
   id: number;
 }
 
-/*--------------------Styles--------------- */
+// --------------------Styles---------------
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -83,34 +82,32 @@ function ListForm({
   formName,
   unregister,
 }: ListFormProps) {
-  //checkbox 클릭 한 리스트 담아두는 state
+  //  checkbox 클릭 한 리스트 담아두는 state
   const [checked, setChecked] = useState<number[]>([]);
-  //전체 컴포넌트 리스트
-  const [itemList, setItemList] = useState<ItemType[]>([
-    { items: items, id: 0 },
-  ]);
-  //index 생성
+  //  전체 컴포넌트 리스트
+  const [itemList, setItemList] = useState<ItemType[]>([{ items, id: 0 }]);
+  //  index 생성
   const [lastKey, setLastKey] = useState<number>(1);
 
-  //Add Button클릭시
+  //  Add Button클릭시
   const onClickAdd = useCallback(() => {
-    setItemList([...itemList, { items: items, id: lastKey }]);
+    setItemList([...itemList, { items, id: lastKey }]);
     setLastKey(lastKey + 1);
-  }, [itemList, lastKey]);
+  }, [itemList, lastKey, items]);
 
-  //Checkbox 변경시
+  //  Checkbox 변경시
   const onChangeCheckbox = useCallback(
     (e: ChangeEvent<HTMLInputElement>, idx: number) => {
       if (e.target.checked) setChecked([...checked, idx]);
       else {
-        const nChecked = checked.filter((c) => c != idx);
+        const nChecked = checked.filter((c) => c !== idx);
         setChecked([...nChecked]);
       }
     },
-    [checked, setChecked]
+    [checked]
   );
 
-  //Remove 버튼 클릭시
+  //  Remove 버튼 클릭시
   const onClickRemove = useCallback(() => {
     setChecked([]);
     const nItemList = itemList.filter((item, idx) => !checked.includes(idx));
@@ -118,7 +115,7 @@ function ListForm({
       unregister(`${formName}.item_${id}`);
     });
     setItemList(nItemList);
-  }, [itemList, checked]);
+  }, [itemList, checked, formName, unregister]);
 
   return (
     <div>
@@ -135,15 +132,15 @@ function ListForm({
       <StyledUl>
         {itemList.map((item, idx) => (
           <StyledLi key={idx}>
-            <ItemWrapper key={idx}>
+            <ItemWrapper key={`itemWrapper_${idx}`}>
               <StyledCheckbox
                 onChange={(e) => onChangeCheckbox(e, idx)}
                 checked={checked.includes(idx)}
               />
 
-              {React.cloneElement(item.items, {
-                register: register,
-                cName: formName,
+              {cloneElement(item.items, {
+                register,
+                formName,
                 idx: `item_${item.id}`,
                 key: item.id,
               })}

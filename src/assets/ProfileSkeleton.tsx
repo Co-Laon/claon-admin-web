@@ -2,7 +2,14 @@ import { SVGProps } from 'react';
 
 function ProfileSkeleton({ width, height, ...props }: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={width || 72} height={height || 72} viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width={width || 72}
+      height={height || 72}
+      viewBox="0 0 72 72"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
