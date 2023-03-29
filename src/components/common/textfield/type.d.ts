@@ -1,10 +1,14 @@
 import { OutlinedInputProps } from '@mui/material';
-import { UseFormRegister } from 'react-hook-form';
+import { FieldError, UseFormRegister, ValidationRule } from 'react-hook-form';
 
 export interface TextFieldProps extends OutlinedInputProps {
   helperText?: string;
   label: string;
-  isRequire?: boolean;
+  isRequire?: string;
   register: UseFormRegister<FieldValues>;
   formKey: string;
+  error?: FieldError<FieldValues>;
+  pattern?: ValidationRule<RegExp>;
+  minLength?: ValidationRule<number>;
+  maxLength?: ValidationRule<number>;
 }

@@ -28,20 +28,38 @@ function TextField({
   label,
   isRequire,
   register,
+  error,
+  formKey,
+  pattern,
+  minLength,
+  maxLength,
   ...props
 }: TextFieldProps) {
   return (
-    <div>
-      <FormControl>
-        <StyledInputLabel htmlFor="outlined-adornment-password">
-          {label}
-          {isRequire && <EssentialStar> *</EssentialStar>}
-        </StyledInputLabel>
-        <StyledOutlinedInput label={label} {...register(label)} {...props} />
-
-        {helperText && <FormHelperText>{helperText}</FormHelperText>}
-      </FormControl>
-    </div>
+    <FormControl>
+      <StyledInputLabel error={Boolean(error[formKey])}>
+        {label}
+        {isRequire && <EssentialStar> *</EssentialStar>}
+      </StyledInputLabel>
+      <StyledOutlinedInput
+        error={Boolean(error[formKey])}
+        {...register(formKey, {
+          required: isRequire,
+          pattern,
+          minLength,
+          maxLength,
+        })}
+        {...props}
+        label={label}
+      />
+      {error[formKey] ? (
+        <FormHelperText error={error[formKey]}>
+          {error[formKey].message}
+        </FormHelperText>
+      ) : (
+        <FormHelperText>{helperText}</FormHelperText>
+      )}
+    </FormControl>
   );
 }
 

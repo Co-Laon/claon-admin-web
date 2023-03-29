@@ -41,7 +41,11 @@ const StyledButton = styled(Button)`
 `;
 
 function RegisterMainPage() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const router = useRouter();
 
   const onSubmit = useCallback(
@@ -61,20 +65,47 @@ function RegisterMainPage() {
           <ProfileButton />
           <TextField
             label="닉네임"
-            isRequire
+            isRequire="닉네임은 필수 입력입니다."
             register={register}
             formKey="nickname"
+            error={errors}
+            minLength={{
+              value: 2,
+              message: '닉네임은 2~20자 이내로 작성해주세요.',
+            }}
+            maxLength={{
+              value: 20,
+              message: '닉네임은 2~20자 이내로 작성해주세요.',
+            }}
           />
           <TextField
             label="이메일"
             helperText="연락 가능한 이메일을 적어주세요."
             register={register}
             formKey="email"
+            error={errors}
+            pattern={{
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+              message: '이메일을 알맞게 입력해주세요.',
+            }}
           />
           <TextField
             label="인스타그램 계정"
             register={register}
             formKey="instagram"
+            error={errors}
+            pattern={{
+              value: /^[a-zA-Z0-9_.]*$/i,
+              message: '영어, 숫자, 언더바, 마침표만 입력 가능합니다.',
+            }}
+            minLength={{
+              value: 3,
+              message: '인스타그램 계정은 3~30자 이내로 작성해주세요.',
+            }}
+            maxLength={{
+              value: 30,
+              message: '인스타그램 계정은 3~30자 이내로 작성해주세요.',
+            }}
           />
           <CheckboxGroupInput
             title="사용자 유형을 선택해주세요."
