@@ -6,6 +6,7 @@ import loadPostcode, {
   postcodeScriptUrl,
 } from 'react-daum-postcode/lib/loadPostcode';
 
+// -------------------Types---------------
 /**
  * TODO: React 에서 autoClose 옵션을 사용할 수 없는 이슈가 있음
  * autoClose 를 통한다면, 내부 ref 를 통해 직접 DOM 을 제거하는 ref.current.remove() 를 호출하는데,
@@ -15,12 +16,7 @@ interface PostcodeEmbedProps extends Omit<DaumPostcodeEmbedProps, 'autoClose'> {
   options?: PostcodeOptions;
 }
 
-const defaultErrorMessage = (
-  <p>
-    현재 Daum 우편번호 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.
-  </p>
-);
-
+// -------------------Styles---------------
 const defaultStyle = {
   fontSize: '1rem',
   width: '100%',
@@ -28,7 +24,16 @@ const defaultStyle = {
 };
 
 /**
- * TODO: Error 관련 처리 추가 적용 필요
+ * PostcodeEmbed 컴포넌트의 기본 에러 메시지
+ */
+const defaultErrorMessage = (
+  <p>
+    현재 Daum 우편번호 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해주세요.
+  </p>
+);
+
+/**
+ * PostcodeEmbed 컴포넌트
  */
 function PostCodeEmbed({
   onComplete,
@@ -61,7 +66,7 @@ function PostCodeEmbed({
 
         postcode.embed(wrap.current, { q: defaultQuery });
       })
-      .catch((e: unknown) => {
+      .catch(() => {
         setHasError(true);
       });
   }, [scriptUrl, options, onComplete, onSearch, onClose, defaultQuery]);

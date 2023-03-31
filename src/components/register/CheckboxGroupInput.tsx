@@ -5,7 +5,7 @@ import CheckboxForm from '../common/checkbox/CheckboxForm';
 
 // -------------------Types------------------
 interface CheckboxGroupInputProps {
-  title: string;
+  title: string | JSX.Element;
   checkboxes: string[];
   register: UseFormRegister<FieldValues>;
   formKey: string;
@@ -55,9 +55,12 @@ function CheckboxGroupInput({
     []
   );
 
+  const titleComponent =
+    typeof title === 'string' ? <StyledTitle>{title}</StyledTitle> : title;
+
   return (
     <ComponentWrapper>
-      <StyledTitle>{title}</StyledTitle>
+      {titleComponent}
       <CheckboxesWrapper>
         {checkboxes.map((checkbox, idx) => (
           <CheckboxForm

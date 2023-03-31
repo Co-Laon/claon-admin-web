@@ -69,7 +69,12 @@ function PostCodeModal({
   };
 
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
       <Box sx={modalBoxStyle}>
         <PostCodeEmbed
           onComplete={handleComplete}
