@@ -4,13 +4,17 @@ import styled from '@emotion/styled';
 import TextField from '@/components/common/textfield/TextField';
 import { useForm } from 'react-hook-form';
 import { useCallback, useRef, useState } from 'react';
-import { Button, InputAdornment } from '@mui/material';
+import { Box, Button, InputAdornment, Modal } from '@mui/material';
 import SearchIcon from '@/assets/SearchIcon';
 import PlusIcon from '@/assets/PlusIcon';
 import PostCodeModal from '@/components/common/postcode/PostCodeModal';
-import CheckboxForm from '@/components/common/checkbox/CheckboxForm';
 import ListForm from '@/components/register/ListForm';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
+import Carousel from 'react-material-ui-carousel';
+import DragDrop from '@/components/common/file/DragDrop';
+import Image from 'next/image';
+import ImageModalEmbed from '@/components/register/manager/ImageModalEmbed';
+import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
 
 const ComponentWrapper = styled.div`
   width: 100%;
@@ -153,6 +157,17 @@ const ListFormPriceInput = styled(TextField)`
   flex-grow: 0;
 `;
 
+const centerImageModalStyle = {
+  position: 'absolute' as const,
+  width: '500px',
+  height: '500px',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  background:
+    'linear-gradient(0deg, rgba(113, 90, 174, 0.11), rgba(113, 90, 174, 0.11)), #FFFBFE',
+};
+
 interface RegularHoliday {
   day: string;
   startTime: string;
@@ -242,33 +257,51 @@ function RegisterManagerPage() {
     '트레이닝 존',
   ];
   const chargeList = [1, 2, 3];
+  const chargeImageList = [1, 2, 3];
+  const imageList = [1, 2, 3];
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
     unregister,
   } = useForm();
-  const [modalOpen, setModalOpen] = useState(false);
+
+  const [postModalOpen, setPostModalOpen] = useState(false);
+
+  const [centerImageModalOpen, setCenterImageModalOpen] = useState(false);
 
   const postcodeTextFieldRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = useCallback(() => {}, []);
-
-  const handleModalOpen = useCallback(() => {
-    setModalOpen(true);
+  const onSubmit = useCallback((data: any) => {
+    console.dir(data);
   }, []);
 
-  const handleModalComplete = useCallback((address?: string) => {
+  const handlePostInputClick = useCallback(() => {
+    setPostModalOpen(true);
+  }, []);
+
+  const handlePostModalComplete = useCallback((address?: string) => {
     if (postcodeTextFieldRef.current && address) {
       postcodeTextFieldRef.current.value = address;
     }
-    setModalOpen(false);
+    setPostModalOpen(false);
   }, []);
 
-  const handleModalClose = useCallback(() => {
-    setModalOpen(false);
+  const handlePostModalClose = useCallback(() => {
+    setPostModalOpen(false);
   }, []);
+
+  const handleCenterImageAddButtonClick = useCallback(() => {
+    setCenterImageModalOpen(true);
+  }, []);
+
+  const handleImageModalClose = useCallback(() => {
+    setCenterImageModalOpen(false);
+  }, []);
+
+  const handleImageModalComplete = useCallback(() => {}, []);
 
   return (
     <ComponentWrapper>
@@ -287,7 +320,7 @@ function RegisterManagerPage() {
             isRequire="이름을 작성해 주세요."
             placeholder="클라온"
             register={register}
-            formKey="centerName"
+            formKey="name"
             error={errors}
             minLength={{
               value: 2,
@@ -304,18 +337,18 @@ function RegisterManagerPage() {
             register={register}
             formKey="address"
             error={errors}
-            onClick={handleModalOpen}
+            onClick={handlePostInputClick}
             ref={postcodeTextFieldRef}
           />
           <PostCodeModal
-            open={modalOpen}
-            onComplete={handleModalComplete}
-            onClose={handleModalClose}
+            open={postModalOpen}
+            onComplete={handlePostModalComplete}
+            onClose={handlePostModalClose}
           />
           <TextField
             label="상세 주소"
             register={register}
-            formKey="detailAddress"
+            formKey="detail_address"
             error={errors}
           />
           <TextField
@@ -323,7 +356,7 @@ function RegisterManagerPage() {
             isRequire="전화번호를 작성해 주세요."
             placeholder="010-1234-5678"
             register={register}
-            formKey="phoneNumber"
+            formKey="tel"
             error={errors}
             pattern={{
               value: /^\d{2,3}-\d{3,4}-\d{4}$/,
@@ -333,7 +366,7 @@ function RegisterManagerPage() {
           <TextField
             label="웹"
             register={register}
-            formKey="webUrl"
+            formKey="web_url"
             error={errors}
             pattern={{
               value:
@@ -344,7 +377,7 @@ function RegisterManagerPage() {
           <TextField
             label="인스타그램 계정"
             register={register}
-            formKey="instagramUrl"
+            formKey="instagram_name"
             error={errors}
             pattern={{
               value: /^[a-zA-Z0-9_.]*$/i,
@@ -362,7 +395,7 @@ function RegisterManagerPage() {
           <TextField
             label="유튜브"
             register={register}
-            formKey="youtubeUrl"
+            formKey="youtube_code"
             error={errors}
           />
           <BetweenWrapper alignItems="center">
@@ -370,10 +403,24 @@ function RegisterManagerPage() {
               <NormalText>암장 모습을 보여주세요.</NormalText>
               <SmallText>최대 10장까지 업로드 가능해요.</SmallText>
             </div>
-            <StyledPlusButton>
+            <StyledPlusButton onClick={handleCenterImageAddButtonClick}>
               <PlusIcon width={12} height={12} />
             </StyledPlusButton>
           </BetweenWrapper>
+          <Modal
+            open={centerImageModalOpen}
+            onClose={handleImageModalClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={centerImageModalStyle}>
+              <ImageModalEmbed
+                title="암장"
+                onComplete={handleImageModalComplete}
+              />
+            </Box>
+          </Modal>
+          <ImageListCarousel images={watch('image_list', [])} />
           <div>
             <NormalText>정기 휴무일이 있나요?</NormalText>
             <SmallText>쉬는 날을 선택해주세요.</SmallText>
@@ -417,7 +464,7 @@ function RegisterManagerPage() {
             <NormalText>이용요금을 알려주세요.</NormalText>
             <SmallText>최대 5장까지 업로드 가능해요.</SmallText>
           </div>
-          <NormalText />
+          <ImageListCarousel images={watch('charge_list', [])} />
           <ListForm
             title={<NormalText>이용요금을 항목을 입력해주세요.</NormalText>}
             items={
@@ -528,8 +575,8 @@ function RegisterManagerPage() {
             }
             unregister={unregister}
           />
+          <StyledButton type="submit">다음</StyledButton>
         </StyledForm>
-        <StyledButton type="submit">다음</StyledButton>
       </RegisterTemplate>
     </ComponentWrapper>
   );
