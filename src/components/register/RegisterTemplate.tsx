@@ -5,6 +5,7 @@ import { LinearProgress } from '@mui/material';
 // ----------------Style----------------
 const TemplateWrapper = styled.div`
   width: 560px;
+  margin: auto;
 `;
 const Template = styled.div`
   width: 100%;

@@ -1,6 +1,5 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
-import { useCallback, useState } from 'react';
-import { v4 as uuid4 } from 'uuid';
+import { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import CheckboxForm from '../common/checkbox/CheckboxForm';
 
@@ -10,6 +9,7 @@ interface CheckboxGroupInputProps {
   checkboxes: string[];
   register: UseFormRegister<FieldValues>;
   formKey: string;
+  defaultValue?: number;
 }
 
 // -------------------Styles----------------
@@ -24,8 +24,8 @@ const CheckboxesWrapper = styled.div`
 `;
 const StyledTitle = styled.p`
   font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 24px;
 `;
 
 /**
@@ -38,8 +38,14 @@ function CheckboxGroupInput({
   checkboxes,
   register,
   formKey,
+  defaultValue,
 }: CheckboxGroupInputProps) {
-  const [checked, setChecked] = useState(-1);
+  const [checked, setChecked] = useState(defaultValue || -1);
+  const [keyList, setKeyList] = useState<string[]>([]);
+
+  useEffect(() => {
+    setKeyList(checkboxes.map((_, idx) => `${formKey}_${idx}`));
+  }, [checkboxes, formKey]);
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
@@ -55,7 +61,7 @@ function CheckboxGroupInput({
       <CheckboxesWrapper>
         {checkboxes.map((checkbox, idx) => (
           <CheckboxForm
-            key={uuid4()}
+            key={keyList[idx]}
             label={checkbox}
             checked={checked === idx}
             onChange={(e) => onChange(e, idx)}
