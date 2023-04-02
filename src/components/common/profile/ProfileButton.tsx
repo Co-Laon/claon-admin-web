@@ -37,7 +37,7 @@ function ProfileButton({ onChange, img }: ProfileButtonProps) {
 
   const onClickButton = useCallback(() => {
     ref.current?.click();
-  }, [ref]);
+  }, []);
 
   return (
     <>
