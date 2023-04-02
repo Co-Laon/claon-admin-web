@@ -3,6 +3,15 @@ import { ReactNode } from 'react';
 import { LinearProgress } from '@mui/material';
 
 // ----------------Style----------------
+
+const ComponentWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const TemplateWrapper = styled.div`
   width: 560px;
 `;
@@ -29,7 +38,7 @@ const CustomLinearProgress = styled(LinearProgress)`
  * @param param0
  * @returns
  */
-function RegisterTemplate({
+function RegisterLayout({
   children,
   step,
 }: {
@@ -37,15 +46,17 @@ function RegisterTemplate({
   step: number;
 }) {
   return (
-    <TemplateWrapper>
-      <CustomLinearProgress
-        variant="determinate"
-        value={step}
-        color="secondary"
-      />
-      <Template>{children}</Template>
-    </TemplateWrapper>
+    <ComponentWrapper>
+      <TemplateWrapper>
+        <CustomLinearProgress
+          variant="determinate"
+          value={step}
+          color="secondary"
+        />
+        <Template>{children}</Template>
+      </TemplateWrapper>
+    </ComponentWrapper>
   );
 }
 
-export default RegisterTemplate;
+export default RegisterLayout;
