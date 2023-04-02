@@ -46,6 +46,16 @@
     // jsx 문법에서 props spreading을 허용,  props가 너무 많으면 해당 rule이 가독성을 해칠 수 있음
     "react/jsx-props-no-spreading": "off",
     // prettier endOfLine 설정을 auto로 설정,  mac, window 호환 설정
-    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    // 함수, 변수 선언 전에 사용하지 않도록 하는 설정 off,  우선적으로 코드 위에서 정의할 때 필요할 수 있음.
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": true,
+        "variables": false,
+        "typedefs": true
+      }
+    ]
   }
 }
