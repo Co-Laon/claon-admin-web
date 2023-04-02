@@ -14,9 +14,10 @@ const ComponentWrapper = styled.div`
 
 const TemplateWrapper = styled.div`
   width: 560px;
+  margin: auto;
 `;
 const Template = styled.div`
-  width: 100%;
+  width: 560px;
   background-color: #fffbfe;
   border-radius: 16px;
   border: 1px solid;

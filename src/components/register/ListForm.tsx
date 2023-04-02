@@ -3,8 +3,15 @@ import DeleteWhiteIcon from '@/assets/DeleteWhiteIcon';
 import styled from '@emotion/styled';
 import { v4 as uuid4 } from 'uuid';
 import { Checkbox } from '@mui/material';
-import { ChangeEvent, cloneElement, useCallback, useState } from 'react';
 import {
+  ChangeEvent,
+  cloneElement,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  FieldErrors,
   FieldValues,
   UseFormRegister,
   UseFormUnregister,
@@ -17,6 +24,7 @@ interface ListFormProps {
   register: UseFormRegister<FieldValues>;
   formName: string;
   unregister: UseFormUnregister<FieldValues>;
+  error?: FieldErrors<FieldValues>;
 }
 
 interface ItemType {
@@ -42,6 +50,7 @@ const StyledUl = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-top: 12px;
 `;
 
 const StyledLi = styled.li`
@@ -82,6 +91,7 @@ function ListForm({
   register,
   formName,
   unregister,
+  error,
 }: ListFormProps) {
   //  checkbox 클릭 한 리스트 담아두는 state
   const [checked, setChecked] = useState<number[]>([]);
@@ -107,6 +117,13 @@ function ListForm({
     },
     [checked]
   );
+
+  const errors = useMemo(() => {
+    if (error) {
+      if (error[formName]) return error[formName];
+    }
+    return undefined;
+  }, [error, formName]);
 
   //  Remove 버튼 클릭시
   const onClickRemove = useCallback(() => {
@@ -141,9 +158,10 @@ function ListForm({
 
               {cloneElement(item.items, {
                 register,
-                formName,
-                idx: `item_${item.id}`,
+                formKey: formName,
+                idx: `${item.id}`,
                 key: item.id,
+                error: errors,
               })}
             </ItemWrapper>
           </StyledLi>

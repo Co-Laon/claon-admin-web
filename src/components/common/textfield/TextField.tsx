@@ -13,10 +13,15 @@ const EssentialStar = styled.span`
 `;
 const StyledOutlinedInput = styled(OutlinedInput)`
   height: 48px;
+
+  & > fieldset > legend > span {
+    padding: 0;
+  }
 `;
 
 const StyledInputLabel = styled(InputLabel)`
-  font-size: 16px;
+  font-size: 12px;
+  color: #49454f;
 `;
 /**
  * Outlined Textfield 컴포넌트
@@ -37,12 +42,12 @@ function TextField({
 }: TextFieldProps) {
   return (
     <FormControl>
-      <StyledInputLabel error={Boolean(error[formKey])}>
+      <StyledInputLabel error={error} shrink>
         {label}
         {isRequire && <EssentialStar> *</EssentialStar>}
       </StyledInputLabel>
       <StyledOutlinedInput
-        error={Boolean(error[formKey])}
+        error={error}
         {...register(formKey, {
           required: isRequire,
           pattern,
@@ -50,12 +55,11 @@ function TextField({
           maxLength,
         })}
         {...props}
-        label={label}
+        label={`${label}${isRequire ? ' *' : ''}`}
+        notched
       />
-      {error[formKey] ? (
-        <FormHelperText error={error[formKey]}>
-          {error[formKey].message}
-        </FormHelperText>
+      {error ? (
+        <FormHelperText error={error}>{error.message}</FormHelperText>
       ) : (
         <FormHelperText>{helperText}</FormHelperText>
       )}
