@@ -3,13 +3,12 @@ import CertificationList from '@/components/register/CertificationList';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import ContestExperience from '@/components/register/ContestExperience';
 import ListForm from '@/components/register/ListForm';
-import RegisterTemplate from '@/components/register/RegisterTemplate';
-import { commonStepState } from '@/recoil/register/atom';
+import RegisterLayout from '@/components/register/RegisterLayout';
 import { nickanmeState } from '@/recoil/register/teacher';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 
@@ -59,48 +58,50 @@ function Step1() {
   );
 
   return (
-    <StyledContainer>
-      <RegisterTemplate step={66}>
-        <div>
-          <StyledTitle>{`${nickName} 강사님`}</StyledTitle>
-          <StyledTitle>자신을 소개해주세요.</StyledTitle>
-        </div>
-        <StyledFormContainer onSubmit={handleSubmit(onFormSubmit)}>
-          <CheckboxGroupInput
-            title="홀드 세팅도 하시나요?"
-            checkboxes={['하고 있어요', '하지 않아요']}
-            formKey="is_setter"
-            register={register}
-            defaultValue={1}
-          />
-          <ListForm
-            formName="contest_list"
-            items={<ContestExperience />}
-            register={register}
-            unregister={unregister}
-            title="대회 참가 경험이 있나요?"
-            error={errors}
-          />
-          <ListForm
-            formName="certificate_list"
-            items={<CertificationList />}
-            register={register}
-            unregister={unregister}
-            title="취득한 자격이 있나요?"
-            error={errors}
-          />
-          <ListForm
-            formName="career_list"
-            items={<Career />}
-            register={register}
-            unregister={unregister}
-            title="다양한 경력 사항을 입력해주세요"
-            error={errors}
-          />
-          <StyledButton type="submit">다음</StyledButton>
-        </StyledFormContainer>
-      </RegisterTemplate>
-    </StyledContainer>
+    <>
+      <div>
+        <StyledTitle>{`${nickName} 강사님`}</StyledTitle>
+        <StyledTitle>자신을 소개해주세요.</StyledTitle>
+      </div>
+      <StyledFormContainer onSubmit={handleSubmit(onFormSubmit)}>
+        <CheckboxGroupInput
+          title="홀드 세팅도 하시나요?"
+          checkboxes={['하고 있어요', '하지 않아요']}
+          formKey="is_setter"
+          register={register}
+          defaultValue={1}
+        />
+        <ListForm
+          formName="contest_list"
+          items={<ContestExperience />}
+          register={register}
+          unregister={unregister}
+          title="대회 참가 경험이 있나요?"
+          error={errors}
+        />
+        <ListForm
+          formName="certificate_list"
+          items={<CertificationList />}
+          register={register}
+          unregister={unregister}
+          title="취득한 자격이 있나요?"
+          error={errors}
+        />
+        <ListForm
+          formName="career_list"
+          items={<Career />}
+          register={register}
+          unregister={unregister}
+          title="다양한 경력 사항을 입력해주세요"
+          error={errors}
+        />
+        <StyledButton type="submit">다음</StyledButton>
+      </StyledFormContainer>
+    </>
   );
 }
+
+Step1.getLayout = function getLayout(page: ReactElement) {
+  return <RegisterLayout step={66}>{page}</RegisterLayout>;
+};
 export default Step1;
