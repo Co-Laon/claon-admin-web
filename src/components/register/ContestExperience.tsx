@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import TextField from '../common/textfield/TextField';
 

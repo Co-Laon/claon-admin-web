@@ -5,7 +5,7 @@ import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import { useForm } from 'react-hook-form';
-import { ChangeEvent, ReactElement, useCallback, useMemo } from 'react';
+import { ChangeEvent, ReactElement, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { commonStepState, profileState } from '@/recoil/register/atom';
@@ -53,7 +53,6 @@ function RegisterMainPage() {
 
   const onSubmit = useCallback(
     (data: { [key: string]: string | Array<'강사' | '암장 관리자'> }) => {
-      console.log(data);
       setCommonStep({
         nickname: data.nickname as string,
         email: data.email as string,

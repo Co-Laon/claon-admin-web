@@ -8,7 +8,7 @@ import { nickanmeState } from '@/recoil/register/teacher';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { ReactElement, useCallback, useEffect } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
 
@@ -22,11 +22,6 @@ const StyledFormContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 32px;
-`;
-
-const StyledContainer = styled.div`
-  padding-top: 116px;
-  padding-bottom: 32px;
 `;
 
 const StyledButton = styled(Button)`
