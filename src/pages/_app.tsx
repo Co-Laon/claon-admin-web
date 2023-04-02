@@ -5,6 +5,10 @@ import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
+import { axiosConfig } from '@/utils/config';
+
+// axios 디폴트 설정 적용
+axiosConfig();
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
