@@ -67,7 +67,7 @@ interface ImageModalProps {
   onComplete: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ImageModalEmbed = ({ title, onComplete }: ImageModalProps) => {
+function ImageModalEmbed({ title, onComplete }: ImageModalProps) {
   const [files, setFiles] = React.useState<File[]>([]);
 
   const handleDragDropChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,6 +92,6 @@ const ImageModalEmbed = ({ title, onComplete }: ImageModalProps) => {
       </ImageModalEmbedImageWrapper>
     </ImageModalEmbedWrapper>
   );
-};
+}
 
 export default ImageModalEmbed;

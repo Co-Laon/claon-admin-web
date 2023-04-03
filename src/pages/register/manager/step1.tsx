@@ -1,5 +1,4 @@
 import ProfileButton from '@/components/common/profile/ProfileButton';
-import RegisterTemplate from '@/components/register/RegisterTemplate';
 import styled from '@emotion/styled';
 import TextField from '@/components/common/textfield/TextField';
 import { useForm } from 'react-hook-form';
@@ -10,11 +9,11 @@ import PlusIcon from '@/assets/PlusIcon';
 import PostCodeModal from '@/components/common/postcode/PostCodeModal';
 import ListForm from '@/components/register/ListForm';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
-import Carousel from 'react-material-ui-carousel';
-import DragDrop from '@/components/common/file/DragDrop';
-import Image from 'next/image';
 import ImageModalEmbed from '@/components/register/manager/ImageModalEmbed';
 import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
+import RegisterLayout from '@/components/register/RegisterLayout';
+import OperatingTimeTableForm from '@/components/register/manager/OperatingTimeTableForm';
+import ChipForm from '@/components/register/manager/ChipForm';
 
 const ComponentWrapper = styled.div`
   width: 100%;
@@ -121,7 +120,7 @@ const ListFormItemContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  padding: 0px;
+  padding: 15px;
   isolation: isolate;
 
   width: 326px;
@@ -167,6 +166,8 @@ const centerImageModalStyle = {
   background:
     'linear-gradient(0deg, rgba(113, 90, 174, 0.11), rgba(113, 90, 174, 0.11)), #FFFBFE',
 };
+
+// --------------------interface--------------------
 
 interface RegularHoliday {
   day: string;
@@ -222,29 +223,57 @@ interface Step2FormProps {
   climbInfo: ClimbInfo[];
 }
 
+interface CenterSignUpFormProps {
+  profile: {
+    profile_image: 'string';
+    nickname: 'string';
+    email: 'user@example.com';
+    instagram_nickname: 'string';
+    role: 'lector';
+  };
+  profile_image: 'string';
+  name: 'string';
+  address: 'string';
+  detail_address: 'string';
+  tel: 'string';
+  web_url: 'string';
+  instagram_name: 'string';
+  youtube_code: 'string';
+  image_list: ['string'];
+  utility_list: ['string'];
+  fee_image_list: ['string'];
+  operating_time_list: [
+    {
+      day_of_week: 'string';
+      start_time: 'string';
+      end_time: 'string';
+    }
+  ];
+  fee_list: [
+    {
+      name: 'string';
+      price: 0;
+      count: 0;
+    }
+  ];
+  hold_list: [
+    {
+      difficulty: 'string';
+      name: 'string';
+    }
+  ];
+  wall_list: [
+    {
+      wall_type: 'endurance';
+      name: 'string';
+    }
+  ];
+  proof_list: ['string'];
+}
+
 function RegisterManagerPage() {
   const name = '암장 관리자';
-  const selectedDayOfWeek = [
-    '월',
-    '화',
-    '수',
-    '목',
-    '금',
-    '토',
-    '일',
-    '공휴일',
-  ];
-  const regularHolidaysList = [
-    '월',
-    '화',
-    '수',
-    '목',
-    '금',
-    '토',
-    '일',
-    '공휴일',
-  ];
-  const serviceList = [
+  const utilityList = [
     '유료주차',
     '무료주차',
     '와이파이',
@@ -262,15 +291,20 @@ function RegisterManagerPage() {
 
   const {
     register,
+    setValue,
     watch,
     handleSubmit,
     formState: { errors },
     unregister,
   } = useForm();
 
+  const [centerSearchModalOpen, setCenterSearchModalOpen] = useState(false);
+
   const [postModalOpen, setPostModalOpen] = useState(false);
 
   const [centerImageModalOpen, setCenterImageModalOpen] = useState(false);
+
+  const [holdType, setHoldType] = useState<'색' | '다르게'>('색');
 
   const postcodeTextFieldRef = useRef<HTMLInputElement>(null);
 
@@ -278,9 +312,15 @@ function RegisterManagerPage() {
     console.dir(data);
   }, []);
 
+  const handleProfileImageChange = useCallback(() => {}, []);
+
   const handlePostInputClick = useCallback(() => {
     setPostModalOpen(true);
   }, []);
+
+  const handleCenterButtonClick = useCallback(() => {
+    console.dir(watch());
+  }, [watch]);
 
   const handlePostModalComplete = useCallback((address?: string) => {
     if (postcodeTextFieldRef.current && address) {
@@ -305,13 +345,13 @@ function RegisterManagerPage() {
 
   return (
     <ComponentWrapper>
-      <RegisterTemplate step={66}>
+      <RegisterLayout step={66}>
         <Title>{`${name}님
         암장을 소개해주세요.`}</Title>
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <BetweenWrapper alignItems="end">
-            <ProfileButton />
-            <StyledSmallButton>
+            <ProfileButton onChange={handleProfileImageChange} />
+            <StyledSmallButton onClick={handleCenterButtonClick}>
               <SearchIcon width={12} height={12} /> 기존 암장
             </StyledSmallButton>
           </BetweenWrapper>
@@ -338,7 +378,7 @@ function RegisterManagerPage() {
             formKey="address"
             error={errors}
             onClick={handlePostInputClick}
-            ref={postcodeTextFieldRef}
+            inputRef={postcodeTextFieldRef}
           />
           <PostCodeModal
             open={postModalOpen}
@@ -420,51 +460,31 @@ function RegisterManagerPage() {
               />
             </Box>
           </Modal>
-          <ImageListCarousel images={watch('image_list', [])} />
+          <ImageListCarousel images={(watch('image_list'), [])} />
           <div>
             <NormalText>정기 휴무일이 있나요?</NormalText>
             <SmallText>쉬는 날을 선택해주세요.</SmallText>
           </div>
-          <ChipContainer>
-            {regularHolidaysList.map((day) => (
-              <StyledChipButton>{day}</StyledChipButton>
-            ))}
-          </ChipContainer>
-          <NormalText>이용 시간을 입력해주세요.</NormalText>
-          {selectedDayOfWeek.map((day) => (
-            <TimeTableInputFormatContainer>
-              {day}
-              <TextField
-                label="시작시간"
-                isRequire="10:00"
-                register={register}
-                formKey={`${day}Start`}
-                error={errors}
-              />
-              ~
-              <TextField
-                label="종료시간"
-                isRequire="22:00"
-                register={register}
-                formKey={`${day}End`}
-                error={errors}
-              />
-            </TimeTableInputFormatContainer>
-          ))}
+          <OperatingTimeTableForm
+            register={register}
+            setValue={setValue}
+            formKey="operating_time_list"
+            error={errors}
+          />
           <div>
             <NormalText>제공하는 서비스를 선택해주세요.</NormalText>
             <SmallText>중복 선택 가능해요.</SmallText>
           </div>
-          <ChipContainer>
-            {serviceList.map((service) => (
-              <StyledChipButton key={service}>{service}</StyledChipButton>
-            ))}
-          </ChipContainer>
+          <ChipForm
+            items={utilityList}
+            formKey="utility_list"
+            setValue={setValue}
+          />
           <div>
             <NormalText>이용요금을 알려주세요.</NormalText>
             <SmallText>최대 5장까지 업로드 가능해요.</SmallText>
           </div>
-          <ImageListCarousel images={watch('charge_list', [])} />
+          <ImageListCarousel images={(watch('fee_image_list'), [])} />
           <ListForm
             title={<NormalText>이용요금을 항목을 입력해주세요.</NormalText>}
             items={
@@ -473,7 +493,7 @@ function RegisterManagerPage() {
                   label="요금명"
                   isRequire="요금명을 작성해 주세요."
                   register={register}
-                  formKey="chargeName"
+                  formKey="name"
                   error={errors}
                 />
                 <div>
@@ -482,9 +502,9 @@ function RegisterManagerPage() {
                     isRequire=""
                     defaultValue="14000"
                     register={register}
-                    formKey="chargePrice"
+                    formKey="price"
                     error={errors}
-                    sx={{ width: '96px', height: '36px' }}
+                    sx={{ width: '96px', height: '36px', marginRight: '5px' }}
                     endAdornment={
                       <InputAdornment position="end">원</InputAdornment>
                     }
@@ -494,7 +514,7 @@ function RegisterManagerPage() {
                     isRequire=""
                     defaultValue="1"
                     register={register}
-                    formKey="chargeName"
+                    formKey="count"
                     error={errors}
                     sx={{ width: '60px', height: '36px' }}
                     endAdornment={
@@ -504,7 +524,7 @@ function RegisterManagerPage() {
                 </div>
               </ListFormItemContainer>
             }
-            formName="chargeList"
+            formName="fee_list"
             register={register}
             unregister={unregister}
           />
@@ -525,18 +545,20 @@ function RegisterManagerPage() {
               <ListFormItemContainer>
                 <div>
                   <TextField
-                    label="가격"
-                    isRequire="14000"
+                    label="색"
+                    isRequire="#FFFFFF"
                     register={register}
                     formKey="chargePrice"
                     error={errors}
+                    sx={{ width: '80px', height: '36px', marginRight: '5px' }}
                   />
                   <TextField
-                    label="횟수"
+                    label="홀드 이름"
                     isRequire="1"
                     register={register}
                     formKey="chargeName"
                     error={errors}
+                    sx={{ width: '210px', height: '36px' }}
                   />
                 </div>
               </ListFormItemContainer>
@@ -555,6 +577,7 @@ function RegisterManagerPage() {
                     register={register}
                     formKey="chargePrice"
                     error={errors}
+                    sx={{ width: '80px', height: '36px', marginRight: '5px' }}
                   />
                   <TextField
                     label="이름"
@@ -562,6 +585,7 @@ function RegisterManagerPage() {
                     register={register}
                     formKey="chargeName"
                     error={errors}
+                    sx={{ width: '210px', height: '36px' }}
                   />
                 </div>
               </ListFormItemContainer>
@@ -577,7 +601,7 @@ function RegisterManagerPage() {
           />
           <StyledButton type="submit">다음</StyledButton>
         </StyledForm>
-      </RegisterTemplate>
+      </RegisterLayout>
     </ComponentWrapper>
   );
 }

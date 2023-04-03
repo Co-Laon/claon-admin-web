@@ -21,8 +21,7 @@ interface ImageListCarouselProps extends CarouselProps {
   images: string[];
 }
 
-const ImageListCarousel = ({ ...props }: ImageListCarouselProps) => {
-  console.dir(props.images.length === 0);
+function ImageListCarousel({ ...props }: ImageListCarouselProps) {
   return props.images.length === 0 ? (
     <ImageListWrapper>
       <PhotoIcon />
@@ -34,6 +33,6 @@ const ImageListCarousel = ({ ...props }: ImageListCarouselProps) => {
       ))}
     </Carousel>
   );
-};
+}
 
 export default ImageListCarousel;
