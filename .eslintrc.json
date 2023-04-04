@@ -36,7 +36,8 @@
           "**/*.stories.ts",
           "**/*.test.tsx",
           "**/*.spec.tsx",
-          "**/*.stories.tsx"
+          "**/*.stories.tsx",
+          "**/mocks/**"
         ]
       }
     ],
