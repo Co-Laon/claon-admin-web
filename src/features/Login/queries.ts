@@ -25,10 +25,9 @@ export const postSignIn = async (provider: string) => {
     id_token: token as string,
   };
 
-  const response: SignInResponse = await axios.post(
-    `/auth/${provider}.sign-in`,
-    request
-  );
+  const response: SignInResponse = await axios
+    .post(`/auth/${provider}/sign-in`, request)
+    .then((res) => res.data);
   return response;
 };
 
@@ -43,12 +42,12 @@ export const useOAuthSignIn = () => {
   } = useMutation(postSignIn, {
     // 성공 시 가입 유무 판단 후 라우팅
     // 회원가입 => 이메일 파라미터 전달
-    onSuccess: (res: SignInResponse) => {
+    onSuccess: (res) => {
       // eslint-disable-next-line no-console
       console.log(res);
-      const nextPath = res.is_signed_up
-        ? `/register?email=${res.profile?.email}`
-        : '/';
+      const registerPath = `/register?email=${res.profile?.email}`;
+      const homePath = '/';
+      const nextPath = res.is_signed_up ? homePath : registerPath;
       router.push(nextPath);
     },
     onError: (error) => {
@@ -56,19 +55,6 @@ export const useOAuthSignIn = () => {
       console.log(error);
     },
   });
-
-  useEffect(() => {
-    if (session) {
-      const { provider } = session;
-      signInClaon(provider);
-    }
-
-    // OAuth 세션 다 사용한 후 disconnect
-    return () => {
-      signOut();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return {
     signInClaon,
