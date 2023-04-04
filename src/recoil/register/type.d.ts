@@ -1,4 +1,5 @@
 export interface CommonStep {
+  profile_image: string | undefined;
   nickname: string;
   email: string;
   instagram_nickname: string;

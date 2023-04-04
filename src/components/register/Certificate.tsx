@@ -9,7 +9,7 @@ import FileList from '../common/file/FileList';
 interface CertificateProps {
   type: string;
   name: string;
-  onClickNext: () => void;
+  onClickNext: (files: File[]) => () => void;
 }
 
 // ------------Style-------------
@@ -98,7 +98,7 @@ function Certificate({ type, name, onClickNext }: CertificateProps) {
           <FileList name={file.name} onDelete={onDelete(idx)} key={uuid4()} />
         ))}
       </FileWrapper>
-      <StyledButton onClick={onClickNext}>다음</StyledButton>
+      <StyledButton onClick={onClickNext(files)}>다음</StyledButton>
     </div>
   );
 }
