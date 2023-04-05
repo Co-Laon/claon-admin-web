@@ -1,11 +1,12 @@
 import PhotoIcon from '@/assets/PhotoIcon';
+import DeleteModal from '@/components/register/manager/DeleteModal';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { CarouselProps } from 'react-material-ui-carousel/dist/components/types';
+import { ImageListCarouselProps } from './type';
 
-const ImageListWrapper = styled.div`
+const ImageListWrapper = styled.div<{ width?: number; height?: number }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -13,25 +14,61 @@ const ImageListWrapper = styled.div`
   padding: 0px;
   gap: 10px;
 
-  width: 360px;
-  height: 140px;
+  width: ${({ width }) => width || 360}px;
+  height: ${({ height }) => height || 140}px;
 `;
 
-interface ImageListCarouselProps extends CarouselProps {
-  images: string[];
-}
+const StyledCarousel = styled(Carousel)`
+  width: ${({ height }) => height || 360}px;
+  height: ${({ height }) => height || 140}px;
+`;
 
 function ImageListCarousel({ ...props }: ImageListCarouselProps) {
-  return props.images.length === 0 ? (
-    <ImageListWrapper>
-      <PhotoIcon />
+  const { images, width, height, deleteable, onClickDeleteConfirm } = props;
+
+  const [current, setCurrent] = React.useState(0);
+
+  const handleNextClick = () => {
+    setCurrent(current + 1);
+  };
+
+  const handlePrevClick = () => {
+    setCurrent(current - 1 >= 0 ? current - 1 : images.length - 1);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (onClickDeleteConfirm && deleteable) {
+      onClickDeleteConfirm(current);
+    }
+  };
+
+  const isCarouselEmpty = images.length === 0;
+
+  return (
+    <ImageListWrapper width={width} height={height}>
+      {isCarouselEmpty && <PhotoIcon />}
+      {!isCarouselEmpty && (
+        <>
+          {deleteable && <DeleteModal onClickConfirm={handleDeleteConfirm} />}
+          <StyledCarousel
+            autoPlay={false}
+            next={handleNextClick}
+            prev={handlePrevClick}
+            {...props}
+          >
+            {images.map((image) => (
+              <Image
+                key={image}
+                src={image}
+                alt="대체 이미지"
+                width={width || 200}
+                height={height || 140}
+              />
+            ))}
+          </StyledCarousel>
+        </>
+      )}
     </ImageListWrapper>
-  ) : (
-    <Carousel {...props}>
-      {props.images.map((image) => (
-        <Image key={image} src={image} alt="대체 이미지" />
-      ))}
-    </Carousel>
   );
 }
 

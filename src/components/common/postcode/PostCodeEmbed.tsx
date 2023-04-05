@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { DaumPostcodeEmbedProps } from 'react-daum-postcode';
 import loadPostcode, {
   PostcodeConstructor,
-  PostcodeOptions,
   postcodeScriptUrl,
 } from 'react-daum-postcode/lib/loadPostcode';
+import { PostcodeEmbedProps } from './type';
 
 // -------------------Types---------------
 /**
@@ -12,9 +11,6 @@ import loadPostcode, {
  * autoClose 를 통한다면, 내부 ref 를 통해 직접 DOM 을 제거하는 ref.current.remove() 를 호출하는데,
  * 이게 현재 React 에서는 동작하지 않음
  */
-interface PostcodeEmbedProps extends Omit<DaumPostcodeEmbedProps, 'autoClose'> {
-  options?: PostcodeOptions;
-}
 
 // -------------------Styles---------------
 const defaultStyle = {
