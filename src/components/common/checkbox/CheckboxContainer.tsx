@@ -1,6 +1,9 @@
-import { Checkbox as MuiCheckbox, FormControlLabel } from '@mui/material';
+import {
+  CheckboxProps,
+  FormControlLabel,
+  Checkbox as MuiCheckbox,
+} from '@mui/material';
 import styled from '@emotion/styled';
-import { CheckboxFormProps } from './type';
 // ----------------------------Styles--------------------------
 const CheckBoxWrapper = styled.div<{ isChecked: boolean }>`
   padding: 20px;
@@ -12,37 +15,39 @@ const CheckBoxWrapper = styled.div<{ isChecked: boolean }>`
   align-items: center;
   gap: 10px;
 `;
+
 const StyledCheckbox = styled(MuiCheckbox)`
   color: #6750a4 !important;
 `;
 
-const StyledLabel = styled.span`
+const StyledText = styled.span`
   font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 18px;
 `;
 
+interface CheckboxContainerProps extends CheckboxProps {
+  text: string;
+}
+
 /**
- * Label 과 같이 사용하는 Checkbox
+ * Form 을 사용하지 않는 Checkbox
  * @param param0
  * @returns
  */
-function CheckboxForm({
-  label,
+function CheckboxContainer({
   checked,
-  register,
-  formKey,
+  text,
   ...props
-}: CheckboxFormProps) {
+}: CheckboxContainerProps) {
   return (
     <CheckBoxWrapper isChecked={checked || false}>
       <FormControlLabel
-        value={label}
-        label={<StyledLabel>{label}</StyledLabel>}
+        value={text}
+        label={<StyledText>{text}</StyledText>}
         control={<StyledCheckbox {...props} checked={checked} />}
-        {...register(formKey)}
       />
     </CheckBoxWrapper>
   );
 }
-export default CheckboxForm;
+export default CheckboxContainer;

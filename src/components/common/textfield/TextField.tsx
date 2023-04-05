@@ -11,8 +11,8 @@ import { TextFieldProps } from './type';
 const EssentialStar = styled.span`
   color: red;
 `;
-const StyledOutlinedInput = styled(OutlinedInput)<{ height?: number }>`
-  height: ${({ height }) => height || 48}px;
+const StyledOutlinedInput = styled(OutlinedInput)`
+  height: 48px;
 
   & > fieldset > legend > span {
     padding: 0;

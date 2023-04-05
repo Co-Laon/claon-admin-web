@@ -2,18 +2,35 @@ import ProfileButton from '@/components/common/profile/ProfileButton';
 import styled from '@emotion/styled';
 import TextField from '@/components/common/textfield/TextField';
 import { useForm } from 'react-hook-form';
-import { useCallback, useRef, useState } from 'react';
-import { Box, Button, InputAdornment, Modal } from '@mui/material';
+import {
+  ChangeEvent,
+  MouseEvent,
+  MouseEventHandler,
+  RefObject,
+  SyntheticEvent,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
+import { Button } from '@mui/material';
 import SearchIcon from '@/assets/SearchIcon';
-import PlusIcon from '@/assets/PlusIcon';
 import PostCodeModal from '@/components/common/postcode/PostCodeModal';
 import ListForm from '@/components/register/ListForm';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
-import ImageModalEmbed from '@/components/register/manager/ImageModalEmbed';
 import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
 import RegisterLayout from '@/components/register/RegisterLayout';
 import OperatingTimeTableForm from '@/components/register/manager/OperatingTimeTableForm';
 import ChipForm from '@/components/register/manager/ChipForm';
+import AddIcon from '@/assets/AddIcon';
+import { ColorResult } from 'react-color';
+import HoldDifficultyFormItem from '@/components/register/manager/HoldDifficultyFormItem';
+import WallInfoFormItem from '@/components/register/manager/WallInfoFormItem';
+import FeeInfoFormItem from '@/components/register/manager/FeeInfoFormItem';
+import ImageModal from '@/components/register/manager/ImageModal';
+import ColorPickerModal from '@/components/register/manager/ColorPickerModal';
+import HoldTypeSelect from '@/components/register/manager/HoldTypeSelect';
+import HoldColorFormItem from '@/components/register/manager/HoldColorFormItem';
+import SearchCenterModal from '@/components/register/manager/SearchCenterModal';
 
 const ComponentWrapper = styled.div`
   width: 100%;
@@ -27,7 +44,6 @@ const Title = styled.p`
   font-size: 20px;
   line-height: 30px;
   font-weight: 700;
-  margin-bottom: 36px;
 `;
 
 const NormalText = styled.p`
@@ -77,26 +93,6 @@ const StyledButton = styled(Button)`
   border-radius: 8px;
 `;
 
-const ChipContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: flex-end;
-  padding: 0px;
-  gap: 8px;
-`;
-
-const StyledChipButton = styled.div`
-  background-color: #d0bcff;
-  font-size: 16px;
-  line-height: 24px;
-  weight: 400;
-  color: black;
-  border: none;
-  border-radius: 8px;
-  padding: 0px 10px;
-`;
-
 const StyledPlusButton = styled.button`
   background-color: #d0bcff;
   width: 24px;
@@ -106,68 +102,12 @@ const StyledPlusButton = styled.button`
   padding: 0;
 `;
 
-const TimeTableInputFormatContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-weight: 400;
-  padding: 0px;
-  gap: 10px;
-`;
-
-const ListFormItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  padding: 15px;
-  isolation: isolate;
-
-  width: 326px;
-
-  background: linear-gradient(
-      0deg,
-      rgba(103, 80, 164, 0.12),
-      rgba(103, 80, 164, 0.12)
-    ),
-    #fffbfe;
-  border-radius: 8px;
-
-  flex: none;
-  order: 1;
-  flex-grow: 1;
-`;
-
-const ListFormPriceInput = styled(TextField)`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0px;
-
-  width: 96px;
-  height: 36px;
-
-  border-radius: 4px 4px 0px 0px;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-`;
-
-const centerImageModalStyle = {
-  position: 'absolute' as const,
-  width: '500px',
-  height: '500px',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  background:
-    'linear-gradient(0deg, rgba(113, 90, 174, 0.11), rgba(113, 90, 174, 0.11)), #FFFBFE',
-};
-
 // --------------------interface--------------------
+
+enum HoldType {
+  COLOR,
+  OTHER,
+}
 
 interface RegularHoliday {
   day: string;
@@ -175,7 +115,7 @@ interface RegularHoliday {
   endTime: string;
 }
 
-interface Charge {
+interface Fee {
   name: string;
   price: number;
   count: number;
@@ -194,33 +134,6 @@ interface OtherHold {
 interface ClimbInfo {
   type: '볼더링' | '지구력';
   name: string;
-}
-
-interface Step2FormProps {
-  centerName: string;
-  centerAddress: string;
-  centerDetailAddress: string;
-  centerPhone: string;
-  centerHomepage: string;
-  centerInstagram: string;
-  centerYoutube: string;
-  centerImage: string;
-  centerRegularHoliday: RegularHoliday[];
-  centerService:
-    | '유료주차'
-    | '무료주차'
-    | '와이파이'
-    | '사물함'
-    | '탈의실'
-    | '휴게실'
-    | '운동복'
-    | '수건'
-    | '스트레칭 존'
-    | '트레이닝 존'[];
-  centerCharge: Charge[];
-  holdType: '색' | '다르게';
-  holdDifficulties: ColoredHold[] | OtherHold[];
-  climbInfo: ClimbInfo[];
 }
 
 interface CenterSignUpFormProps {
@@ -271,32 +184,33 @@ interface CenterSignUpFormProps {
   proof_list: ['string'];
 }
 
-function RegisterManagerPage() {
-  const name = '암장 관리자';
-  const utilityList = [
-    '유료주차',
-    '무료주차',
-    '와이파이',
-    '사물함',
-    '탈의실',
-    '휴게실',
-    '운동복',
-    '수건',
-    '스트레칭 존',
-    '트레이닝 존',
-  ];
-  const chargeList = [1, 2, 3];
-  const chargeImageList = [1, 2, 3];
-  const imageList = [1, 2, 3];
+// --------------------example data--------------------
+const name = '암장 관리자';
 
+const utilityList = [
+  '유료주차',
+  '무료주차',
+  '와이파이',
+  '사물함',
+  '탈의실',
+  '휴게실',
+  '운동복',
+  '수건',
+  '스트레칭 존',
+  '트레이닝 존',
+];
+
+function RegisterManagerPage() {
   const {
     register,
     setValue,
-    watch,
+    getValues,
     handleSubmit,
     formState: { errors },
     unregister,
   } = useForm();
+
+  const [holdType, setHoldType] = useState<HoldType>(HoldType.COLOR);
 
   const [centerSearchModalOpen, setCenterSearchModalOpen] = useState(false);
 
@@ -304,23 +218,56 @@ function RegisterManagerPage() {
 
   const [centerImageModalOpen, setCenterImageModalOpen] = useState(false);
 
-  const [holdType, setHoldType] = useState<'색' | '다르게'>('색');
+  const [centerImageList, setCenterImageList] = useState<string[]>([]);
 
-  const postcodeTextFieldRef = useRef<HTMLInputElement>(null);
+  const [feeImageModalOpen, setFeeImageModalOpen] = useState(false);
 
-  const onSubmit = useCallback((data: any) => {
-    console.dir(data);
-  }, []);
+  const [feeImageList, setFeeImageList] = useState<string[]>([]);
+
+  const [colorPickerModalOpen, setColorPickerModalOpen] = useState(false);
+
+  // 이름 검색 input ref
+  const nameTextFieldRef = useRef<HTMLInputElement>();
+
+  // 우편번호 검색 input ref
+  const postcodeTextFieldRef = useRef<HTMLInputElement>();
+
+  // 홀드 난이도 색 input formKey
+  const [holdColorTextFieldFormKey, setHoldColorTextFieldFormKey] =
+    useState<string>('');
+
+  const onSubmit = useCallback(() => {}, []);
 
   const handleProfileImageChange = useCallback(() => {}, []);
 
+  // 기존 암장 검색 모달 관련 핸들러
+  const handleCenterButtonClick = useCallback(() => {
+    console.dir(getValues());
+    setCenterSearchModalOpen(true);
+  }, [getValues]);
+
+  const handleCenterSearchModalClose = useCallback(() => {
+    setCenterSearchModalOpen(false);
+  }, []);
+
+  const handleCenterSearchModalComplete = useCallback((center?: any) => {
+    if (nameTextFieldRef.current && center) {
+      nameTextFieldRef.current.value = center.name;
+    }
+    if (postcodeTextFieldRef.current && center) {
+      postcodeTextFieldRef.current.value = center.address;
+    }
+    setCenterSearchModalOpen(false);
+  }, []);
+
+  // 우편번호 검색 모달 관련 핸들러
   const handlePostInputClick = useCallback(() => {
     setPostModalOpen(true);
   }, []);
 
-  const handleCenterButtonClick = useCallback(() => {
-    console.dir(watch());
-  }, [watch]);
+  const handlePostModalClose = useCallback(() => {
+    setPostModalOpen(false);
+  }, []);
 
   const handlePostModalComplete = useCallback((address?: string) => {
     if (postcodeTextFieldRef.current && address) {
@@ -329,25 +276,77 @@ function RegisterManagerPage() {
     setPostModalOpen(false);
   }, []);
 
-  const handlePostModalClose = useCallback(() => {
-    setPostModalOpen(false);
-  }, []);
-
+  // 암장 이미지 모달 핸들러
   const handleCenterImageAddButtonClick = useCallback(() => {
     setCenterImageModalOpen(true);
   }, []);
 
-  const handleImageModalClose = useCallback(() => {
+  const handleCenterImageModalClose = useCallback(() => {
     setCenterImageModalOpen(false);
   }, []);
 
-  const handleImageModalComplete = useCallback(() => {}, []);
+  const handleCenterImageModalComplete = useCallback(
+    (centerImages: string[]) => {
+      setValue('image_list', centerImages);
+      setCenterImageList(centerImages);
+    },
+    [setValue]
+  );
+
+  // 요금 이미지 추가 모달 핸들러
+  const handleFeeImageAddButtonClick = useCallback(() => {
+    setFeeImageModalOpen(true);
+  }, []);
+
+  const handleFeeImageModalClose = useCallback(() => {
+    setFeeImageModalOpen(false);
+  }, []);
+
+  const handleFeeImageModalComplete = useCallback(
+    (feeImages: string[]) => {
+      setValue('fee_image_list', feeImages);
+      setFeeImageList(feeImages);
+    },
+    [setValue]
+  );
+
+  // 홀드 타입 변경 핸들러
+  const handleHoldTypeChange = useCallback(
+    (value: number) => {
+      setHoldType(value);
+      unregister('hold_list');
+    },
+    [unregister]
+  );
+
+  // color picker 핸들러
+  const handleColorPickerInputClick = useCallback((key: string) => {
+    setHoldColorTextFieldFormKey(key);
+    setColorPickerModalOpen(true);
+  }, []);
+
+  const handleColorPickerModalClose = useCallback(() => {
+    setColorPickerModalOpen(false);
+  }, []);
+
+  const handleColorPickerModalComplete = useCallback(
+    (color: ColorResult) => {
+      setValue(holdColorTextFieldFormKey, color.hex);
+      setColorPickerModalOpen(false);
+    },
+    [setValue, holdColorTextFieldFormKey]
+  );
+
+  // 홀드 난이도 색 변경 값
+  const isHoldSetColor = holdType === 0;
 
   return (
     <ComponentWrapper>
       <RegisterLayout step={66}>
-        <Title>{`${name}님
-        암장을 소개해주세요.`}</Title>
+        <div>
+          <Title>{`${name}님`}</Title>
+          <Title>암장을 소개해주세요.</Title>
+        </div>
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <BetweenWrapper alignItems="end">
             <ProfileButton onChange={handleProfileImageChange} />
@@ -355,13 +354,18 @@ function RegisterManagerPage() {
               <SearchIcon width={12} height={12} /> 기존 암장
             </StyledSmallButton>
           </BetweenWrapper>
+          <SearchCenterModal
+            open={centerSearchModalOpen}
+            onClose={handleCenterSearchModalClose}
+            onComplete={handleCenterSearchModalComplete}
+          />
           <TextField
             label="이름"
             isRequire="이름을 작성해 주세요."
             placeholder="클라온"
             register={register}
             formKey="name"
-            error={errors}
+            error={errors && 'name' in errors ? errors.name : undefined}
             minLength={{
               value: 2,
               message: '이름은 2~30자 이내로 작성해 주세요.',
@@ -370,13 +374,14 @@ function RegisterManagerPage() {
               value: 30,
               message: '이름은 2~30자 이내로 작성해 주세요.',
             }}
+            inputRef={nameTextFieldRef}
           />
           <TextField
             label="주소"
             isRequire="주소를 작성해 주세요."
             register={register}
             formKey="address"
-            error={errors}
+            error={errors && 'address' in errors ? errors.address : undefined}
             onClick={handlePostInputClick}
             inputRef={postcodeTextFieldRef}
           />
@@ -389,15 +394,19 @@ function RegisterManagerPage() {
             label="상세 주소"
             register={register}
             formKey="detail_address"
-            error={errors}
+            error={
+              errors && 'detail_address' in errors
+                ? errors.detail_address
+                : undefined
+            }
           />
           <TextField
             label="전화번호"
             isRequire="전화번호를 작성해 주세요."
-            placeholder="010-1234-5678"
+            placeholder="02-0000-0000"
             register={register}
             formKey="tel"
-            error={errors}
+            error={errors && 'tel' in errors ? errors.tel : undefined}
             pattern={{
               value: /^\d{2,3}-\d{3,4}-\d{4}$/,
               message: '올바른 전화번호를 입력해 주세요.',
@@ -405,9 +414,10 @@ function RegisterManagerPage() {
           />
           <TextField
             label="웹"
+            placeholder="admin.claon.life"
             register={register}
             formKey="web_url"
-            error={errors}
+            error={errors && 'web_url' in errors ? errors.web_url : undefined}
             pattern={{
               value:
                 /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
@@ -416,9 +426,14 @@ function RegisterManagerPage() {
           />
           <TextField
             label="인스타그램 계정"
+            placeholder="claon_official"
             register={register}
             formKey="instagram_name"
-            error={errors}
+            error={
+              errors && 'instagram_name' in errors
+                ? errors.instagram_name
+                : undefined
+            }
             pattern={{
               value: /^[a-zA-Z0-9_.]*$/i,
               message: '영어, 숫자, 언더바, 마침표만 입력 가능합니다.',
@@ -434,9 +449,14 @@ function RegisterManagerPage() {
           />
           <TextField
             label="유튜브"
+            placeholder="@claon"
             register={register}
             formKey="youtube_code"
-            error={errors}
+            error={
+              errors && 'youtube_code' in errors
+                ? errors.youtube_code
+                : undefined
+            }
           />
           <BetweenWrapper alignItems="center">
             <div>
@@ -444,30 +464,23 @@ function RegisterManagerPage() {
               <SmallText>최대 10장까지 업로드 가능해요.</SmallText>
             </div>
             <StyledPlusButton onClick={handleCenterImageAddButtonClick}>
-              <PlusIcon width={12} height={12} />
+              <AddIcon width={24} height={24} />
             </StyledPlusButton>
           </BetweenWrapper>
-          <Modal
+          <ImageModal
+            title="암장"
             open={centerImageModalOpen}
-            onClose={handleImageModalClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={centerImageModalStyle}>
-              <ImageModalEmbed
-                title="암장"
-                onComplete={handleImageModalComplete}
-              />
-            </Box>
-          </Modal>
-          <ImageListCarousel images={(watch('image_list'), [])} />
+            onClose={handleCenterImageModalClose}
+            onComplete={handleCenterImageModalComplete}
+          />
+          <ImageListCarousel images={centerImageList} />
           <div>
             <NormalText>정기 휴무일이 있나요?</NormalText>
             <SmallText>쉬는 날을 선택해주세요.</SmallText>
           </div>
           <OperatingTimeTableForm
             register={register}
-            setValue={setValue}
+            unregister={unregister}
             formKey="operating_time_list"
             error={errors}
           />
@@ -480,117 +493,76 @@ function RegisterManagerPage() {
             formKey="utility_list"
             setValue={setValue}
           />
-          <div>
-            <NormalText>이용요금을 알려주세요.</NormalText>
-            <SmallText>최대 5장까지 업로드 가능해요.</SmallText>
-          </div>
-          <ImageListCarousel images={(watch('fee_image_list'), [])} />
+          <BetweenWrapper alignItems="center">
+            <div>
+              <NormalText>이용요금을 알려주세요.</NormalText>
+              <SmallText>최대 5장까지 업로드 가능해요.</SmallText>
+            </div>
+            <StyledPlusButton onClick={handleFeeImageAddButtonClick}>
+              <AddIcon width={24} height={24} />
+            </StyledPlusButton>
+          </BetweenWrapper>
+          <ImageModal
+            title="암장 이용요금"
+            open={feeImageModalOpen}
+            onClose={handleFeeImageModalClose}
+            onComplete={handleFeeImageModalComplete}
+          />
+          <ImageListCarousel images={feeImageList} />
           <ListForm
             title={<NormalText>이용요금을 항목을 입력해주세요.</NormalText>}
-            items={
-              <ListFormItemContainer>
-                <TextField
-                  label="요금명"
-                  isRequire="요금명을 작성해 주세요."
-                  register={register}
-                  formKey="name"
-                  error={errors}
-                />
-                <div>
-                  <TextField
-                    label="가격"
-                    isRequire=""
-                    defaultValue="14000"
-                    register={register}
-                    formKey="price"
-                    error={errors}
-                    sx={{ width: '96px', height: '36px', marginRight: '5px' }}
-                    endAdornment={
-                      <InputAdornment position="end">원</InputAdornment>
-                    }
-                  />
-                  <TextField
-                    label="횟수"
-                    isRequire=""
-                    defaultValue="1"
-                    register={register}
-                    formKey="count"
-                    error={errors}
-                    sx={{ width: '60px', height: '36px' }}
-                    endAdornment={
-                      <InputAdornment position="end">회</InputAdornment>
-                    }
-                  />
-                </div>
-              </ListFormItemContainer>
-            }
+            items={<FeeInfoFormItem />}
             formName="fee_list"
             register={register}
             unregister={unregister}
           />
-          <CheckboxGroupInput
+          <HoldTypeSelect
             title={<NormalText>홀드 난이도를 어떻게 표현하나요?</NormalText>}
             checkboxes={['색으로 표현해요', '다르게 표현해요']}
-            register={register}
-            formKey="holdType"
+            defaultValue={holdType}
+            onInputChange={handleHoldTypeChange}
+          />
+          {isHoldSetColor && (
+            <ListForm
+              title={
+                <div>
+                  <NormalText>홀드 난이도를 알려주세요.</NormalText>
+                  <SmallText>쉬운 난이도를 먼저 입력해주세요.</SmallText>
+                </div>
+              }
+              items={
+                <HoldColorFormItem
+                  getValues={getValues}
+                  onClickTextField={handleColorPickerInputClick}
+                />
+              }
+              formName="hold_list"
+              register={register}
+              unregister={unregister}
+            />
+          )}
+          {!isHoldSetColor && (
+            <ListForm
+              title={
+                <div>
+                  <NormalText>홀드 난이도를 알려주세요.</NormalText>
+                  <SmallText>쉬운 난이도를 먼저 입력해주세요.</SmallText>
+                </div>
+              }
+              items={<HoldDifficultyFormItem />}
+              formName="hold_list"
+              register={register}
+              unregister={unregister}
+            />
+          )}
+          <ColorPickerModal
+            open={colorPickerModalOpen}
+            onClose={handleColorPickerModalClose}
+            onChangeComplete={handleColorPickerModalComplete}
           />
           <ListForm
-            title={
-              <div>
-                <NormalText>홀드 난이도를 알려주세요.</NormalText>
-                <SmallText>쉬운 난이도를 먼저 입력해주세요.</SmallText>
-              </div>
-            }
-            items={
-              <ListFormItemContainer>
-                <div>
-                  <TextField
-                    label="색"
-                    isRequire="#FFFFFF"
-                    register={register}
-                    formKey="chargePrice"
-                    error={errors}
-                    sx={{ width: '80px', height: '36px', marginRight: '5px' }}
-                  />
-                  <TextField
-                    label="홀드 이름"
-                    isRequire="1"
-                    register={register}
-                    formKey="chargeName"
-                    error={errors}
-                    sx={{ width: '210px', height: '36px' }}
-                  />
-                </div>
-              </ListFormItemContainer>
-            }
-            formName="chargeList"
-            register={register}
-            unregister={unregister}
-          />
-          <ListForm
-            items={
-              <ListFormItemContainer>
-                <div>
-                  <TextField
-                    label="유형"
-                    isRequire="14000"
-                    register={register}
-                    formKey="chargePrice"
-                    error={errors}
-                    sx={{ width: '80px', height: '36px', marginRight: '5px' }}
-                  />
-                  <TextField
-                    label="이름"
-                    isRequire="1"
-                    register={register}
-                    formKey="chargeName"
-                    error={errors}
-                    sx={{ width: '210px', height: '36px' }}
-                  />
-                </div>
-              </ListFormItemContainer>
-            }
-            formName="climbInfoList"
+            items={<WallInfoFormItem />}
+            formName="wall_list"
             register={register}
             title={
               <div>
