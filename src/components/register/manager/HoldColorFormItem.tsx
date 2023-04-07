@@ -1,12 +1,9 @@
 import styled from '@emotion/styled';
-import { useMemo, useRef } from 'react';
-import {
-  FieldErrors,
-  FieldValues,
-  UseFormGetValues,
-  UseFormRegister,
-} from 'react-hook-form';
+import { useMemo } from 'react';
+import CrayonIcon from '@/assets/CrayonIcon';
 import TextField from '../../common/textfield/TextField';
+import ColorContainer from './ColorContainer';
+import { HoldColorFormItemProps } from './type';
 
 // ------------------- Style ----------------------
 
@@ -33,7 +30,7 @@ const ListFormItemContainer = styled.div`
   flex-grow: 1;
 `;
 
-const StyledColorTextField = styled(TextField)<{ background?: string }>`
+const StyledColorContainer = styled(ColorContainer)<{ background?: string }>`
   width: 80px;
   height: 36px;
   margin-right: 5px;
@@ -48,15 +45,6 @@ const StyledNameTextField = styled(TextField)`
 
 // ------------------- Component ----------------------
 
-interface HoldDifficultyFormItemProps {
-  getValues?: UseFormGetValues<FieldValues>;
-  register?: UseFormRegister<FieldValues>;
-  idx?: number;
-  formKey?: string;
-  error?: FieldErrors<FieldValues>;
-  onClickTextField?: (key: string) => void;
-}
-
 function HoldColorFormItem({
   getValues,
   register,
@@ -64,9 +52,7 @@ function HoldColorFormItem({
   formKey,
   error,
   onClickTextField,
-}: HoldDifficultyFormItemProps) {
-  const textFieldRef = useRef();
-
+}: HoldColorFormItemProps) {
   const errors = useMemo(() => {
     if (idx && error) {
       return error[idx];
@@ -84,20 +70,23 @@ function HoldColorFormItem({
     return (
       <ListFormItemContainer>
         <div>
-          <StyledColorTextField
-            inputRef={textFieldRef}
+          <StyledColorContainer
             label="색"
             isRequire
-            register={register}
-            formKey={`${formKey}.${idx}.difficulty`}
-            background={
-              getValues ? getValues(`${formKey}.${idx}.difficulty`) : undefined
-            }
+            {...register(`${formKey}.${idx}.difficulty`)}
             onClick={handleTextFieldClick}
             error={
               errors && 'difficulty' in errors ? errors.difficulty : undefined
             }
-          />
+          >
+            <CrayonIcon
+              color={
+                getValues
+                  ? getValues(`${formKey}.${idx}.difficulty`)
+                  : undefined
+              }
+            />
+          </StyledColorContainer>
           <StyledNameTextField
             label="홀드 이름"
             isRequire

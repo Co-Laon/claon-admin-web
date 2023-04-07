@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 import { Box, Modal } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import CrossIcon from '@/assets/CrossIcon';
+import { DeleteModalProps } from './type';
 
-const StyledDeleteButton = styled.div`
+const StyledDeleteButton = styled(CrossIcon)`
   position: absolute;
   width: 24px;
   height: 24px;
-  right: 2px;
-  top: 2px;
+  right: 14px;
+  top: 14px;
   border-radius: 50%;
   background: #808080;
   z-index: 10;
@@ -107,6 +109,8 @@ const StyledDeleteModalConfirmButton = styled.div`
   padding: 0px;
 
   width: 50%;
+
+  color: red;
 `;
 
 const StyledDeleteModalCancelButton = styled.div`
@@ -118,11 +122,6 @@ const StyledDeleteModalCancelButton = styled.div`
 
   width: 50%;
 `;
-
-interface DeleteModalProps {
-  onClickConfirm?: () => void;
-  onClickCancel?: () => void;
-}
 
 function DeleteModal({ onClickConfirm, onClickCancel }: DeleteModalProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);

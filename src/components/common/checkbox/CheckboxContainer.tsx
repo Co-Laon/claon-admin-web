@@ -1,10 +1,9 @@
-import {
-  CheckboxProps,
-  FormControlLabel,
-  Checkbox as MuiCheckbox,
-} from '@mui/material';
+import { FormControlLabel, Checkbox as MuiCheckbox } from '@mui/material';
 import styled from '@emotion/styled';
+import { CheckboxContainerProps } from './type';
+
 // ----------------------------Styles--------------------------
+
 const CheckBoxWrapper = styled.div<{ isChecked: boolean }>`
   padding: 20px;
   background-color: ${({ isChecked }) =>
@@ -26,14 +25,12 @@ const StyledText = styled.span`
   line-height: 18px;
 `;
 
-interface CheckboxContainerProps extends CheckboxProps {
-  text: string;
-}
-
 /**
- * Form 을 사용하지 않는 Checkbox
- * @param param0
- * @returns
+ * Form 을 사용하지 않는 CheckboxForm 형태의 컴포넌트
+ *
+ * @param param0.checked 체크박스 체크 여부
+ * @param param0.text 체크박스 안에 표시될 텍스트
+ * @returns 체크 할 수 있는 컨테이너 컴포넌트
  */
 function CheckboxContainer({
   checked,

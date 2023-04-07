@@ -2,6 +2,9 @@ import styled from '@emotion/styled';
 import { Box, Modal } from '@mui/material';
 import React, { useCallback } from 'react';
 import { ColorResult, CompactPicker } from 'react-color';
+import { ColorPickerModalProps } from './type';
+
+// -----------------------------Styles----------------------
 
 const StyledColorPickerModalBox = styled(Box)`
   position: absolute;
@@ -15,12 +18,6 @@ const StyledColorPickerModalBox = styled(Box)`
     ),
     #fffbfe;
 `;
-
-interface ColorPickerModalProps {
-  open: boolean;
-  onClose: () => void;
-  onChangeComplete: (color: ColorResult) => void;
-}
 
 function ColorPickerModal({
   open,

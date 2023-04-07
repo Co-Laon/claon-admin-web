@@ -36,6 +36,7 @@
     "react-hook-form": "^7.43.8",
     "react-material-ui-carousel": "^3.4.2",
     "react-query": "^3.39.3",
+    "react-responsive-carousel": "^3.2.23",
     "recoil": "^0.7.7",
     "typescript": "5.0.2",
     "uuid": "^9.0.0"

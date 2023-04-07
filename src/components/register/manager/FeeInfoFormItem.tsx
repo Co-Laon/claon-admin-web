@@ -2,7 +2,9 @@ import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
 import { InputAdornment } from '@mui/material';
 import React, { useMemo } from 'react';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { FeeInfoFormItemProps } from './type';
+
+// ------------------- Style ----------------------
 
 const ListFormItemContainer = styled.div`
   display: flex;
@@ -44,13 +46,6 @@ const StyledFeeCountTextField = styled(TextField)`
   width: 60px;
   height: 36px;
 `;
-
-interface FeeInfoFormItemProps {
-  register?: UseFormRegister<FieldValues>;
-  idx?: number;
-  formKey?: string;
-  error?: FieldErrors<FieldValues>;
-}
 
 function FeeInfoFormItem({
   register,

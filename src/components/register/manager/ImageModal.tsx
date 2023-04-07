@@ -3,6 +3,9 @@ import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 import ImageUpload from '@/components/common/file/ImageUpload';
 import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
+import { ImageModalProps } from './type';
+
+// -------------------Styles----------------
 
 const StyledImageModalBox = styled(Box)`
   position: absolute;
@@ -76,17 +79,10 @@ const ImageModalEmbedImageWrapper = styled.div`
 `;
 
 const imageListData = [
-  'https://via.placeholder.com/150',
-  'https://via.placeholder.com/300',
-  'https://via.placeholder.com/360',
+  'https://via.placeholder.com/150x200',
+  'https://via.placeholder.com/300x100',
+  'https://via.placeholder.com/360x360',
 ];
-
-interface ImageModalProps {
-  title: string;
-  open: boolean;
-  onClose: () => void;
-  onComplete: (list: string[]) => void;
-}
 
 function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
   const [imageList, setImageList] = React.useState<string[]>([]);

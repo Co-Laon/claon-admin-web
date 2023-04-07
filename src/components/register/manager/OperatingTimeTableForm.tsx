@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import TextField from '@/components/common/textfield/TextField';
 import React, { useCallback, useMemo } from 'react';
-import { WeekTimeTableFormProps } from './type';
+import { OperatingTimeTableFormProps } from './type';
 
 const NormalText = styled.p`
   font-size: 16px;
@@ -22,7 +22,7 @@ const StyledChipButton = styled.div<{ isSelected: boolean }>`
   background-color: ${({ isSelected }) => (isSelected ? '#d0bcff' : '#E6E1E5')};
   font-size: 16px;
   line-height: 24px;
-  weight: 400;
+  font-weight: 400;
   color: black;
   border: none;
   border-radius: 8px;
@@ -74,7 +74,7 @@ function OperatingTimeTableForm({
   unregister,
   formKey,
   error,
-}: WeekTimeTableFormProps) {
+}: OperatingTimeTableFormProps) {
   const [selected, setSelected] = React.useState<boolean[]>([
     false,
     false,

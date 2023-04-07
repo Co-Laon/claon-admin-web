@@ -1,10 +1,10 @@
 import { SVGProps } from 'react';
 
-function CloseIcon({ width, height, ...props }: SVGProps<SVGSVGElement>) {
+function CloseIcon({ ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width={width || 14}
-      height={height || 14}
+      width={14}
+      height={14}
       viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

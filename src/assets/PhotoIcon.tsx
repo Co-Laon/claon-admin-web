@@ -1,10 +1,10 @@
 import React, { SVGProps } from 'react';
 
-function PhotoIcon({ width, height, ...props }: SVGProps<SVGSVGElement>) {
+function PhotoIcon({ ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width={width || 72}
-      height={width || 72}
+      width={72}
+      height={72}
       viewBox="0 0 72 72"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

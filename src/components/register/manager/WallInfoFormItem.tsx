@@ -2,7 +2,9 @@ import SelectBox from '@/components/common/selectbox/SelectBox';
 import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
 import React, { useMemo } from 'react';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { WallInfoFormItemProps } from './type';
+
+// ------------------- Style ----------------------
 
 const ListFormItemContainer = styled.div`
   display: flex;
@@ -37,13 +39,6 @@ const StyledTextField = styled(TextField)`
   width: 210px;
   height: 36px;
 `;
-
-interface WallInfoFormItemProps {
-  register?: UseFormRegister<FieldValues>;
-  idx?: number;
-  formKey?: string;
-  error?: FieldErrors<FieldValues>;
-}
 
 function WallInfoFormItem({
   register,
