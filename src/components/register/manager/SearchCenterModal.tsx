@@ -4,6 +4,8 @@ import ParkingIcon from '@/assets/ParkingIcon';
 import styled from '@emotion/styled';
 import { Box, Modal } from '@mui/material';
 import React, { useCallback, useState } from 'react';
+import { Center } from '@/features/common/types/center';
+import { SearchCenterModalProps } from './type';
 
 const StyledSearchCenterBox = styled(Box)`
   display: flex;
@@ -119,11 +121,6 @@ const StyledSearchResultAddress = styled.p`
   line-height: 20px;
 `;
 
-interface Center {
-  name: string;
-  address: string;
-}
-
 interface SearchResultItemProps {
   center: Center;
   onSelect: (center: Center) => void;
@@ -154,12 +151,6 @@ const resultData: Center[] = [
     address: '테스트',
   },
 ];
-
-interface SearchCenterModalProps {
-  open: boolean;
-  onClose: () => void;
-  onComplete: () => void;
-}
 
 function SearchCenterModal({
   open,

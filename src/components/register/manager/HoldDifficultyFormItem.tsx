@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useMemo } from 'react';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import TextField from '../../common/textfield/TextField';
+import { HoldDifficultyFormItemProps } from './type';
 
 // ------------------- Style ----------------------
 
@@ -41,14 +41,6 @@ const StyledNameTextField = styled(TextField)`
 `;
 
 // ------------------- Component ----------------------
-
-interface HoldDifficultyFormItemProps {
-  register?: UseFormRegister<FieldValues>;
-  idx?: number;
-  formKey?: string;
-  error?: FieldErrors<FieldValues>;
-  onClickTextField?: (key: string) => void;
-}
 
 function HoldDifficultyFormItem({
   register,

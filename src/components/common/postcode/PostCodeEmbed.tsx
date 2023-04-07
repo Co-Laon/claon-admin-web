@@ -29,7 +29,18 @@ const defaultErrorMessage = (
 );
 
 /**
- * PostcodeEmbed 컴포넌트
+ * PostcodeEmbed 컴포넌트 function형으로 변경한 컴포넌트
+ *
+ * @param param0.onComplete - 우편번호 검색 완료시 실행되는 함수
+ * @param param0.onClose - 우편번호 검색창이 닫힐 때 실행되는 함수
+ * @param param0.onSearch - 우편번호 검색창에서 검색 버튼을 눌렀을 때 실행되는 함수
+ * @param param0.className - 우편번호 검색창의 className
+ * @param param0.style - 우편번호 검색창의 style
+ * @param param0.defaultQuery - 우편번호 검색창의 기본 검색어
+ * @param param0.errorMessage - 우편번호 검색창이 에러가 발생했을 때 보여줄 메시지
+ * @param param0.scriptUrl - 우편번호 검색창을 불러올 스크립트 URL
+ * @param param0.options - 우편번호 검색창의 옵션
+ * @returns 우편번호 검색창의 함수형 컴포넌트
  */
 function PostCodeEmbed({
   onComplete,

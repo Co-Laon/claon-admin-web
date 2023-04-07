@@ -8,3 +8,7 @@ export interface CheckboxFormProps extends MuiCheckboxProps {
   fontSize?: string;
   fontWeight?: string;
 }
+
+export interface CheckboxContainerProps extends MuiCheckboxProps {
+  text: string;
+}

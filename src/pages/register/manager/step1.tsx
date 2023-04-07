@@ -2,21 +2,11 @@ import ProfileButton from '@/components/common/profile/ProfileButton';
 import styled from '@emotion/styled';
 import TextField from '@/components/common/textfield/TextField';
 import { useForm } from 'react-hook-form';
-import {
-  ChangeEvent,
-  MouseEvent,
-  MouseEventHandler,
-  RefObject,
-  SyntheticEvent,
-  useCallback,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Button } from '@mui/material';
 import SearchIcon from '@/assets/SearchIcon';
 import PostCodeModal from '@/components/common/postcode/PostCodeModal';
 import ListForm from '@/components/register/ListForm';
-import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
 import RegisterLayout from '@/components/register/RegisterLayout';
 import OperatingTimeTableForm from '@/components/register/manager/OperatingTimeTableForm';
@@ -31,6 +21,7 @@ import ColorPickerModal from '@/components/register/manager/ColorPickerModal';
 import HoldTypeSelect from '@/components/register/manager/HoldTypeSelect';
 import HoldColorFormItem from '@/components/register/manager/HoldColorFormItem';
 import SearchCenterModal from '@/components/register/manager/SearchCenterModal';
+import { Center } from '@/features/common/types/center';
 
 const ComponentWrapper = styled.div`
   width: 100%;
@@ -109,81 +100,6 @@ enum HoldType {
   OTHER,
 }
 
-interface RegularHoliday {
-  day: string;
-  startTime: string;
-  endTime: string;
-}
-
-interface Fee {
-  name: string;
-  price: number;
-  count: number;
-}
-
-interface ColoredHold {
-  color: string;
-  holdName: string;
-}
-
-interface OtherHold {
-  difficulty: string;
-  holdName: string;
-}
-
-interface ClimbInfo {
-  type: '볼더링' | '지구력';
-  name: string;
-}
-
-interface CenterSignUpFormProps {
-  profile: {
-    profile_image: 'string';
-    nickname: 'string';
-    email: 'user@example.com';
-    instagram_nickname: 'string';
-    role: 'lector';
-  };
-  profile_image: 'string';
-  name: 'string';
-  address: 'string';
-  detail_address: 'string';
-  tel: 'string';
-  web_url: 'string';
-  instagram_name: 'string';
-  youtube_code: 'string';
-  image_list: ['string'];
-  utility_list: ['string'];
-  fee_image_list: ['string'];
-  operating_time_list: [
-    {
-      day_of_week: 'string';
-      start_time: 'string';
-      end_time: 'string';
-    }
-  ];
-  fee_list: [
-    {
-      name: 'string';
-      price: 0;
-      count: 0;
-    }
-  ];
-  hold_list: [
-    {
-      difficulty: 'string';
-      name: 'string';
-    }
-  ];
-  wall_list: [
-    {
-      wall_type: 'endurance';
-      name: 'string';
-    }
-  ];
-  proof_list: ['string'];
-}
-
 // --------------------example data--------------------
 const name = '암장 관리자';
 
@@ -242,15 +158,14 @@ function RegisterManagerPage() {
 
   // 기존 암장 검색 모달 관련 핸들러
   const handleCenterButtonClick = useCallback(() => {
-    console.dir(getValues());
     setCenterSearchModalOpen(true);
-  }, [getValues]);
+  }, []);
 
   const handleCenterSearchModalClose = useCallback(() => {
     setCenterSearchModalOpen(false);
   }, []);
 
-  const handleCenterSearchModalComplete = useCallback((center?: any) => {
+  const handleCenterSearchModalComplete = useCallback((center: Center) => {
     if (nameTextFieldRef.current && center) {
       nameTextFieldRef.current.value = center.name;
     }
@@ -473,7 +388,11 @@ function RegisterManagerPage() {
             onClose={handleCenterImageModalClose}
             onComplete={handleCenterImageModalComplete}
           />
-          <ImageListCarousel images={centerImageList} />
+          <ImageListCarousel
+            images={centerImageList}
+            width={360}
+            height={200}
+          />
           <div>
             <NormalText>정기 휴무일이 있나요?</NormalText>
             <SmallText>쉬는 날을 선택해주세요.</SmallText>
@@ -508,7 +427,7 @@ function RegisterManagerPage() {
             onClose={handleFeeImageModalClose}
             onComplete={handleFeeImageModalComplete}
           />
-          <ImageListCarousel images={feeImageList} />
+          <ImageListCarousel images={feeImageList} width={360} />
           <ListForm
             title={<NormalText>이용요금을 항목을 입력해주세요.</NormalText>}
             items={<FeeInfoFormItem />}

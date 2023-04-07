@@ -1,16 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import CheckboxContainer from '@/components/common/checkbox/CheckboxContainer';
-
-// -------------------Types------------------
-interface HoldTypeSelectProps {
-  title: JSX.Element;
-  checkboxes: string[];
-  defaultValue?: number;
-  onInputChange?: (idx: number) => void;
-}
+import { HoldTypeSelectProps } from './type';
 
 // -------------------Styles----------------
+
 const ComponentWrapper = styled.div`
   margin-top: 12px;
 `;

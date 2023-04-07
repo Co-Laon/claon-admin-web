@@ -1,11 +1,11 @@
-import FolderPlus from '@/assets/FolderPlus';
 import { Button } from '@mui/material';
 import styled from '@emotion/styled';
 import { useCallback, useRef } from 'react';
-import { ImageUploadProps } from './type';
 import PhotoIcon from '@/assets/PhotoIcon';
+import { ImageUploadProps } from './type';
 
 // -----------------------Styles-----------------
+
 const ImageUploadWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -38,9 +38,9 @@ const StyledButton = styled(Button)`
 `;
 
 /**
- *  ImageUpload
- * @param param0
- * @returns
+ * ImageUpload
+ * @param param0.onChange - onChange event
+ * @returns 이미지 업로드 컴포넌트
  */
 function ImageUpload({ onChange }: ImageUploadProps) {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -55,7 +55,7 @@ function ImageUpload({ onChange }: ImageUploadProps) {
         type="file"
         ref={fileRef}
         onChange={onChange}
-        multiple={true}
+        multiple
       />
       <PhotoIcon />
       <StyledText>사진을 여기에 올려 놓으세요</StyledText>

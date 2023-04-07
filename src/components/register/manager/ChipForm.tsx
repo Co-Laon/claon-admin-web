@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { FieldValues, UseFormSetValue } from 'react-hook-form';
+import { ChipFormProps } from './type';
 
+// --------------------Styles---------------
 const ChipContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -22,17 +23,13 @@ const StyledChipButton = styled.div<{ isSelected: boolean }>`
   padding: 0px 10px;
 `;
 
-interface ChipFormProps {
-  items: string[];
-  formKey: string;
-  setValue: UseFormSetValue<FieldValues>;
-}
-
 /**
  * form : { formKey: [item1, item2, item3] }
  *
- * @param param0
- * @returns
+ * @param items: string[] - 선택할 아이템들
+ * @param formKey: string - form 에서 사용할 key
+ * @param setValue: UseFormSetValue<FieldValues> - react-hook-form 의 setValue
+ * @returns Chip 으로 선택 할 수 있는 form 컴포넌트
  */
 function ChipForm({ items, formKey, setValue }: ChipFormProps) {
   const [selected, setSelected] = React.useState<boolean[]>(
