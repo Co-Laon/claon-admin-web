@@ -92,15 +92,6 @@ const StyledLeftCarouselArrowIconContainer = styled.div`
   }
 `;
 
-const StyledCarouselIndicator = styled.li<{ active: boolean }>`
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: '#6750A4';
-  opacity: ${({ active }) => (active ? 1 : 0.5)};
-  margin: 0px 4px;
-`;
-
 /**
  *
  * @param param0.images 이미지 리스트
@@ -120,6 +111,8 @@ function ImageListCarousel({
 }: ImageListCarouselProps) {
   const [current, setCurrent] = React.useState(0);
 
+  const isCarouselEmpty = images.length === 0;
+
   const handleCarouselChange = (index: number) => {
     setCurrent(index);
   };
@@ -129,8 +122,6 @@ function ImageListCarousel({
       onClickDeleteConfirm(current);
     }
   };
-
-  const isCarouselEmpty = images.length === 0;
 
   return (
     <ImageListWrapper width={width} height={height}>

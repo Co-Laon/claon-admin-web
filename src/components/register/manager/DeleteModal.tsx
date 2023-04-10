@@ -10,6 +10,7 @@ const StyledDeleteButton = styled(CrossIcon)`
   height: 24px;
   right: 14px;
   top: 14px;
+  padding: 5px;
   border-radius: 50%;
   background: #808080;
   z-index: 10;
@@ -41,11 +42,10 @@ const StyledDeleteModalBox = styled(Box)`
 
 const StyledDeleteModalContentContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 10px;
 
   width: 328px;
   height: 72px;
@@ -56,6 +56,18 @@ const StyledDeleteModalContentContainer = styled.div`
   order: 0;
   align-self: stretch;
   flex-grow: 1;
+`;
+
+const StyledDeleteModalLargeText = styled.p`
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+`;
+
+const StyledDeleteModalSmallText = styled.p`
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
 `;
 
 const ModalHorizontalDivider = styled.div`
@@ -99,6 +111,8 @@ const StyledDeleteModalButtonContainer = styled.div`
   order: 2;
   align-self: stretch;
   flex-grow: 0;
+
+  cursor: pointer;
 `;
 
 const StyledDeleteModalConfirmButton = styled.div`
@@ -155,7 +169,12 @@ function DeleteModal({ onClickConfirm, onClickCancel }: DeleteModalProps) {
       >
         <StyledDeleteModalBox>
           <StyledDeleteModalContentContainer>
-            사진을 삭제할까요?
+            <StyledDeleteModalLargeText>
+              사진을 삭제할까요?
+            </StyledDeleteModalLargeText>
+            <StyledDeleteModalSmallText>
+              사진은 저장되지 않아요
+            </StyledDeleteModalSmallText>
           </StyledDeleteModalContentContainer>
           <ModalHorizontalDivider />
           <StyledDeleteModalButtonContainer>
