@@ -16,7 +16,7 @@ const StyledChipButton = styled.div<{ isSelected: boolean }>`
   background-color: ${({ isSelected }) => (isSelected ? '#d0bcff' : '#E6E1E5')};
   font-size: 16px;
   line-height: 24px;
-  weight: 400;
+  font-weight: 400;
   color: black;
   border: none;
   border-radius: 8px;
