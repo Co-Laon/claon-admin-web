@@ -56,6 +56,8 @@
         "variables": false,
         "typedefs": true
       }
-    ]
+    ],
+    // dependency 배열 의존성을 체크하지 않도록 설정
+    "react-hooks/exhaustive-deps": "off"
   }
 }
