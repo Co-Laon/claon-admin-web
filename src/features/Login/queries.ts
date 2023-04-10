@@ -3,7 +3,6 @@ import axios from 'axios';
 import { getSession, signOut, useSession } from 'next-auth/react';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { SignInRequest, SignInResponse } from '.';
 
 // 로그인 관련 쿼리키 저장소
@@ -44,11 +43,14 @@ export const useOAuthSignIn = () => {
     // 회원가입 => 이메일 파라미터 전달
     onSuccess: (res) => {
       // eslint-disable-next-line no-console
-      console.log(res);
+      const { access_token: accessToken, refresh_token: refreshToken } = res;
+      axios.defaults.headers.common['access-token'] = accessToken;
+      axios.defaults.headers.common['refresh-token'] = refreshToken;
       const registerPath = `/register?email=${res.profile?.email}`;
-      const homePath = '/';
+      const homePath = '/home';
       const nextPath = res.is_signed_up ? homePath : registerPath;
       router.push(nextPath);
+      signOut();
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
@@ -58,6 +60,7 @@ export const useOAuthSignIn = () => {
 
   return {
     signInClaon,
+    session,
     userData,
     signInClaonLoading,
   };
