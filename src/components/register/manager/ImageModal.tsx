@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 import ImageUpload from '@/components/common/file/ImageUpload';
 import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
+import CheckIcon from '@/assets/CheckIcon';
 import { ImageModalProps } from './type';
 
 // -------------------Styles----------------
@@ -22,6 +23,16 @@ const StyledImageModalBox = styled(Box)`
     #fffbfe;
 `;
 
+const StyledCheckIcon = styled(CheckIcon)`
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  right: 14px;
+  top: 14px;
+
+  cursor: pointer;
+`;
+
 const ImageModalEmbedWrapper = styled.div`
   position: relative;
   width: 500px;
@@ -29,8 +40,9 @@ const ImageModalEmbedWrapper = styled.div`
 `;
 
 const ImageModalEmbedTitleWrapper = styled.div`
+  position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 5px 4px;
@@ -78,21 +90,16 @@ const ImageModalEmbedImageWrapper = styled.div`
   padding: 0px;
 `;
 
-const imageListData = [
-  'https://via.placeholder.com/150x200',
-  'https://via.placeholder.com/300x100',
-  'https://via.placeholder.com/360x360',
-];
-
 function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
   const [imageList, setImageList] = React.useState<string[]>([]);
 
+  const isImageListEmpty = imageList.length === 0;
+
   const handleDragDropChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if (e.target.files) {
-    //   const files = Array.from(e.target.files);
-    //   setImageList(files);
-    // }
-    setImageList(imageListData);
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      setImageList(files.map((file) => URL.createObjectURL(file)));
+    }
   };
 
   const handleDeleteImage = (index: number) => {
@@ -105,10 +112,14 @@ function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
     onComplete(imageList);
   }, [onClose, onComplete, imageList]);
 
+  const handleCancel = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
   return (
     <Modal
       open={open}
-      onClose={handleComplete}
+      onClose={handleCancel}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -116,12 +127,14 @@ function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
         <ImageModalEmbedWrapper>
           <ImageModalEmbedTitleWrapper>
             {`${title} 사진 업로드`}
+            {!isImageListEmpty && <StyledCheckIcon onClick={handleComplete} />}
           </ImageModalEmbedTitleWrapper>
           <ImageModalDivider />
           <ImageModalEmbedImageWrapper>
-            {imageList.length === 0 ? (
+            {isImageListEmpty && (
               <ImageUpload onChange={handleDragDropChange} />
-            ) : (
+            )}
+            {!isImageListEmpty && (
               <ImageListCarousel
                 images={imageList}
                 deleteable

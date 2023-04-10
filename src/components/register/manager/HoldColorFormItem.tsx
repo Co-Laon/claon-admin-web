@@ -9,7 +9,7 @@ import { HoldColorFormItemProps } from './type';
 
 const ListFormItemContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: start;
   padding: 15px;
@@ -66,19 +66,21 @@ function HoldColorFormItem({
     }
   };
 
+  const isColorSelected = getValues(`${formKey}.${idx}.difficulty`);
+
   if (register && formKey && idx) {
     return (
       <ListFormItemContainer>
-        <div>
-          <StyledColorContainer
-            label="색"
-            isRequire
-            {...register(`${formKey}.${idx}.difficulty`)}
-            onClick={handleTextFieldClick}
-            error={
-              errors && 'difficulty' in errors ? errors.difficulty : undefined
-            }
-          >
+        <StyledColorContainer
+          label="색"
+          isRequire
+          {...register(`${formKey}.${idx}.difficulty`)}
+          onClick={handleTextFieldClick}
+          error={
+            errors && 'difficulty' in errors ? errors.difficulty : undefined
+          }
+        >
+          {isColorSelected && (
             <CrayonIcon
               color={
                 getValues
@@ -86,16 +88,16 @@ function HoldColorFormItem({
                   : undefined
               }
             />
-          </StyledColorContainer>
-          <StyledNameTextField
-            label="홀드 이름"
-            isRequire
-            register={register}
-            formKey={`${formKey}.${idx}.name`}
-            sx={{ width: '210px', height: '36px' }}
-            error={errors && 'name' in errors ? errors.name : undefined}
-          />
-        </div>
+          )}
+        </StyledColorContainer>
+        <StyledNameTextField
+          label="홀드 이름"
+          isRequire
+          register={register}
+          formKey={`${formKey}.${idx}.name`}
+          sx={{ width: '210px', height: '36px' }}
+          error={errors && 'name' in errors ? errors.name : undefined}
+        />
       </ListFormItemContainer>
     );
   }
