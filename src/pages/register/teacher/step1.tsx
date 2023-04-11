@@ -4,13 +4,19 @@ import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import ContestExperience from '@/components/register/ContestExperience';
 import ListForm from '@/components/register/ListForm';
 import RegisterLayout from '@/components/register/RegisterLayout';
+import { teacherStep1State } from '@/recoil/register/atom';
 import { nickanmeState } from '@/recoil/register/teacher';
+import {
+  Career as CareerType,
+  TeacherCertificate,
+  TeacherContest,
+} from '@/recoil/register/type';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import { ReactElement, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 const StyledTitle = styled.p`
   font-size: 20px;
@@ -44,12 +50,20 @@ function Step1() {
     handleSubmit,
   } = useForm();
 
+  const [step1State, setStep1State] = useRecoilState(teacherStep1State);
+
   const onFormSubmit = useCallback(
-    (data: any) => {
+    (data: { [key: string]: string | Array<string | object> }) => {
       console.log(data);
-      router.push('/register/teacher/step1');
+      setStep1State({
+        is_setter: data.is_setter[0] === '하고 있어요',
+        career_list: data.career_list as CareerType[],
+        certificate_list: data.certificate_list as TeacherCertificate[],
+        contest_list: data.contest_list as TeacherContest[],
+      });
+      router.push('/register/teacher/step2');
     },
-    [router]
+    [router, setStep1State]
   );
 
   return (

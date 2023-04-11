@@ -4,6 +4,7 @@ import { CommonStep, TeacherStep1 } from './type';
 export const commonStepState = atom<CommonStep>({
   key: 'commonStepState',
   default: {
+    profile_image: undefined,
     nickname: '',
     email: '',
     instagram_nickname: '',
@@ -16,7 +17,7 @@ export const profileState = atom<File | undefined>({
   default: undefined,
 });
 
-export const teacherSte1State = atom<TeacherStep1>({
+export const teacherStep1State = atom<TeacherStep1>({
   key: 'teacherStep1State',
   default: {
     is_setter: false,
@@ -24,4 +25,9 @@ export const teacherSte1State = atom<TeacherStep1>({
     certificate_list: [],
     career_list: [],
   },
+});
+
+export const proofState = atom<File[]>({
+  key: 'proofState',
+  default: [],
 });

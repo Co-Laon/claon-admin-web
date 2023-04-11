@@ -29,6 +29,8 @@ const StyledSecondLine = styled.div`
 const StyledName = styled(TextField)`
   height: 36px;
 
+  font-size: 12px;
+  line-height: 18px
   & > input::placeholder {
     font-size: 12px;
     font-weight: 700;
@@ -41,6 +43,8 @@ const StyledDate = styled(TextField)`
   height: 36px;
   margin-right: 4px;
 
+  font-size: 12px;
+  line-height: 18px
   & > input::placeholder {
     font-size: 12px;
     font-weight: 700;
@@ -51,6 +55,8 @@ const StyledRate = styled(TextField)`
   width: 50px;
   height: 36px;
 
+  font-size: 12px;
+  line-height: 18px
   & > input::placeholder {
     font-size: 12px;
     font-weight: 700;
@@ -64,6 +70,10 @@ function CertificationList({
   formKey,
   error,
 }: CertificationListProps) {
+  const datePattern = useMemo(
+    () => /^(d{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[1-2])$/,
+    []
+  );
   const errors = useMemo(() => {
     if (idx && error) {
       return error[idx];
@@ -86,6 +96,11 @@ function CertificationList({
                 : undefined
             }
             placeholder="2023-01-01"
+            pattern={{
+              value:
+                /^(19\d{2}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[1-2])$/,
+              message: 'yyyy-mm-dd',
+            }}
           />
 
           <StyledRate
@@ -93,9 +108,7 @@ function CertificationList({
             label="급수"
             isRequire
             register={register}
-            error={
-              errors && 'rate' in errors ? errors.acquisition_date : undefined
-            }
+            error={errors && 'rate' in errors ? errors.rate : undefined}
             placeholder="1"
           />
         </StyledFirstLine>
@@ -105,9 +118,7 @@ function CertificationList({
             label="자격명"
             isRequire
             register={register}
-            error={
-              errors && 'name' in errors ? errors.acquisition_date : undefined
-            }
+            error={errors && 'name' in errors ? errors.name : undefined}
             placeholder="스포츠 클라이밍 지도사"
           />
         </StyledSecondLine>

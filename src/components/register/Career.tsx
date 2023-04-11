@@ -25,6 +25,8 @@ const StyledStart = styled(TextField)`
   width: 84px;
   height: 36px;
   margin-right: 4px;
+  font-size: 12px;
+  line-height: 18px
 
   & > input::placeholder {
     font-size: 12px;
@@ -36,6 +38,8 @@ const StyledStart = styled(TextField)`
 const StyledEnd = styled(TextField)`
   width: 84px;
   height: 36px;
+  font-size: 12px;
+  line-height: 18px
 
   & > input::placeholder {
     font-size: 12px;
@@ -50,9 +54,12 @@ const StyledSecondLine = styled.div`
 
 const StyledName = styled(TextField)`
   height: 36px;
+  font-size: 12px;
+  line-height: 18px;
 `;
 
 function Career({ register, idx, formKey, error }: CareerProps) {
+  const datePattern = useMemo(() => /^(1\d{3}|2\d{3})-(0[1-9]|1[0-2])$/, []);
   const errors = useMemo(() => {
     if (idx && error) {
       return error[idx];
@@ -71,6 +78,10 @@ function Career({ register, idx, formKey, error }: CareerProps) {
             error={errors && 'start' in errors ? errors.start : undefined}
             isRequire
             placeholder="2023-01"
+            pattern={{
+              value: datePattern,
+              message: 'yyyy-mm',
+            }}
           />
           <StyledEnd
             formKey={`${formKey}.${idx}.end`}
@@ -79,6 +90,10 @@ function Career({ register, idx, formKey, error }: CareerProps) {
             error={errors && 'end' in errors ? errors.end : undefined}
             placeholder="2023-01"
             isRequire
+            pattern={{
+              value: datePattern,
+              message: 'yyyy-mm',
+            }}
           />
         </StyeldFirstLine>
         <StyledSecondLine>

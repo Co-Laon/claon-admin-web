@@ -58,6 +58,7 @@ function RegisterMainPage() {
         email: data.email as string,
         instagram_nickname: data.instagram as string,
         role: 'lector',
+        profile_image: undefined,
       });
       if (data.type[0] === '강사') router.push('/register/teacher/step1');
       else if (data.type[0] === '암장 관리자')

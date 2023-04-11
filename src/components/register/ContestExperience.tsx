@@ -22,6 +22,8 @@ const StyledContainer = styled.div`
 const StyledYear = styled(TextField)`
   width: 60px;
   height: 36px;
+  font-size: 12px;
+  line-height: 18px
 
   & > input::placeholder {
     font-size: 12px;
@@ -32,6 +34,8 @@ const StyledYear = styled(TextField)`
 
 const StyledContestName = styled(TextField)`
   height: 36px;
+  font-size: 12px;
+  line-height: 18px
   & > input::placeholder {
     font-size: 12px;
     font-weight: 700;
@@ -52,6 +56,8 @@ const StyledSecond = styled.div`
 
 const StyledPrize = styled(TextField)`
   height: 36px;
+  font-size: 12px;
+  line-height: 18px
 
   & > input::placeholder {
     font-size: 12px;
@@ -66,6 +72,11 @@ function ContestExperience({
   formKey,
   error,
 }: ContestExperienceProps) {
+  // eslint-disable-next-line
+  const yearPattern = `(197[6-9]|198\d|199\d|200\d|201\d|202[0-${new Date()
+    .getFullYear()
+    .toString()
+    .substring(-1)}])`;
   const errors = useMemo(() => {
     if (idx && error) {
       return error[idx];
@@ -83,6 +94,10 @@ function ContestExperience({
             formKey={`${formKey}.${idx}.year`}
             placeholder={new Date().getFullYear().toString()}
             error={errors && 'year' in errors ? errors.year : undefined}
+            pattern={{
+              value: new RegExp(yearPattern),
+              message: '1976~',
+            }}
           />
           <StyledContestName
             label="대회명"
