@@ -7,9 +7,15 @@ import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import { axiosConfig } from '@/utils/config';
 import { SessionProvider } from 'next-auth/react';
+import initMockAPI from '@/mocks';
 
 // axios 디폴트 설정 적용
 axiosConfig();
+
+// msw mock api 서버 실행
+if (process.env.NODE_ENV === 'development') {
+  initMockAPI();
+}
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
