@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import CheckboxForm from './CheckboxForm';
-import { CheckboxProps } from './type';
+import { CheckboxFormProps } from './type';
 
 const meta: Meta<typeof CheckboxForm> = {
   title: '공통/CheckboxForm',
@@ -19,7 +19,7 @@ const meta: Meta<typeof CheckboxForm> = {
 export default meta;
 type Story = StoryFn<typeof CheckboxForm>;
 
-function Template(args: CheckboxProps) {
+function Template(args: CheckboxFormProps) {
   const { register } = useForm();
   return <CheckboxForm {...args} formKey="check" register={register} />;
 }

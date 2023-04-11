@@ -36,6 +36,11 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ['via.placeholder.com', '*'],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
   reactStrictMode: true,
   compiler: {
     emotion: true,

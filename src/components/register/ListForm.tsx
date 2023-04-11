@@ -19,7 +19,7 @@ import {
 
 // -------------------Types---------------
 interface ListFormProps {
-  title: string;
+  title: string | JSX.Element;
   items: JSX.Element;
   register: UseFormRegister<FieldValues>;
   formName: string;
@@ -93,6 +93,9 @@ function ListForm({
   unregister,
   error,
 }: ListFormProps) {
+  //  title 부분에 다른 컴포넌트를 넣을 수 있도록 처리
+  const titleComponent =
+    typeof title === 'string' ? <StyledTitle>{title}</StyledTitle> : title;
   //  checkbox 클릭 한 리스트 담아두는 state
   const [checked, setChecked] = useState<number[]>([]);
   //  전체 컴포넌트 리스트
@@ -138,7 +141,7 @@ function ListForm({
   return (
     <div>
       <TitleWrapper>
-        <StyledTitle>{title}</StyledTitle>
+        {titleComponent}
         <StyledIconButton buttonType={checked.length === 0 ? 'add' : 'delete'}>
           {checked.length === 0 ? (
             <AddIcon onClick={onClickAdd} width={24} height={24} />

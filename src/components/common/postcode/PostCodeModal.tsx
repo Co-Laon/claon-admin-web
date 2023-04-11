@@ -1,6 +1,7 @@
 import { Address, Search, State } from 'react-daum-postcode/lib/loadPostcode';
 import { Box, Modal } from '@mui/material';
 import PostCodeEmbed from './PostCodeEmbed';
+import { PostCodeModalProps } from './type';
 
 const modalBoxStyle = {
   position: 'absolute' as const,
@@ -27,14 +28,6 @@ const postcodeTheme = {
     // outlineColor: "", //테두리
   },
 };
-
-interface PostCodeModalProps {
-  open: boolean;
-  onComplete?: (data?: string) => void;
-  onSearch?: (data?: Search) => void;
-  onClose?: (data?: State) => void;
-  defaultQuery?: string;
-}
 
 function PostCodeModal({
   open,
@@ -69,7 +62,12 @@ function PostCodeModal({
   };
 
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
       <Box sx={modalBoxStyle}>
         <PostCodeEmbed
           onComplete={handleComplete}

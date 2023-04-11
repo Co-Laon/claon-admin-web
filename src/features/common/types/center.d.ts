@@ -19,3 +19,8 @@ export interface Wall {
   wall_type: string;
   name: string;
 }
+
+export interface Center {
+  name: string;
+  address: string;
+}
