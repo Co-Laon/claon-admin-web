@@ -50,11 +50,12 @@ export const useOAuthSignIn = () => {
       const homePath = '/home';
       const nextPath = res.is_signed_up ? homePath : registerPath;
       router.push(nextPath);
-      signOut();
+      signOut({ redirect: false });
     },
     onError: (error) => {
       // eslint-disable-next-line no-console
       console.log(error);
+      signOut({ redirect: false });
     },
   });
 
