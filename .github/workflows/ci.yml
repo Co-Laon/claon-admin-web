@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ['develop']
   pull_request:
-    branches: ["develop"]
+    branches: ['develop']
 
 jobs:
   test:
@@ -26,10 +26,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: 'pnpm'
       # pnpm 으로 의존성 설치
       - name: Install PNPM dependencies
         run: pnpm install
-      # lint 설정
-      - name: lint
+      # lint 확인
+      - name: lint test
         run: pnpm lint
+      # Build 확인
+      - name: build test
+        run: pnpm build
