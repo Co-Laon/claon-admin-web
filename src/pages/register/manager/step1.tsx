@@ -21,7 +21,7 @@ import ColorPickerModal from '@/components/register/manager/ColorPickerModal';
 import HoldTypeSelect from '@/components/register/manager/HoldTypeSelect';
 import HoldColorFormItem from '@/components/register/manager/HoldColorFormItem';
 import SearchCenterModal from '@/components/register/manager/SearchCenterModal';
-import { Center } from '@/features/common/types/center';
+import { CenterNameResponse } from '@/features/common/types/center';
 
 const ComponentWrapper = styled.div`
   width: 100%;
@@ -165,15 +165,18 @@ function RegisterManagerPage() {
     setCenterSearchModalOpen(false);
   }, []);
 
-  const handleCenterSearchModalComplete = useCallback((center: Center) => {
-    if (nameTextFieldRef.current && center) {
-      nameTextFieldRef.current.value = center.name;
-    }
-    if (postcodeTextFieldRef.current && center) {
-      postcodeTextFieldRef.current.value = center.address;
-    }
-    setCenterSearchModalOpen(false);
-  }, []);
+  const handleCenterSearchModalComplete = useCallback(
+    (center: CenterNameResponse) => {
+      if (nameTextFieldRef.current && center) {
+        nameTextFieldRef.current.value = center.name;
+      }
+      if (postcodeTextFieldRef.current && center) {
+        postcodeTextFieldRef.current.value = center.address;
+      }
+      setCenterSearchModalOpen(false);
+    },
+    []
+  );
 
   // 우편번호 검색 모달 관련 핸들러
   const handlePostInputClick = useCallback(() => {

@@ -1,4 +1,4 @@
-import { Center } from '@/features/common/types/center';
+import { CenterNameResponse } from '@/features/common/types/center';
 import {
   FieldError,
   FieldValues,
@@ -82,7 +82,7 @@ export interface HoldColorFormItemProps {
 export interface SearchCenterModalProps {
   open: boolean;
   onClose: () => void;
-  onComplete: (center: Center) => void;
+  onComplete: (center: CenterNameResponse) => void;
 }
 
 export interface WallInfoFormItemProps {

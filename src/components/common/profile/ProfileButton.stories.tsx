@@ -25,7 +25,7 @@ export default meta;
 type Story = StoryFn<typeof ProfileButton>;
 
 function Template() {
-  return <ProfileButton />;
+  return <ProfileButton onChange={() => {}} />;
 }
 
 export const Primary: Story = Template.bind({});
