@@ -4,7 +4,7 @@ import ParkingIcon from '@/assets/ParkingIcon';
 import styled from '@emotion/styled';
 import { Box, Modal } from '@mui/material';
 import React, { useCallback, useState } from 'react';
-import { Center } from '@/features/common/types/center';
+import { CenterNameResponse } from '@/features/common/types/center';
 import { SearchCenterModalProps } from './type';
 
 const StyledSearchCenterBox = styled(Box)`
@@ -122,8 +122,8 @@ const StyledSearchResultAddress = styled.p`
 `;
 
 interface SearchResultItemProps {
-  center: Center;
-  onSelect: (center: Center) => void;
+  center: CenterNameResponse;
+  onSelect: (center: CenterNameResponse) => void;
 }
 
 function SearchResultItem({ center, onSelect }: SearchResultItemProps) {
@@ -141,12 +141,14 @@ function SearchResultItem({ center, onSelect }: SearchResultItemProps) {
   );
 }
 
-const resultData: Center[] = [
+const resultData: CenterNameResponse[] = [
   {
+    center_id: '1',
     name: '테스트',
     address: '테스트',
   },
   {
+    center_id: '2',
     name: '테스트',
     address: '테스트',
   },
@@ -157,7 +159,7 @@ function SearchCenterModal({
   onClose,
   onComplete,
 }: SearchCenterModalProps) {
-  const [result, setResult] = useState<Center[]>([]);
+  const [result, setResult] = useState<CenterNameResponse[]>([]);
 
   const handleArrowIconClick = useCallback(() => {
     onClose();
