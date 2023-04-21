@@ -81,6 +81,14 @@ function DragDrop({ onChange }: DragDropProps) {
     []
   );
 
+  const handleLabelClick = useCallback(
+    (e: React.MouseEvent<HTMLLabelElement>): void => {
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    []
+  );
+
   const handleFileChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
@@ -90,19 +98,12 @@ function DragDrop({ onChange }: DragDropProps) {
     [onChange]
   );
 
-  const onClickButton = useCallback(() => {
+  const handleSelectButtonClick = useCallback(() => {
     fileRef.current?.click();
   }, [fileRef]);
 
   return (
-    <DragDropWrapper
-      ref={dropRef}
-      htmlFor="dragDropInput"
-      onDragEnter={handleDragIn}
-      onDragEnd={handleDragOut}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-    >
+    <>
       <DragDropInput
         id="dragDropInput"
         type="file"
@@ -110,10 +111,22 @@ function DragDrop({ onChange }: DragDropProps) {
         onChange={handleFileChange}
         multiple
       />
-      <FolderPlus />
-      <StyledText>파일을 여기에 올려 놓으세요</StyledText>
-      <StyledButton onClick={onClickButton}>기기에서 선택</StyledButton>
-    </DragDropWrapper>
+      <DragDropWrapper
+        ref={dropRef}
+        htmlFor="dragDropInput"
+        onDragEnter={handleDragIn}
+        onDragEnd={handleDragOut}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onClick={handleLabelClick}
+      >
+        <FolderPlus />
+        <StyledText>파일을 여기에 올려 놓으세요</StyledText>
+        <StyledButton onClick={handleSelectButtonClick}>
+          기기에서 선택
+        </StyledButton>
+      </DragDropWrapper>
+    </>
   );
 }
 export default DragDrop;
