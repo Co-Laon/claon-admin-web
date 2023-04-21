@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import ImageUpload from '@/components/common/file/ImageUpload';
 import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
 import CheckIcon from '@/assets/CheckIcon';
+import CloseIcon from '@/assets/CloseIcon';
 import { ImageModalProps } from './type';
 
 // -------------------Styles----------------
@@ -21,14 +22,26 @@ const StyledImageModalBox = styled(Box)`
       rgba(113, 90, 174, 0.11)
     ),
     #fffbfe;
+  border-radius: 14px;
+  overflow: hidden;
 `;
 
 const StyledCheckIcon = styled(CheckIcon)`
   position: absolute;
   width: 18px;
   height: 18px;
-  right: 14px;
+  left: 14px;
   top: 14px;
+
+  cursor: pointer;
+`;
+
+const StyledCloseIcon = styled(CloseIcon)`
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  right: 14px;
+  top: 16px;
 
   cursor: pointer;
 `;
@@ -119,15 +132,15 @@ function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
   return (
     <Modal
       open={open}
-      onClose={handleCancel}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <StyledImageModalBox>
         <ImageModalEmbedWrapper>
           <ImageModalEmbedTitleWrapper>
+            <StyledCheckIcon onClick={handleComplete} />
             {`${title} 사진 업로드`}
-            {!isImageListEmpty && <StyledCheckIcon onClick={handleComplete} />}
+            <StyledCloseIcon onClick={handleCancel} />
           </ImageModalEmbedTitleWrapper>
           <ImageModalDivider />
           <ImageModalEmbedImageWrapper>
