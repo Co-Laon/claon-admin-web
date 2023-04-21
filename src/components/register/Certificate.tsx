@@ -7,7 +7,7 @@ import FileList from '../common/file/FileList';
 
 // ----------Props------------
 interface CertificateProps {
-  type: string;
+  type: '강사' | '관리자';
   name: string;
   onClickNext: (files: File[]) => () => void;
 }
