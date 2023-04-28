@@ -1,47 +1,55 @@
+import LNB from '@/components/common/LNB/LNB';
 import Header from '@/components/common/header/Header';
-import { LNBMenuDepth2 } from '@/types/common';
+import styled from '@emotion/styled';
 import { useState } from 'react';
 
-const LNBMenu = [
-  {
-    name: '암장 관리',
-    icon: 'CenterManage',
-    depth2: ['암장 정보 관리', '게시글', '리뷰 관리'],
-  },
-  {
-    name: '회원 관리',
-    icon: 'CrewManage',
-    depth2: ['회원 정보 관리', '회원 등급 관리', '회원 포인트 관리'],
-  },
-  {
-    name: '스케줄 관리',
-    icon: 'ScheduleManage',
-    depth2: ['스케줄 관리', '스케줄 등록'],
-  },
-  {
-    name: '매칭 관리',
-    icon: 'MatchingManage',
-    depth2: ['매칭 관리', '매칭 등록'],
-  },
-];
+const StyledMainPageWrapper = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  height: 100vh;
+`;
 
-const getLnBMenu = (depth2Name: string) => {
-  const depth1 = LNBMenu.find((item) => item.depth2.includes(depth2Name));
-  return depth1;
-};
+interface SelectedDepth2 {
+  depth1Name: string;
+  depth2Name: string;
+  iconType: string;
+}
 
 export default function MainPage() {
-  const [selectedMenu, setSelectedMenu] = useState<LNBMenuDepth2>({
-    depth1Icon: 'Center',
-    depth1Name: '암장 관리',
-    depth2Name: '암장 정보 관리',
+  const [selectedDepth1, setSelectedDepth1] = useState<string>('');
+  const [selectedDepth2, setSelectedDepth2] = useState<SelectedDepth2>({
+    depth1Name: '',
+    depth2Name: '',
+    iconType: '',
   });
 
+  const handleDepth1Click = (depth1Name: string) => {
+    setSelectedDepth1(depth1Name);
+  };
+
+  const handleDepth2Click = (
+    depth1Name: string,
+    depth2Name: string,
+    iconType: string
+  ) => {
+    setSelectedDepth2({ depth1Name, depth2Name, iconType });
+  };
+
   return (
-    <Header
-      selectedMenu={selectedMenu}
-      profileAlarmCount={1}
-      messageAlarmCount={1}
-    />
+    <StyledMainPageWrapper>
+      <LNB
+        auth="manager"
+        selectedDepth1={selectedDepth1}
+        onClickDepth1={handleDepth1Click}
+        onClickDepth2={handleDepth2Click}
+      />
+      <Header
+        depth1Name={selectedDepth2.depth1Name}
+        depth2Name={selectedDepth2.depth2Name}
+        iconType={selectedDepth2.iconType}
+        profileAlarmCount={1}
+        messageAlarmCount={1}
+      />
+    </StyledMainPageWrapper>
   );
 }

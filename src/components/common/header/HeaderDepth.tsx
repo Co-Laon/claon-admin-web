@@ -1,6 +1,7 @@
 import CarouselArrowIcon from '@/assets/CarouselArrowIcon';
 import styled from '@emotion/styled';
 import React from 'react';
+import MenuIcon from '../LNB/MenuIcon';
 
 const StyledHeaderDepthWrapper = styled.div`
   display: flex;
@@ -13,7 +14,7 @@ const StyledHeaderDepthWrapper = styled.div`
 `;
 
 interface HeaderDepthProps extends React.HTMLAttributes<HTMLElement> {
-  depth1Icon: React.ReactNode;
+  depth1Icon: string;
   depth1Name: string;
   depth2Name: string;
 }
@@ -21,7 +22,7 @@ interface HeaderDepthProps extends React.HTMLAttributes<HTMLElement> {
 function HeaderDepth({ depth1Icon, depth1Name, depth2Name }: HeaderDepthProps) {
   return (
     <StyledHeaderDepthWrapper>
-      {depth1Icon}
+      <MenuIcon iconType={depth1Icon} fill="#6750A4" />
       <div>{depth1Name}</div>
       <CarouselArrowIcon width={9} height={12} />
       <div>{depth2Name}</div>

@@ -2,13 +2,12 @@ import styled from '@emotion/styled';
 import React from 'react';
 import ProfileSkeleton from '@/assets/ProfileSkeleton';
 import MessageIcon from '@/assets/MessageIcon';
-import MenuIcon from '@/components/common/LNB/MenuIcon';
-import { LNBMenuDepth2 } from '@/types/common';
 import AlarmedIcon from '../AlarmedIcon/AlarmedIcon';
 import HeaderDepth from './HeaderDepth';
 
 const StyledHeaderWrapper = styled.div`
   display: flex;
+  width: 100%;
   height: 66px;
   align-items: center;
   justify-content: space-between;
@@ -29,23 +28,25 @@ const StyledAlarmWrapper = styled.div`
 `;
 
 interface HeaderDepthProps extends React.HTMLAttributes<HTMLElement> {
-  selectedMenu: LNBMenuDepth2;
+  depth1Name: string;
+  depth2Name: string;
+  iconType: string;
   profileAlarmCount: number;
   messageAlarmCount: number;
 }
 
 function Header({
-  selectedMenu,
+  depth1Name,
+  depth2Name,
+  iconType,
   profileAlarmCount,
   messageAlarmCount,
 }: HeaderDepthProps) {
-  const { depth1Icon, depth1Name, depth2Name } = selectedMenu;
-
   return (
     <StyledHeaderWrapper>
       <StyledHeaderDepthWrapper>
         <HeaderDepth
-          depth1Icon={<MenuIcon icon={depth1Icon} />}
+          depth1Icon={iconType}
           depth1Name={depth1Name}
           depth2Name={depth2Name}
         />
