@@ -1,3 +1,8 @@
+export interface SelectedDepth2 {
+  depth1Name: string;
+  depth2Name: string;
+  iconType: string;
+}
 export interface LNBMenuDepth2 {
   name: string;
   url: string;

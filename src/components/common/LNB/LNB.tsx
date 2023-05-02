@@ -37,21 +37,22 @@ function LNB({ auth, selectedDepth1, onClickDepth1, onClickDepth2 }: LNBProps) {
         <ClaonLogo />
       </StyledLogoWrapper>
       {items.map((depth1: LNBMenuDepth1) => {
+        const { name: depth1Name, icon: depth1Icon } = depth1;
         return (
           <LNBDepth1
-            key={depth1.name}
-            icon={depth1.icon}
-            name={depth1.name}
-            isOpened={selectedDepth1 === depth1.name}
-            onClick={() => onClickDepth1(depth1.name)}
+            key={depth1Name}
+            icon={depth1Icon}
+            name={depth1Name}
+            isOpened={selectedDepth1 === depth1Name}
+            onClick={() => onClickDepth1(depth1Name)}
           >
-            {depth1.children.map((depth2: LNBMenuDepth2) => {
+            {depth1.children.map(({ name: depth2Name }: LNBMenuDepth2) => {
               return (
                 <LNBDepth2
-                  key={depth2.name}
-                  name={depth2.name}
+                  key={depth2Name}
+                  name={depth2Name}
                   onClick={() =>
-                    onClickDepth2(depth1.name, depth2.name, depth1.icon)
+                    onClickDepth2(depth1Name, depth2Name, depth1Icon)
                   }
                 />
               );

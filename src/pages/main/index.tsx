@@ -1,5 +1,6 @@
 import LNB from '@/components/common/LNB/LNB';
 import Header from '@/components/common/header/Header';
+import { SelectedDepth2 } from '@/types/common';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
@@ -8,12 +9,6 @@ const StyledMainPageWrapper = styled.div`
   flex-shrink: 0;
   height: 100vh;
 `;
-
-interface SelectedDepth2 {
-  depth1Name: string;
-  depth2Name: string;
-  iconType: string;
-}
 
 export default function MainPage() {
   const [selectedDepth1, setSelectedDepth1] = useState<string>('');
@@ -44,9 +39,7 @@ export default function MainPage() {
         onClickDepth2={handleDepth2Click}
       />
       <Header
-        depth1Name={selectedDepth2.depth1Name}
-        depth2Name={selectedDepth2.depth2Name}
-        iconType={selectedDepth2.iconType}
+        selectedDepth2={selectedDepth2}
         profileAlarmCount={1}
         messageAlarmCount={1}
       />

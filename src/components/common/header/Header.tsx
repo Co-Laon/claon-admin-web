@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import ProfileSkeleton from '@/assets/ProfileSkeleton';
 import MessageIcon from '@/assets/MessageIcon';
+import { SelectedDepth2 } from '@/types/common';
 import AlarmedIcon from '../AlarmedIcon/AlarmedIcon';
 import HeaderDepth from './HeaderDepth';
 
@@ -28,17 +29,13 @@ const StyledAlarmWrapper = styled.div`
 `;
 
 interface HeaderDepthProps extends React.HTMLAttributes<HTMLElement> {
-  depth1Name: string;
-  depth2Name: string;
-  iconType: string;
+  selectedDepth2: SelectedDepth2;
   profileAlarmCount: number;
   messageAlarmCount: number;
 }
 
 function Header({
-  depth1Name,
-  depth2Name,
-  iconType,
+  selectedDepth2: { depth1Name, depth2Name, iconType },
   profileAlarmCount,
   messageAlarmCount,
 }: HeaderDepthProps) {
