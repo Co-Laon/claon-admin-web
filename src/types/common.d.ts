@@ -1,8 +1,9 @@
-export interface SelectedDepth2 {
+export interface HeaderDepthProps {
+  depth1Icon: string;
   depth1Name: string;
-  depth2Name: string;
-  iconType: string;
+  depthArray: string[];
 }
+
 export interface LNBMenuDepth2 {
   name: string;
   url: string;

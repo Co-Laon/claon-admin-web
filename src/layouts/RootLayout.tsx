@@ -1,6 +1,6 @@
 import LNB from '@/components/common/LNB/LNB';
 import Header from '@/components/common/header/Header';
-import { SelectedDepth2 } from '@/types/common';
+import { HeaderDepthProps } from '@/types/common';
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
 
@@ -18,10 +18,10 @@ const StyledHomePageWrapper = styled.div`
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [selectedDepth1, setSelectedDepth1] = useState<string>('');
-  const [selectedDepth2, setSelectedDepth2] = useState<SelectedDepth2>({
-    depth1Name: '',
-    depth2Name: '',
-    iconType: '',
+  const [selectedDepth2, setSelectedDepth2] = useState<HeaderDepthProps>({
+    depth1Icon: 'CenterManage',
+    depth1Name: '암장 관리',
+    depthArray: ['암장 정보 관리'],
   });
 
   const handleDepth1Click = (depth1Name: string) => {
@@ -29,11 +29,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   };
 
   const handleDepth2Click = (
+    depth1Icon: string,
     depth1Name: string,
-    depth2Name: string,
-    iconType: string
+    depthArray: string[]
   ) => {
-    setSelectedDepth2({ depth1Name, depth2Name, iconType });
+    setSelectedDepth2({ depth1Icon, depth1Name, depthArray });
   };
 
   return (
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       />
       <StyledHomePageWrapper>
         <Header
-          selectedDepth2={selectedDepth2}
+          selectedDepth={selectedDepth2}
           profileAlarmCount={1}
           messageAlarmCount={1}
         />

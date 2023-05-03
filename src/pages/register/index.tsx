@@ -1,5 +1,5 @@
 import ProfileButton from '@/components/common/profile/ProfileButton';
-import RegisterLayout from '@/components/register/RegisterLayout';
+import RegisterLayout from '@/layouts/RegisterLayout';
 import { Button } from '@mui/material';
 import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';

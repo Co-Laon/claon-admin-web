@@ -3,7 +3,7 @@ import CertificationList from '@/components/register/CertificationList';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import ContestExperience from '@/components/register/ContestExperience';
 import ListForm from '@/components/register/ListForm';
-import RegisterLayout from '@/components/register/RegisterLayout';
+import RegisterLayout from '@/layouts/RegisterLayout';
 import { teacherStep1State } from '@/recoil/register/atom';
 import { nickanmeState } from '@/recoil/register/teacher';
 import {

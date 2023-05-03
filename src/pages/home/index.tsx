@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import RootLayout from './layout';
+import RootLayout from '../../layouts/RootLayout';
 
 function Main() {
   return <div>main page</div>;

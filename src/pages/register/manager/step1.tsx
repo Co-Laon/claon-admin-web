@@ -8,7 +8,7 @@ import SearchIcon from '@/assets/SearchIcon';
 import PostCodeModal from '@/components/common/postcode/PostCodeModal';
 import ListForm from '@/components/register/ListForm';
 import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
-import RegisterLayout from '@/components/register/RegisterLayout';
+import RegisterLayout from '@/layouts/RegisterLayout';
 import OperatingTimeTableForm from '@/components/register/manager/OperatingTimeTableForm';
 import ChipForm from '@/components/register/manager/ChipForm';
 import AddIcon from '@/assets/AddIcon';

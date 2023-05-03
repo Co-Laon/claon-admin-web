@@ -25,7 +25,11 @@ interface LNBProps extends React.HTMLAttributes<HTMLElement> {
   auth: 'manager' | 'intsructor';
   selectedDepth1: string;
   onClickDepth1: (depth1Name: string) => void;
-  onClickDepth2: (depth1Name: string, depth2Name: string, icon: string) => void;
+  onClickDepth2: (
+    depth1Icon: string,
+    depth1Name: string,
+    depthArray: string[]
+  ) => void;
 }
 
 function LNB({ auth, selectedDepth1, onClickDepth1, onClickDepth2 }: LNBProps) {
@@ -52,7 +56,7 @@ function LNB({ auth, selectedDepth1, onClickDepth1, onClickDepth2 }: LNBProps) {
                   key={depth2Name}
                   name={depth2Name}
                   onClick={() =>
-                    onClickDepth2(depth1Name, depth2Name, depth1Icon)
+                    onClickDepth2(depth1Icon, depth1Name, [depth2Name])
                   }
                 />
               );
