@@ -2,7 +2,7 @@ import LNB from '@/components/common/LNB/LNB';
 import Header from '@/components/common/header/Header';
 import { SelectedDepth2 } from '@/types/common';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 const StyledMainPageWrapper = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const StyledMainPageWrapper = styled.div`
   height: 100vh;
 `;
 
-export default function MainPage() {
+export default function RootLayout({ children }: { children: ReactNode }) {
   const [selectedDepth1, setSelectedDepth1] = useState<string>('');
   const [selectedDepth2, setSelectedDepth2] = useState<SelectedDepth2>({
     depth1Name: '',
@@ -43,6 +43,7 @@ export default function MainPage() {
         profileAlarmCount={1}
         messageAlarmCount={1}
       />
+      {children}
     </StyledMainPageWrapper>
   );
 }
