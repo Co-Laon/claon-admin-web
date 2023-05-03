@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-const StyledAlarmedIconWrapper = styled.div`
+const StyledBadgedIconWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@ const StyledAlarmedIconWrapper = styled.div`
   aspect-ratio: 1;
 `;
 
-const StyledAlarmedIconCount = styled.div`
+const StyledBadgedIconCount = styled.div`
   position: absolute;
   text-align: center;
   top: -2px;
@@ -25,17 +25,17 @@ const StyledAlarmedIconCount = styled.div`
   background-color: #b3261e;
 `;
 
-interface AlarmedIconProps extends React.HTMLAttributes<HTMLElement> {
+interface BadgedIconProps extends React.HTMLAttributes<HTMLElement> {
   count: number;
 }
 
-function AlarmedIcon({ children, count }: AlarmedIconProps) {
+function BadgedIcon({ children, count }: BadgedIconProps) {
   return (
-    <StyledAlarmedIconWrapper>
-      {count !== 0 && <StyledAlarmedIconCount>{count}</StyledAlarmedIconCount>}
+    <StyledBadgedIconWrapper>
+      {count !== 0 && <StyledBadgedIconCount>{count}</StyledBadgedIconCount>}
       {children}
-    </StyledAlarmedIconWrapper>
+    </StyledBadgedIconWrapper>
   );
 }
 
-export default AlarmedIcon;
+export default BadgedIcon;

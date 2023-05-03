@@ -3,7 +3,7 @@ import React from 'react';
 import ProfileSkeleton from '@/assets/ProfileSkeleton';
 import MessageIcon from '@/assets/MessageIcon';
 import { SelectedDepth2 } from '@/types/common';
-import AlarmedIcon from '../AlarmedIcon/AlarmedIcon';
+import AlarmedIcon from '../BadgedIcon/BadgedIcon';
 import HeaderDepth from './HeaderDepth';
 
 const StyledHeaderWrapper = styled.div`
