@@ -1,4 +1,4 @@
-import { LNBInstructorMenu, LNBManagerMenu } from '@/utils/LNBManage';
+import { LNBInstructorMenu, LNBManagerMenu } from '@/constants/LNBManage';
 import styled from '@emotion/styled';
 import React from 'react';
 import ClaonLogo from '@/assets/ClaonLogo';

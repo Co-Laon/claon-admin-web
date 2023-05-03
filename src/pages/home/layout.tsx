@@ -4,10 +4,16 @@ import { SelectedDepth2 } from '@/types/common';
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
 
-const StyledMainPageWrapper = styled.div`
+const StyledHomeLayoutWrapper = styled.div`
   display: flex;
   flex-shrink: 0;
   height: 100vh;
+`;
+
+const StyledHomePageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -31,19 +37,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <StyledMainPageWrapper>
+    <StyledHomeLayoutWrapper>
       <LNB
         auth="manager"
         selectedDepth1={selectedDepth1}
         onClickDepth1={handleDepth1Click}
         onClickDepth2={handleDepth2Click}
       />
-      <Header
-        selectedDepth2={selectedDepth2}
-        profileAlarmCount={1}
-        messageAlarmCount={1}
-      />
-      {children}
-    </StyledMainPageWrapper>
+      <StyledHomePageWrapper>
+        <Header
+          selectedDepth2={selectedDepth2}
+          profileAlarmCount={1}
+          messageAlarmCount={1}
+        />
+        {children}
+      </StyledHomePageWrapper>
+    </StyledHomeLayoutWrapper>
   );
 }
