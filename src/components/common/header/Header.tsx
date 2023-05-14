@@ -35,18 +35,14 @@ interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 function Header({
-  selectedDepth: { depth1Icon, depth1Name, depthArray },
+  selectedDepth: { depth1Icon, depthArray },
   profileAlarmCount,
   messageAlarmCount,
 }: HeaderProps) {
   return (
     <StyledHeaderWrapper>
       <StyledHeaderDepthWrapper>
-        <HeaderDepth
-          depth1Icon={depth1Icon}
-          depth1Name={depth1Name}
-          depthArray={depthArray}
-        />
+        <HeaderDepth depth1Icon={depth1Icon} depthArray={depthArray} />
       </StyledHeaderDepthWrapper>
       <StyledAlarmWrapper>
         <AlarmedIcon count={profileAlarmCount}>

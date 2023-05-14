@@ -1,6 +1,5 @@
 export interface HeaderDepthProps {
   depth1Icon: string;
-  depth1Name: string;
   depthArray: string[];
 }
 
@@ -12,11 +11,18 @@ export interface LNBMenuDepth2 {
 export interface LNBMenuDepth1 {
   name: string;
   icon: string;
+  url: string;
   children: LNBMenuDepth2[];
-  isOpened: boolean;
 }
 
 export type LNBMenu = LNBMenuDepth1[];
+
+export interface SelectedLNBMenu {
+  name: string;
+  icon: string;
+  url: string;
+  children: LNBMenuDepth2;
+}
 
 export enum Auth {
   MANAGER = 'manager',

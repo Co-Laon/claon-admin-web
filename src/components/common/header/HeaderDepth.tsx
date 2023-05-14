@@ -15,19 +15,21 @@ const StyledHeaderDepthWrapper = styled.div`
 
 interface HeaderDepthProps extends React.HTMLAttributes<HTMLElement> {
   depth1Icon: string;
-  depth1Name: string;
   depthArray: string[];
 }
 
-function HeaderDepth({ depth1Icon, depth1Name, depthArray }: HeaderDepthProps) {
+function HeaderDepth({ depth1Icon, depthArray }: HeaderDepthProps) {
   return (
     <StyledHeaderDepthWrapper>
-      <MenuIcon iconType={depth1Icon} fill="#6750A4" />
-      <div>{depth1Name}</div>
-      {depthArray.map((depth) => {
+      {depthArray.map((depth, index) => {
+        const isFirst = index === 0;
         return (
           <>
-            <CarouselArrowIcon width={9} height={12} />
+            {isFirst ? (
+              <MenuIcon iconType={depth1Icon} fill="#6750A4" />
+            ) : (
+              <CarouselArrowIcon width={9} height={12} />
+            )}
             <div>{depth}</div>
           </>
         );

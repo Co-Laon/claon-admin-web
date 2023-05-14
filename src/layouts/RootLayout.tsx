@@ -20,20 +20,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const [selectedDepth1, setSelectedDepth1] = useState<string>('');
   const [selectedDepth2, setSelectedDepth2] = useState<HeaderDepthProps>({
     depth1Icon: 'CenterManage',
-    depth1Name: '암장 관리',
-    depthArray: ['암장 정보 관리'],
+    depthArray: ['암장 관리', '암장 정보 관리'],
   });
 
   const handleDepth1Click = (depth1Name: string) => {
     setSelectedDepth1(depth1Name);
   };
 
-  const handleDepth2Click = (
-    depth1Icon: string,
-    depth1Name: string,
-    depthArray: string[]
-  ) => {
-    setSelectedDepth2({ depth1Icon, depth1Name, depthArray });
+  const handleDepth2Click = (depth1Icon: string, depthArray: string[]) => {
+    setSelectedDepth2({ depth1Icon, depthArray });
   };
 
   return (
