@@ -1,34 +1,8 @@
-// import { createQueryKeys } from '@lukemorales/query-key-factory';
 import axios from 'axios';
-import { getSession, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { SignInRequest, SignInResponse } from '.';
-
-// 로그인 관련 쿼리키 저장소
-// const loginKeys = createQueryKeys('login', {
-//   login: () => ({
-//     queryKey: ['login'],
-//     queryFn: (provider: string) => postSignIn(provider),
-//   }),
-// });
-
-// 로그인 쿼리
-export const postSignIn = async (provider: string) => {
-  const session = await getSession();
-  let token = null;
-  if (session) {
-    token = 'idToken' in session ? session.idToken : session.accessToken;
-  }
-  const request: SignInRequest = {
-    id_token: token as string,
-  };
-
-  const response: SignInResponse = await axios
-    .post(`/auth/${provider}/sign-in`, request)
-    .then((res) => res.data);
-  return response;
-};
+import { postSignIn } from './queries';
 
 // 로그인 커스텀 훅
 export const useOAuthSignIn = () => {

@@ -15,7 +15,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { ReactElement, useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { LectorRegisterRequest } from '../../../../types/request/register';
+import { LectorRegisterRequest } from '@/types/request/register';
 
 const StyledContainer = styled.div`
   margin-top: 120px;

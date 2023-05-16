@@ -2,8 +2,8 @@ import axios from 'axios';
 import {
   FileResponse,
   LectorRegisterResponse,
-} from '../../../../types/response/register';
-import { LectorRegisterRequest } from '../../../../types/request/register';
+} from '@/types/response/register';
+import { LectorRegisterRequest } from '@/types/request/register';
 
 export const profilePost = async (file: File) => {
   try {
