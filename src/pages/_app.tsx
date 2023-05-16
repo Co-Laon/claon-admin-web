@@ -13,7 +13,7 @@ import initMockAPI from '@/mocks';
 axiosConfig();
 
 // msw mock api 서버 실행
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NEXT_PUBLIC_MOCK_SERVER === 'true') {
   initMockAPI();
 }
 
