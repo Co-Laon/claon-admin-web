@@ -1,5 +1,5 @@
 import Certificate from '@/components/register/Certificate';
-import RegisterLayout from '@/components/register/RegisterLayout';
+import RegisterLayout from '@/layouts/RegisterLayout';
 import React, { ReactElement, useCallback } from 'react';
 
 function Step2() {
