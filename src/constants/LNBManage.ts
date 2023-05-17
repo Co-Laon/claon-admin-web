@@ -1,4 +1,4 @@
-import { LNBMenu } from '@/types/common.d';
+import { LNBMenu } from '@/types/layout';
 
 export const LNBManagerMenu: LNBMenu = [
   {
