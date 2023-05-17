@@ -59,6 +59,13 @@
       }
     ],
     // dependency 배열 의존성을 체크하지 않도록 설정
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    // label 을 form 과 반드시 연결하지 않아도 되도록 설정, htmlFor 을 통해 연결하는 것 허용
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelAttributes": ["htmlFor"]
+      }
+    ]
   }
 }
