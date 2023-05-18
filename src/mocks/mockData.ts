@@ -1,4 +1,4 @@
-import { UpLoadFileResponse } from '@/types/common';
+import { UploadFileResponse } from '@/types/common';
 import { Center } from '@/types/common/center';
 
 const nickNameList: string[] = ['test', 'test1', 'test2'];
@@ -44,6 +44,6 @@ export const center: Center = {
   ],
 };
 
-export const uploadedFileUrl: UpLoadFileResponse = {
+export const uploadedFileUrl: UploadFileResponse = {
   file_url: 'file_url',
 };

@@ -23,10 +23,10 @@ export interface ServerBusinessError {
   violations?: string[];
 }
 
-export interface UpLoadFileRequest {
+export interface UploadFileRequest {
   file: File[] | File;
 }
 
-export interface UpLoadFileResponse {
+export interface UploadFileResponse {
   file_url: string;
 }
