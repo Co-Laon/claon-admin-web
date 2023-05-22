@@ -11,15 +11,10 @@ import {
   proofState,
   teacherStep1State,
 } from '@/recoil/register/atom';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { ReactElement, useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { LectorRegisterRequest } from '../../../../types/request/register';
-
-const StyledContainer = styled.div`
-  margin-top: 120px;
-`;
+import { LectorRegisterRequest } from '@/types/request/register';
 
 function Step2() {
   const [proofList, setProofList] = useRecoilState(proofState);
@@ -56,7 +51,6 @@ function Step2() {
   const onClickNext = useCallback(
     (files: File[]) => {
       return () => {
-        console.log(profile);
         setProofList(files);
         if (profile) postProfile(profile);
       };

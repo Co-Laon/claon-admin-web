@@ -22,3 +22,11 @@ export interface ServerBusinessError {
   timeStamp: string;
   violations?: string[];
 }
+
+export interface UploadFileRequest {
+  file: File[] | File;
+}
+
+export interface UploadFileResponse {
+  file_url: string;
+}

@@ -1,10 +1,10 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
-import { LectorRegisterRequest } from '../../../../types/request/register';
+import { LectorRegisterRequest } from '@/types/request/register';
 import {
   FileResponse,
   LectorRegisterResponse,
-} from '../../../../types/response/register';
+} from '@/types/response/register';
 import { lectorRegister, profilePost, proofPost } from './queries';
 
 export const registerQuries = createQueryKeys('register', {});

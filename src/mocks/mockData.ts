@@ -1,5 +1,5 @@
-import { UpLoadFileResponse } from '@/features/common/types';
-import { Center } from '@/features/common/types/center';
+import { UploadFileResponse } from '@/types/common';
+import { Center } from '@/types/common/center';
 
 const nickNameList: string[] = ['test', 'test1', 'test2'];
 export const nickNameStore = new Set(nickNameList);
@@ -44,6 +44,6 @@ export const center: Center = {
   ],
 };
 
-export const uploadedFileUrl: UpLoadFileResponse = {
+export const uploadedFileUrl: UploadFileResponse = {
   file_url: 'file_url',
 };

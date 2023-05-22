@@ -4,7 +4,7 @@ import GoogleLogo from '@/assets/google_login.svg';
 import KakaoLogo from '@/assets/kakao_login.svg';
 import ClaonLogo from '@/assets/claon_login_logo.svg';
 import { signIn } from 'next-auth/react';
-import { useOAuthSignIn } from '@/features/Login/queries';
+import { useOAuthSignIn } from '@/hooks/queries/login/useOAuthSignIn';
 import { useEffect } from 'react';
 
 const LoginBox = styled(Box)`

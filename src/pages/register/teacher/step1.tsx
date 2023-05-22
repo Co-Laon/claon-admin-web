@@ -16,7 +16,7 @@ import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import { ReactElement, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const StyledTitle = styled.p`
   font-size: 20px;
@@ -50,11 +50,10 @@ function Step1() {
     handleSubmit,
   } = useForm();
 
-  const [step1State, setStep1State] = useRecoilState(teacherStep1State);
+  const setStep1State = useSetRecoilState(teacherStep1State);
 
   const onFormSubmit = useCallback(
     (data: { [key: string]: string | Array<string | object> }) => {
-      console.log(data);
       setStep1State({
         is_setter: data.is_setter[0] === '하고 있어요',
         career_list: data.career_list as CareerType[],

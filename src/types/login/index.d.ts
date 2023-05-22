@@ -1,4 +1,4 @@
-import { Profile } from '@/features/common/types/profile';
+import { Profile } from '@/types/common/profile';
 
 export interface SignInRequest {
   id_token: string;

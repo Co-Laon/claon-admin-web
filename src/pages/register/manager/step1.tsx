@@ -21,7 +21,7 @@ import ColorPickerModal from '@/components/register/manager/ColorPickerModal';
 import HoldTypeSelect from '@/components/register/manager/HoldTypeSelect';
 import HoldColorFormItem from '@/components/register/manager/HoldColorFormItem';
 import SearchCenterModal from '@/components/register/manager/SearchCenterModal';
-import { CenterNameResponse } from '@/features/common/types/center';
+import { CenterNameResponse } from '@/types/common/center';
 
 const Title = styled.p`
   font-size: 20px;

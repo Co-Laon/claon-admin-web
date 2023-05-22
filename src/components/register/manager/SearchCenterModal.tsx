@@ -3,7 +3,7 @@ import ParkingIcon from '@/assets/ParkingIcon';
 import styled from '@emotion/styled';
 import { Box, Modal } from '@mui/material';
 import React, { useCallback, useState } from 'react';
-import { CenterNameResponse } from '@/features/common/types/center';
+import { CenterNameResponse } from '@/types/common/center';
 import { SearchCenterModalProps } from './type';
 
 const StyledSearchCenterBox = styled(Box)`

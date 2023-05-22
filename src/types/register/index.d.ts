@@ -1,6 +1,6 @@
-import { Career, Certificate, Contest } from '@/features/common/types/lector';
-import { Center } from '@/features/common/types/center';
-import { Profile } from '@/features/common/types/profile';
+import { Career, Certificate, Contest } from '@/types/common/lector';
+import { Center } from '@/types/common/center';
+import { Profile } from '@/types/common/profile';
 
 export interface RegisterResponse {
   is_proofed: boolean;
