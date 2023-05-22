@@ -8,7 +8,7 @@ import React, { ReactElement, useCallback } from 'react';
 import {
   CenterAuthRequest,
   CenterUploadPurpose,
-} from '../../../../types/request/register';
+} from '@/types/request/register';
 
 function Step2() {
   const { mutate: mutateCenterSignUp } = useCenterSignUp();

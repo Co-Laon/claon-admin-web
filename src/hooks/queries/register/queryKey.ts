@@ -4,18 +4,20 @@ import {
   UseMutationOptions,
   useQuery,
 } from '@tanstack/react-query';
-import { LectorRegisterRequest } from '@/types/request/register';
 import {
-  CenterAuthRequest,
   CenterUploadPurpose,
+  CenterAuthRequest,
   LectorRegisterRequest,
-} from '../../../../types/request/register';
+} from '@/types/request/register';
 import {
   CenterAuthResponse,
   FileResponse,
   LectorRegisterResponse,
 } from '@/types/response/register';
+import { UploadFileResponse, ValidationError } from '@/types/common';
 import {
+  centerSignUp,
+  centerUploadList,
   lectorRegister,
   nicknameDupCheck,
   profilePost,
@@ -59,7 +61,7 @@ export const useLectorRegister = (
 
 export const usePostProfile = (
   options?: Omit<
-    UseMutationOptions<string, unknown, File | undefined, unknown>,
+    UseMutationOptions<UploadFileResponse, unknown, File, unknown>,
     'mutationFn'
   >
 ) => {

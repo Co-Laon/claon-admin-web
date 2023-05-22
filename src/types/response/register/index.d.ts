@@ -65,7 +65,3 @@ export interface CenterAuthResponse {
   wall_list: CenterWall[];
   approved: boolean;
 }
-
-export interface UploadFileResponse {
-  file_url: string;
-}
