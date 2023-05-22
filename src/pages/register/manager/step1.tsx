@@ -118,6 +118,8 @@ function Step1() {
     unregister,
   } = useForm();
 
+  const router = useRouter();
+
   const [holdType, setHoldType] = useState<HoldType>(HoldType.COLOR);
 
   const [centerSearchModalOpen, setCenterSearchModalOpen] = useState(false);
@@ -144,7 +146,10 @@ function Step1() {
   const [holdColorTextFieldFormKey, setHoldColorTextFieldFormKey] =
     useState<string>('');
 
-  const onSubmit = useCallback(() => {}, []);
+  const onSubmit = useCallback(() => {
+    localStorage.setItem('manager', JSON.stringify(getValues()));
+    router.push('/register/manager/step2');
+  }, []);
 
   const handleProfileImageChange = useCallback(() => {}, []);
 

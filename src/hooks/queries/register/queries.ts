@@ -4,7 +4,11 @@ import {
   IsDuplicatedResponse,
   LectorRegisterResponse,
 } from '@/types/response/register';
-import { LectorRegisterRequest } from '@/types/request/register';
+import {
+  CenterAuthRequest,
+  LectorRegisterRequest,
+} from '@/types/request/register';
+import { UploadFileResponse } from '@/types/common';
 
 export const profilePost = async (file?: File) => {
   if (!file) return `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`;
@@ -69,4 +73,44 @@ export const nicknameDupCheck = async (nickname: string) => {
   } catch (error: any) {
     throw error.response.data;
   }
+};
+
+export const centerSignUp = async (centerAuthRequest: CenterAuthRequest) => {
+  try {
+    const { data } = await axios.post('/auth/center/sign-up', {
+      ...centerAuthRequest,
+    });
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+export const centerUploadList = async (purpose: string, fileList: File[]) => {
+  const data = await axios
+    .all(
+      fileList.map((file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return axios.post<UploadFileResponse>(
+          `/centers/${purpose}/file`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+      })
+    )
+    .then(
+      axios.spread((...responses) => {
+        return responses.map((res) => res.data);
+      })
+    )
+    .catch((error: any) => {
+      throw error.response.data;
+    });
+  return data;
 };

@@ -6,6 +6,12 @@ import {
 } from '@tanstack/react-query';
 import { LectorRegisterRequest } from '@/types/request/register';
 import {
+  CenterAuthRequest,
+  CenterUploadPurpose,
+  LectorRegisterRequest,
+} from '../../../../types/request/register';
+import {
+  CenterAuthResponse,
   FileResponse,
   LectorRegisterResponse,
 } from '@/types/response/register';
@@ -76,4 +82,38 @@ export const usePostProof = (
   return useMutation((fileList: File[]) => proofPost(fileList), {
     ...options,
   });
+};
+
+export const useCenterSignUp = (
+  options?: Omit<
+    UseMutationOptions<
+      CenterAuthResponse,
+      ValidationError,
+      CenterAuthRequest,
+      unknown
+    >,
+    'mutationFn'
+  >
+) => {
+  return useMutation(
+    (centerInfo: CenterAuthRequest) => centerSignUp(centerInfo),
+    {
+      ...options,
+    }
+  );
+};
+
+export const useCenterUploadList = (
+  purpose: CenterUploadPurpose,
+  options?: Omit<
+    UseMutationOptions<FileResponse[], unknown, File[], unknown>,
+    'mutationFn'
+  >
+) => {
+  return useMutation(
+    (fileList: File[]) => centerUploadList(purpose, fileList),
+    {
+      ...options,
+    }
+  );
 };
