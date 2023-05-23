@@ -1,4 +1,4 @@
-import { CenterNameResponse } from '@/features/common/types/center';
+import { CenterNameResponse } from '@/types/common/center';
 import { rest } from 'msw';
 import { center, uploadedFileUrl } from './mockData';
 

@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import DragDrop from '../common/file/DragDrop';
 import FileList from '../common/file/FileList';
 
 // ----------Props------------
 interface CertificateProps {
-  type: string;
+  type: '강사' | '관리자';
   name: string;
   onClickNext: (files: File[]) => () => void;
 }
@@ -59,14 +59,10 @@ function Certificate({ type, name, onClickNext }: CertificateProps) {
   const [files, setFiles] = useState<File[]>([]);
 
   const onFileChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      let uploadFile: File[] = [];
-      if (files.length === 5) alert('파일 개수는 최대 5개 입니다.');
-
-      if (e.target.files) {
-        uploadFile = Array.from(e.target.files);
-      }
-      setFiles([...files, ...uploadFile]);
+    (fileList: File[]) => {
+      if (files.length > 5 || fileList.length > 5)
+        alert('파일은 최대 5개까지 업로드 가능해요.');
+      else setFiles([...files, ...fileList]);
     },
     [files]
   );
@@ -80,16 +76,26 @@ function Certificate({ type, name, onClickNext }: CertificateProps) {
     [files]
   );
 
+  const typeMap = {
+    role: type,
+    target: type === '강사' ? '자신' : '암장',
+    item: type === '강사' ? '자격증' : '사업자등록증',
+    when: type === '강사' ? '회원가입' : '확인이 완료된',
+  };
+
   return (
     <div>
       <TitleWrapper>
-        <StyledTitle>{`${name} ${type}님`}</StyledTitle>
-        <StyledTitle>자신을 증명해주세요.</StyledTitle>
+        <StyledTitle>{`${name} ${typeMap.role}님`}</StyledTitle>
+        <StyledTitle>{`${typeMap.target}을 증명해주세요.`}</StyledTitle>
       </TitleWrapper>
       <SubTitleWrapper>
-        <StyledSubTitle>{`자격증과 같이 ${type}임을 증명해주세요.`}</StyledSubTitle>
+        <StyledSubTitle>{`${typeMap.item}과 같이 ${typeMap.target}임을 증명해주세요.`}</StyledSubTitle>
         <StyledDescription>
-          업로드한 파일은 회원가입 즉시 삭제됩니다.
+          {`업로드한 파일은 ${typeMap.when} 즉시 삭제하고 있어요.`}
+        </StyledDescription>
+        <StyledDescription>
+          파일은 최대 5개까지 업로드 가능해요.
         </StyledDescription>
       </SubTitleWrapper>
       <FileWrapper>

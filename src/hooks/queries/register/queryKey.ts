@@ -4,11 +4,11 @@ import {
   UseMutationOptions,
   useQuery,
 } from '@tanstack/react-query';
-import { LectorRegisterRequest } from '../../../../types/request/register';
+import { LectorRegisterRequest } from '@/types/request/register';
 import {
   FileResponse,
   LectorRegisterResponse,
-} from '../../../../types/response/register';
+} from '@/types/response/register';
 import {
   lectorRegister,
   nicknameDupCheck,

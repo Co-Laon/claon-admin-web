@@ -14,7 +14,7 @@ import {
 import { useRouter } from 'next/router';
 import { ReactElement, useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { LectorRegisterRequest } from '../../../../types/request/register';
+import { LectorRegisterRequest } from '@/types/request/register';
 
 function Step2() {
   const [proofList, setProofList] = useRecoilState(proofState);

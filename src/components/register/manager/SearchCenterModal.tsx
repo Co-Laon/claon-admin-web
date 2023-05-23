@@ -1,10 +1,9 @@
-import Arrow from '@/assets/ArrowIcon';
 import Close from '@/assets/CloseIcon';
 import ParkingIcon from '@/assets/ParkingIcon';
 import styled from '@emotion/styled';
 import { Box, Modal } from '@mui/material';
 import React, { useCallback, useState } from 'react';
-import { CenterNameResponse } from '@/features/common/types/center';
+import { CenterNameResponse } from '@/types/common/center';
 import { SearchCenterModalProps } from './type';
 
 const StyledSearchCenterBox = styled(Box)`
@@ -26,6 +25,9 @@ const StyledSearchCenterBox = styled(Box)`
       rgba(113, 90, 174, 0.11)
     ),
     #fffbfe;
+
+  border-radius: 14px;
+  overflow: hidden;
 `;
 
 const StyledSearchCenterInputWrapper = styled.div`
@@ -69,11 +71,6 @@ const StyledSearchCenterHorizontalLine = styled.div`
   width: 100%;
   height: 1px;
   background: #000000;
-`;
-
-const StyledArrowIcon = styled(Arrow)`
-  margin-left: 10px;
-  cursor: pointer;
 `;
 
 const StyledCloseIcon = styled(Close)`
@@ -161,10 +158,6 @@ function SearchCenterModal({
 }: SearchCenterModalProps) {
   const [result, setResult] = useState<CenterNameResponse[]>([]);
 
-  const handleArrowIconClick = useCallback(() => {
-    onClose();
-  }, [onClose]);
-
   const handleCloseIconClick = useCallback(() => {
     onClose();
   }, [onClose]);
@@ -182,7 +175,6 @@ function SearchCenterModal({
     >
       <StyledSearchCenterBox>
         <StyledSearchCenterInputWrapper>
-          <StyledArrowIcon onClick={handleArrowIconClick} />
           <StyledSearchCenterInput onChange={handleSearch} />
           <StyledCloseIcon onClick={handleCloseIconClick} />
         </StyledSearchCenterInputWrapper>

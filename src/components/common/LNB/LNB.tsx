@@ -2,7 +2,7 @@ import { LNBInstructorMenu, LNBManagerMenu } from '@/constants/LNBManage';
 import styled from '@emotion/styled';
 import React from 'react';
 import ClaonLogo from '@/assets/ClaonLogo';
-import { LNBMenuDepth1, LNBMenuDepth2 } from '@/types/common';
+import { LNBMenuDepth1, LNBMenuDepth2 } from '@/types/layout';
 import { LNBDepth1, LNBDepth2 } from './LNBItems';
 
 const StyledLNBWrapper = styled.div`

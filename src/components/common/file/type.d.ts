@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 
 export interface DragDropProps {
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: File[]) => void;
 }
 
 export interface FileListProps {
