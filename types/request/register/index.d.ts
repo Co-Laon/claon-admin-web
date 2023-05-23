@@ -3,7 +3,7 @@ export interface ProfileRequest {
   nickname: string;
   email: string;
   instagram_nickname: string;
-  role: string;
+  role: 'pending' | 'admin' | 'user' | 'lector' | 'center_admin';
 }
 export interface ContestListRequest {
   year: number;
@@ -21,7 +21,7 @@ export interface CareerListRequest {
   name: string;
 }
 export interface LectorRegisterRequest {
-  profile_image: Profile;
+  profile: ProfileRequest;
   is_setter: boolean;
   contest_list: ContestList[];
   certificate_list: CertificateList[];

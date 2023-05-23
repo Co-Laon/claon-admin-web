@@ -11,15 +11,10 @@ import {
   proofState,
   teacherStep1State,
 } from '@/recoil/register/atom';
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { ReactElement, useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { LectorRegisterRequest } from '../../../../types/request/register';
-
-const StyledContainer = styled.div`
-  margin-top: 120px;
-`;
 
 function Step2() {
   const [proofList, setProofList] = useRecoilState(proofState);
@@ -38,8 +33,8 @@ function Step2() {
     onSuccess: (data) => {
       const prList: string[] = data.map((d) => d.file_url);
       const lectorRegisterRequest: LectorRegisterRequest = {
+        profile: { ...commonState },
         ...step1,
-        ...commonState,
         proof_list: prList,
       };
       lectorRegister(lectorRegisterRequest);
@@ -48,7 +43,7 @@ function Step2() {
 
   const { mutate: postProfile } = usePostProfile({
     onSuccess: (data) => {
-      setCommonState({ ...commonState, profile_image: data.file_url });
+      setCommonState({ ...commonState, profile_image: data });
       postProof(proofList);
     },
   });
@@ -56,9 +51,8 @@ function Step2() {
   const onClickNext = useCallback(
     (files: File[]) => {
       return () => {
-        console.log(profile);
         setProofList(files);
-        if (profile) postProfile(profile);
+        postProfile(profile);
       };
     },
     [setProofList, profile, postProfile]

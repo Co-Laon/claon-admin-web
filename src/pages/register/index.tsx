@@ -5,10 +5,17 @@ import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
 import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import { useForm } from 'react-hook-form';
-import { ChangeEvent, ReactElement, useCallback } from 'react';
+import {
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { commonStepState, profileState } from '@/recoil/register/atom';
+import { useDupCheck } from '@/hooks/queries/register/queryKey';
 
 const Title = styled.p`
   font-size: 20px;
@@ -38,11 +45,14 @@ function RegisterMainPage() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
   const router = useRouter();
   const [commonStep, setCommonStep] = useRecoilState(commonStepState);
   const [profile, setProfile] = useRecoilState(profileState);
+  const [nickname, setNickname] = useState<string>('');
+  const { data: dupResult } = useDupCheck(nickname);
 
   const onChangeProfile = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +68,7 @@ function RegisterMainPage() {
         email: data.email as string,
         instagram_nickname: data.instagram as string,
         role: 'lector',
-        profile_image: undefined,
+        profile_image: '',
       });
       if (data.type[0] === '강사') router.push('/register/teacher/step1');
       else if (data.type[0] === '암장 관리자')
@@ -66,6 +76,16 @@ function RegisterMainPage() {
     },
     [router, setCommonStep]
   );
+
+  const nicknameDupCheck = useCallback((name: string) => {
+    setNickname(name);
+  }, []);
+
+  useEffect(() => {
+    if (dupResult) {
+      setError('nickname', { type: 'custom', message: '중복된 닉네임입니다.' });
+    }
+  }, [dupResult]);
 
   return (
     <>
@@ -92,6 +112,7 @@ function RegisterMainPage() {
             value: /^[가-힣a-zA-Z0-9]*$/i,
             message: '한글, 영어, 숫자만 입력가능합니다.',
           }}
+          onBlur={nicknameDupCheck}
         />
         <TextField
           label="이메일"

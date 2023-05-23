@@ -1,13 +1,36 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+} from '@tanstack/react-query';
 import { LectorRegisterRequest } from '../../../../types/request/register';
 import {
   FileResponse,
   LectorRegisterResponse,
 } from '../../../../types/response/register';
-import { lectorRegister, profilePost, proofPost } from './queries';
+import {
+  lectorRegister,
+  nicknameDupCheck,
+  profilePost,
+  proofPost,
+} from './queries';
 
-export const registerQuries = createQueryKeys('register', {});
+export const registerQuries = createQueryKeys('register', {
+  auth: () => ({
+    queryKey: ['auth'],
+    contextQueries: {
+      dupCheck: (nickName: string) => ({
+        queryKey: [nickName],
+        queryFn: () => nicknameDupCheck(nickName),
+      }),
+    },
+  }),
+});
+
+export const useDupCheck = (nickname: string) => {
+  return useQuery({ ...registerQuries.auth()._ctx.dupCheck(nickname) });
+};
 
 export const useLectorRegister = (
   options?: Omit<
@@ -30,11 +53,11 @@ export const useLectorRegister = (
 
 export const usePostProfile = (
   options?: Omit<
-    UseMutationOptions<FileResponse, unknown, File, unknown>,
+    UseMutationOptions<string, unknown, File | undefined, unknown>,
     'mutationFn'
   >
 ) => {
-  return useMutation((file: File) => profilePost(file), {
+  return useMutation((file?: File) => profilePost(file), {
     ...options,
     onSuccess: (data, variables, context) => {
       if (options?.onSuccess) {

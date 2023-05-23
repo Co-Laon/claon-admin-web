@@ -4,11 +4,11 @@ import { CommonStep, TeacherStep1 } from './type';
 export const commonStepState = atom<CommonStep>({
   key: 'commonStepState',
   default: {
-    profile_image: undefined,
+    profile_image: '',
     nickname: '',
     email: '',
     instagram_nickname: '',
-    role: '',
+    role: 'pending',
   },
 });
 

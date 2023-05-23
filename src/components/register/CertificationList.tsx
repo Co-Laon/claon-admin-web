@@ -70,10 +70,6 @@ function CertificationList({
   formKey,
   error,
 }: CertificationListProps) {
-  const datePattern = useMemo(
-    () => /^(d{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|3[1-2])$/,
-    []
-  );
   const errors = useMemo(() => {
     if (idx && error) {
       return error[idx];

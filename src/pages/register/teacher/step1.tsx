@@ -54,9 +54,9 @@ function Step1() {
 
   const onFormSubmit = useCallback(
     (data: { [key: string]: string | Array<string | object> }) => {
-      console.log(data);
       setStep1State({
-        is_setter: data.is_setter[0] === '하고 있어요',
+        is_setter:
+          data.is_setter.length === 1 && data.is_setter[0] === '하고 있어요',
         career_list: data.career_list as CareerType[],
         certificate_list: data.certificate_list as TeacherCertificate[],
         contest_list: data.contest_list as TeacherContest[],
