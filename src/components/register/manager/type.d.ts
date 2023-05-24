@@ -1,4 +1,4 @@
-import { CenterNameResponse } from '@/types/common/center';
+import { CenterNameResponse } from '../../../types/common/center';
 import {
   FieldError,
   FieldValues,

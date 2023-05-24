@@ -1,6 +1,6 @@
 import LNB from '@/components/common/LNB/LNB';
 import Header from '@/components/common/header/Header';
-import { HeaderDepthProps } from '@/types/layout';
+import { HeaderDepthProps } from '../types/layout';
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
 

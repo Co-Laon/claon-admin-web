@@ -5,10 +5,8 @@ import {
   useCenterUploadList,
 } from '@/hooks/queries/register/queryKey';
 import React, { ReactElement, useCallback } from 'react';
-import {
-  CenterAuthRequest,
-  CenterUploadPurpose,
-} from '@/types/request/register';
+import { CenterAuthRequest } from '@/types/request/register';
+import { CenterUploadPurpose } from '@/constants';
 
 function Step2() {
   const { mutate: mutateCenterSignUp } = useCenterSignUp();

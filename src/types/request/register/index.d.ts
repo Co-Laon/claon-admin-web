@@ -81,10 +81,3 @@ export interface CenterAuthRequest {
 export interface Role {
   description: string;
 }
-
-export enum CenterUploadPurpose {
-  PROFILE = 'profile',
-  IMAGE = 'image',
-  FEE = 'fee',
-  PROOF = 'proof',
-}

@@ -3,12 +3,12 @@ import {
   FileResponse,
   IsDuplicatedResponse,
   LectorRegisterResponse,
-} from '@/types/response/register';
+} from '../../../types/response/register';
 import {
   CenterAuthRequest,
   LectorRegisterRequest,
-} from '@/types/request/register';
-import { UploadFileResponse } from '@/types/common';
+} from '../../../types/request/registers';
+import { UploadFileResponse } from '../../../types/common';
 
 export const profilePost = async (file?: File) => {
   if (!file) return `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`;

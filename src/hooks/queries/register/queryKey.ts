@@ -5,7 +5,6 @@ import {
   useQuery,
 } from '@tanstack/react-query';
 import {
-  CenterUploadPurpose,
   CenterAuthRequest,
   LectorRegisterRequest,
 } from '@/types/request/register';
@@ -15,6 +14,7 @@ import {
   LectorRegisterResponse,
 } from '@/types/response/register';
 import { UploadFileResponse, ValidationError } from '@/types/common';
+import { CenterUploadPurpose } from '@/constants';
 import {
   centerSignUp,
   centerUploadList,

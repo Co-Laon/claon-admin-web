@@ -1,5 +1,5 @@
-import { UploadFileResponse } from '@/types/common';
-import { Center } from '@/types/common/center';
+import { UploadFileResponse } from '../types/common';
+import { Center } from '../types/common/center';
 
 const nickNameList: string[] = ['test', 'test1', 'test2'];
 export const nickNameStore = new Set(nickNameList);
