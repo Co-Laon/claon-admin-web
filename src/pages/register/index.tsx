@@ -7,6 +7,7 @@ import CheckboxGroupInput from '@/components/register/CheckboxGroupInput';
 import { useForm } from 'react-hook-form';
 import {
   ChangeEvent,
+  FocusEvent,
   ReactElement,
   useCallback,
   useEffect,
@@ -77,8 +78,8 @@ function RegisterMainPage() {
     [router, setCommonStep]
   );
 
-  const nicknameDupCheck = useCallback((name: string) => {
-    setNickname(name);
+  const nicknameDupCheck = useCallback((e: FocusEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
   }, []);
 
   useEffect(() => {

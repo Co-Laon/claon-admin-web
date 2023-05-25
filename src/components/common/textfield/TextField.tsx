@@ -55,7 +55,7 @@ function TextField({
           minLength,
           maxLength,
           onBlur: (e) => {
-            if (onBlur) onBlur(e.target.value);
+            if (onBlur) onBlur(e);
           },
         })}
         {...props}
