@@ -33,8 +33,8 @@ function Step2() {
     onSuccess: (data) => {
       const prList: string[] = data.map((d) => d.file_url);
       const lectorRegisterRequest: LectorRegisterRequest = {
+        profile: { ...commonState },
         ...step1,
-        ...commonState,
         proof_list: prList,
       };
       lectorRegister(lectorRegisterRequest);
@@ -43,7 +43,7 @@ function Step2() {
 
   const { mutate: postProfile } = usePostProfile({
     onSuccess: (data) => {
-      setCommonState({ ...commonState, profile_image: data.file_url });
+      setCommonState({ ...commonState, profile_image: data });
       postProof(proofList);
     },
   });
@@ -52,7 +52,7 @@ function Step2() {
     (files: File[]) => {
       return () => {
         setProofList(files);
-        if (profile) postProfile(profile);
+        postProfile(profile);
       };
     },
     [setProofList, profile, postProfile]

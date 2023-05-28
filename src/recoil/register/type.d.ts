@@ -1,9 +1,9 @@
 export interface CommonStep {
-  profile_image: string | undefined;
+  profile_image: string;
   nickname: string;
   email: string;
   instagram_nickname: string;
-  role: string;
+  role: 'pending' | 'admin' | 'user' | 'lector' | 'center_admin';
 }
 
 export interface TeacherStep1 {

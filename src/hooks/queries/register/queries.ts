@@ -1,15 +1,18 @@
 import axios from 'axios';
 import {
   FileResponse,
+  IsDuplicatedResponse,
   LectorRegisterResponse,
 } from '@/types/response/register';
 import { LectorRegisterRequest } from '@/types/request/register';
 
-export const profilePost = async (file: File) => {
+export const profilePost = async (file?: File) => {
+  if (!file) return `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`;
+
   try {
     const formData = new FormData();
-    formData.append('image', file);
-    const { data } = await axios.post('/centers/profile/file', formData, {
+    formData.append('file', file);
+    const { data } = await axios.post('/users/profile', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -36,7 +39,7 @@ export const proofPost = async (fileList: File[]) => {
     )
     .then(
       axios.spread((...response: any[]) => {
-        return response.map((res) => ({ file_url: res.data }));
+        return response.map((res) => res.data);
       })
     );
   return data as FileResponse[];
@@ -51,6 +54,18 @@ export const lectorRegister = async (
       lectorRegisterRequest
     );
     return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+export const nicknameDupCheck = async (nickname: string) => {
+  if (nickname === '') return false;
+  try {
+    const { data } = await axios.get<IsDuplicatedResponse>(
+      `/auth/nickname/${nickname}/is-duplicated`
+    );
+    return data.is_duplicated;
   } catch (error: any) {
     throw error.response.data;
   }

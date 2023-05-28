@@ -38,6 +38,7 @@ function TextField({
   pattern,
   minLength,
   maxLength,
+  onBlur,
   ...props
 }: TextFieldProps) {
   return (
@@ -53,6 +54,9 @@ function TextField({
           pattern,
           minLength,
           maxLength,
+          onBlur: (e) => {
+            if (onBlur) onBlur(e);
+          },
         })}
         {...props}
         label={`${label}${isRequire ? ' *' : ''}`}

@@ -48,11 +48,11 @@ function CheckboxGroupInput({
   }, [checkboxes, formKey]);
 
   const onChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
-      if (!e.target.checked) setChecked(-1);
+    (idx: number) => {
+      if (idx === checked) setChecked(-1);
       else setChecked(idx);
     },
-    []
+    [checked]
   );
 
   const titleComponent =
@@ -67,7 +67,7 @@ function CheckboxGroupInput({
             key={keyList[idx]}
             label={checkbox}
             checked={checked === idx}
-            onChange={(e) => onChange(e, idx)}
+            onChange={() => onChange(idx)}
             register={register}
             formKey={formKey}
           />

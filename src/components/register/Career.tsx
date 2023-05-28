@@ -26,7 +26,7 @@ const StyledStart = styled(TextField)`
   height: 36px;
   margin-right: 4px;
   font-size: 12px;
-  line-height: 18px
+  line-height: 18px;
 
   & > input::placeholder {
     font-size: 12px;
@@ -39,7 +39,7 @@ const StyledEnd = styled(TextField)`
   width: 84px;
   height: 36px;
   font-size: 12px;
-  line-height: 18px
+  line-height: 18px;
 
   & > input::placeholder {
     font-size: 12px;
@@ -72,10 +72,10 @@ function Career({ register, idx, formKey, error }: CareerProps) {
       <StyledContainer>
         <StyeldFirstLine>
           <StyledStart
-            formKey={`${formKey}.${idx}.start`}
+            formKey={`${formKey}.${idx}.start_date`}
             label="시작일"
             register={register}
-            error={errors && 'start' in errors ? errors.start : undefined}
+            error={errors && 'start_date' in errors ? errors.start : undefined}
             isRequire
             placeholder="2023-01"
             pattern={{
@@ -84,10 +84,10 @@ function Career({ register, idx, formKey, error }: CareerProps) {
             }}
           />
           <StyledEnd
-            formKey={`${formKey}.${idx}.end`}
+            formKey={`${formKey}.${idx}.end_date`}
             label="종료일"
             register={register}
-            error={errors && 'end' in errors ? errors.end : undefined}
+            error={errors && 'end_date' in errors ? errors.end : undefined}
             placeholder="2023-01"
             isRequire
             pattern={{
