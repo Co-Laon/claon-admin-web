@@ -18,3 +18,16 @@ export const postSignIn = async (provider: string) => {
     .then((res) => res.data);
   return response;
 };
+
+// Test Sign in
+export const testSignIn = async (token: string) => {
+  const request: SignInRequest = {
+    id_token: token as string,
+  };
+  try {
+    const { data } = await axios.post('/auth/test-sign-in', request);
+    return data;
+  } catch (error: any) {
+    throw error.response.message;
+  }
+};
