@@ -1,7 +1,7 @@
 import { CarouselProps } from 'react-material-ui-carousel/dist/components/types';
 
 export interface ImageListCarouselProps extends CarouselProps {
-  images: string[];
+  images: string[] | File[];
   width: number;
   height?: number;
   deleteable?: boolean;

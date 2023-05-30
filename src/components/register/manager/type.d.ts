@@ -1,4 +1,3 @@
-import { CenterNameResponse } from '../../../types/common/center';
 import {
   FieldError,
   FieldValues,
@@ -6,6 +5,7 @@ import {
   UseFormRegisterReturn,
   UseFormUnregister,
 } from 'react-hook-form';
+import { CenterNameResponse } from '../../../types/common/center';
 
 export interface OperatingTimeTableFormProps {
   register: UseFormRegister<FieldValues>;
@@ -28,7 +28,7 @@ export interface ImageModalProps {
   title: string;
   open: boolean;
   onClose: () => void;
-  onComplete: (list: string[]) => void;
+  onComplete: (list: File[]) => void;
 }
 
 export interface HoldTypeSelectProps {

@@ -123,6 +123,10 @@ function ImageListCarousel({
     }
   };
 
+  const imageUrlList = images.map((file) =>
+    typeof file === 'string' ? file : URL.createObjectURL(file)
+  );
+
   return (
     <ImageListWrapper width={width} height={height}>
       {isCarouselEmpty && <PhotoEmptyIcon />}
@@ -149,7 +153,7 @@ function ImageListCarousel({
               )
             }
           >
-            {images.map((image) => (
+            {imageUrlList.map((image) => (
               <StyledCarouselItemContainer
                 key={image}
                 width={width}

@@ -11,7 +11,7 @@ import { CenterUploadPurpose } from '@/constants';
 function Step2() {
   const { mutate: mutateCenterSignUp } = useCenterSignUp();
 
-  const { mutate: mutateCenterUploadList } = useCenterUploadList(
+  const { mutate: mutateCenterProofUploadList } = useCenterUploadList(
     CenterUploadPurpose.PROOF,
     {
       onSuccess: (data) => {
@@ -26,7 +26,7 @@ function Step2() {
 
   const handleClickNext = useCallback((files: File[]) => {
     return () => {
-      mutateCenterUploadList(files);
+      mutateCenterProofUploadList(files);
     };
   }, []);
 
