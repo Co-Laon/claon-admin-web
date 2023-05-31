@@ -6,7 +6,7 @@ import {
   Select,
   SelectProps,
 } from '@mui/material';
-import React from 'react';
+import { forwardRef } from 'react';
 
 const EssentialStar = styled.span`
   color: red;
@@ -32,26 +32,28 @@ interface SelectBoxProps extends SelectProps {
   isRequire?: string | boolean;
 }
 
-function SelectBox({ items, isRequire, ...props }: SelectBoxProps) {
-  const { label, error } = props;
+const SelectBox = forwardRef<Element, SelectBoxProps>(
+  ({ items, isRequire, ...props }: SelectBoxProps) => {
+    const { label, error } = props;
 
-  return (
-    <FormControl error={error}>
-      <StyledInputLabel shrink>
-        {label}
-        {isRequire && <EssentialStar> * </EssentialStar>}
-      </StyledInputLabel>
-      <StyledSelect defaultValue="" {...props}>
-        {items.map((item) => {
-          return (
-            <MenuItem key={item} value={item}>
-              {item}
-            </MenuItem>
-          );
-        })}
-      </StyledSelect>
-    </FormControl>
-  );
-}
+    return (
+      <FormControl error={error}>
+        <StyledInputLabel shrink>
+          {label}
+          {isRequire && <EssentialStar> * </EssentialStar>}
+        </StyledInputLabel>
+        <StyledSelect defaultValue="" {...props}>
+          {items.map((item) => {
+            return (
+              <MenuItem key={item} value={item}>
+                {item}
+              </MenuItem>
+            );
+          })}
+        </StyledSelect>
+      </FormControl>
+    );
+  }
+);
 
 export default SelectBox;

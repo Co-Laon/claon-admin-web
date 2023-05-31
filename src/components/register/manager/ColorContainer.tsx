@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { FormControl, FormHelperText, InputLabel } from '@mui/material';
 import styled from '@emotion/styled';
 import { ColorContainerProps } from './type';
@@ -37,30 +38,32 @@ const StyledColorContainer = styled.div`
  * @param param0
  * @returns
  */
-function ColorContainer({
-  helperText,
-  label,
-  isRequire,
-  children,
-  formPorps: register,
-  error,
-  ...props
-}: ColorContainerProps) {
-  return (
-    <FormControl>
-      <StyledInputLabel error={error} shrink>
-        {label}
-        {isRequire && <EssentialStar> *</EssentialStar>}
-      </StyledInputLabel>
-      <input type="hidden" {...register} />
-      <StyledColorContainer {...props}>{children}</StyledColorContainer>
-      {error ? (
-        <FormHelperText error={error}>{error.message}</FormHelperText>
-      ) : (
-        <FormHelperText>{helperText}</FormHelperText>
-      )}
-    </FormControl>
-  );
-}
+const ColorContainer = forwardRef<Element, ColorContainerProps>(
+  ({
+    helperText,
+    label,
+    isRequire,
+    children,
+    formPorps: register,
+    error,
+    ...props
+  }: ColorContainerProps) => {
+    return (
+      <FormControl>
+        <StyledInputLabel error={error} shrink>
+          {label}
+          {isRequire && <EssentialStar> *</EssentialStar>}
+        </StyledInputLabel>
+        <input type="hidden" {...register} />
+        <StyledColorContainer {...props}>{children}</StyledColorContainer>
+        {error ? (
+          <FormHelperText error={error}>{error.message}</FormHelperText>
+        ) : (
+          <FormHelperText>{helperText}</FormHelperText>
+        )}
+      </FormControl>
+    );
+  }
+);
 
 export default ColorContainer;
