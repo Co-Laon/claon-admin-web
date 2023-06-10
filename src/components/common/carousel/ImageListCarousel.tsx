@@ -135,6 +135,7 @@ function ImageListCarousel({
           {deleteable && <DeleteModal onClickConfirm={handleDeleteConfirm} />}
           <StyledCarousel
             infiniteLoop
+            showThumbs={false}
             showStatus={false}
             width={width}
             onChange={handleCarouselChange}
