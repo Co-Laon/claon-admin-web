@@ -19,12 +19,17 @@ function Step2() {
           localStorage.getItem('manager') || ''
         );
         formData.proof_list = data.map((file) => file.file_url);
+        console.dir(formData);
         mutateCenterSignUp(formData);
       },
     }
   );
 
   const handleClickNext = useCallback((files: File[]) => {
+    const formData: CenterAuthRequest = JSON.parse(
+      localStorage.getItem('manager') || ''
+    );
+    console.dir(formData);
     return () => {
       mutateCenterProofUploadList(files);
     };

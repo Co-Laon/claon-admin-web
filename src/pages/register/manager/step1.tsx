@@ -6,6 +6,7 @@ import {
   ChangeEvent,
   ReactElement,
   useCallback,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -169,6 +170,14 @@ function Step1() {
     CenterUploadPurpose.FEE
   );
 
+  useEffect(() => {
+    const manager = localStorage.getItem('manager');
+
+    if (manager) {
+      setValue('manager', JSON.parse(manager));
+    }
+  });
+
   const onSubmitButtonClick = useCallback(async () => {
     try {
       const values = await Promise.all([
@@ -180,6 +189,8 @@ function Step1() {
       ]);
 
       const [profileImages, images, feeImages] = values;
+
+      console.dir(values);
 
       setValue('profile_image_list', profileImages);
       setValue('image_list', images);
