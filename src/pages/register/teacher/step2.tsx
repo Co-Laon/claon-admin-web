@@ -43,7 +43,7 @@ function Step2() {
 
   const { mutate: postProfile } = usePostProfile({
     onSuccess: (data) => {
-      setCommonState({ ...commonState, profile_image: data });
+      setCommonState({ ...commonState, profile_image: data.file_url });
       postProof(proofList);
     },
   });

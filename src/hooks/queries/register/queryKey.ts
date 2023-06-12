@@ -61,7 +61,7 @@ export const useLectorRegister = (
 
 export const usePostProfile = (
   options?: Omit<
-    UseMutationOptions<UploadFileResponse, unknown, File, unknown>,
+    UseMutationOptions<UploadFileResponse, unknown, File | undefined, unknown>,
     'mutationFn'
   >
 ) => {

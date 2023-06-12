@@ -7,28 +7,26 @@ import {
 import React, { ReactElement, useCallback } from 'react';
 import { CenterAuthRequest } from '@/types/request/register';
 import { CenterUploadPurpose } from '@/constants';
+import { useLocalStorage } from '@/hooks/common/useLocalStorage';
 
 function Step2() {
+  const [formData, setFormData] = useLocalStorage<CenterAuthRequest>('manager');
   const { mutate: mutateCenterSignUp } = useCenterSignUp();
 
   const { mutate: mutateCenterProofUploadList } = useCenterUploadList(
     CenterUploadPurpose.PROOF,
     {
       onSuccess: (data) => {
-        const formData: CenterAuthRequest = JSON.parse(
-          localStorage.getItem('manager') || ''
-        );
-        formData.proof_list = data.map((file) => file.file_url);
-        console.dir(formData);
+        setFormData({
+          ...formData,
+          proof_list: data.map((file) => file.file_url),
+        });
         mutateCenterSignUp(formData);
       },
     }
   );
 
   const handleClickNext = useCallback((files: File[]) => {
-    const formData: CenterAuthRequest = JSON.parse(
-      localStorage.getItem('manager') || ''
-    );
     console.dir(formData);
     return () => {
       mutateCenterProofUploadList(files);
