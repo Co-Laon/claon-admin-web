@@ -1,14 +1,14 @@
-import axios from 'axios';
+import { UploadFileResponse } from '@/types/common';
+import {
+  CenterAuthRequest,
+  LectorRegisterRequest,
+} from '@/types/request/register';
 import {
   FileResponse,
   IsDuplicatedResponse,
   LectorRegisterResponse,
-} from '../../../types/response/register';
-import {
-  CenterAuthRequest,
-  LectorRegisterRequest,
-} from '../../../types/request/registers';
-import { UploadFileResponse } from '../../../types/common';
+} from '@/types/response/register';
+import axios from 'axios';
 
 export const profilePost = async (file?: File) => {
   if (!file) return `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`;
