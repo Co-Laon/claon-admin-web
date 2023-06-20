@@ -1,5 +1,6 @@
-import { UploadFileResponse } from '@/types/common';
+import { Pagination, UploadFileResponse } from '@/types/common';
 import { Center } from '@/types/common/center';
+import { CenterListResponse } from '@/types/response/center';
 
 const nickNameList: string[] = ['test', 'test1', 'test2'];
 export const nickNameStore = new Set(nickNameList);
@@ -46,4 +47,24 @@ export const center: Center = {
 
 export const uploadedFileUrl: UploadFileResponse = {
   file_url: 'file_url',
+};
+
+export const centerList: Pagination<CenterListResponse> = {
+  next_page_num: 0,
+  previous_page_num: 0,
+  total_num: 0,
+  results: [
+    {
+      address: '서울특별시 강남구 역삼동 115-2',
+      center_id: '0',
+      detail_address: '',
+      image_list: [],
+      is_approved: true,
+      lector_count: 5,
+      matching_request_count: 3,
+      member_count: 150,
+      name: '더클라이밍 강남점',
+      profile_image: `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`,
+    },
+  ],
 };

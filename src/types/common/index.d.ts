@@ -3,10 +3,10 @@
  * 공통 인터페이스 Claon Pagination, 유명한 이름이라 바꿔야 할 수도 있음
  */
 export interface Pagination<T> {
-  nextPageNum: number;
-  previousPageNum: number;
+  next_page_num: number;
+  previous_page_num: number;
   results: T[];
-  totalCount: number;
+  total_num: number;
 }
 
 export interface ServerError {
