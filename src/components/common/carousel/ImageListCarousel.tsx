@@ -123,6 +123,10 @@ function ImageListCarousel({
     }
   };
 
+  const imageUrlList = images.map((file) =>
+    typeof file === 'string' ? file : URL.createObjectURL(file)
+  );
+
   return (
     <ImageListWrapper width={width} height={height}>
       {isCarouselEmpty && <PhotoEmptyIcon />}
@@ -131,6 +135,7 @@ function ImageListCarousel({
           {deleteable && <DeleteModal onClickConfirm={handleDeleteConfirm} />}
           <StyledCarousel
             infiniteLoop
+            showThumbs={false}
             showStatus={false}
             width={width}
             onChange={handleCarouselChange}
@@ -149,7 +154,7 @@ function ImageListCarousel({
               )
             }
           >
-            {images.map((image) => (
+            {imageUrlList.map((image) => (
               <StyledCarouselItemContainer
                 key={image}
                 width={width}

@@ -4,12 +4,20 @@ import {
   UseMutationOptions,
   useQuery,
 } from '@tanstack/react-query';
-import { LectorRegisterRequest } from '@/types/request/register';
 import {
+  CenterAuthRequest,
+  LectorRegisterRequest,
+} from '@/types/request/register';
+import {
+  CenterAuthResponse,
   FileResponse,
   LectorRegisterResponse,
 } from '@/types/response/register';
+import { UploadFileResponse, ValidationError } from '@/types/common';
+import { CenterUploadPurpose } from '@/constants';
 import {
+  centerSignUp,
+  centerUploadList,
   lectorRegister,
   nicknameDupCheck,
   profilePost,
@@ -53,7 +61,7 @@ export const useLectorRegister = (
 
 export const usePostProfile = (
   options?: Omit<
-    UseMutationOptions<string, unknown, File | undefined, unknown>,
+    UseMutationOptions<UploadFileResponse, unknown, File | undefined, unknown>,
     'mutationFn'
   >
 ) => {
@@ -76,4 +84,38 @@ export const usePostProof = (
   return useMutation((fileList: File[]) => proofPost(fileList), {
     ...options,
   });
+};
+
+export const useCenterSignUp = (
+  options?: Omit<
+    UseMutationOptions<
+      CenterAuthResponse,
+      ValidationError,
+      CenterAuthRequest,
+      unknown
+    >,
+    'mutationFn'
+  >
+) => {
+  return useMutation(
+    (centerInfo: CenterAuthRequest) => centerSignUp(centerInfo),
+    {
+      ...options,
+    }
+  );
+};
+
+export const useCenterUploadList = (
+  purpose: CenterUploadPurpose,
+  options?: Omit<
+    UseMutationOptions<FileResponse[], unknown, File[], unknown>,
+    'mutationFn'
+  >
+) => {
+  return useMutation(
+    (fileList: File[]) => centerUploadList(purpose, fileList),
+    {
+      ...options,
+    }
+  );
 };

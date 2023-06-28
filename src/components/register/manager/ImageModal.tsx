@@ -104,14 +104,14 @@ const ImageModalEmbedImageWrapper = styled.div`
 `;
 
 function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
-  const [imageList, setImageList] = React.useState<string[]>([]);
+  const [imageList, setImageList] = React.useState<File[]>([]);
 
-  const isImageListEmpty = imageList.length === 0;
+  const isImageListEmpty = imageList?.length === 0;
 
   const handleDragDropChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
-      setImageList(files.map((file) => URL.createObjectURL(file)));
+      setImageList(files);
     }
   };
 

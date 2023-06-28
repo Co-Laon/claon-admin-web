@@ -1,4 +1,11 @@
-import { LNBMenu } from '@/types/layout';
+import { LNBMenu } from '../types/layout';
+
+export enum CenterUploadPurpose {
+  PROFILE = 'profile',
+  IMAGE = 'image',
+  FEE = 'fee',
+  PROOF = 'proof',
+}
 
 export const LNBManagerMenu: LNBMenu = [
   {

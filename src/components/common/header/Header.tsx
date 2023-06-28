@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import ProfileSkeleton from '@/assets/ProfileSkeleton';
 import MessageIcon from '@/assets/MessageIcon';
-import { HeaderDepthProps } from '@/types/layout';
+import { HeaderDepthProps } from '../../../types/layout';
 import AlarmedIcon from '../BadgedIcon/BadgedIcon';
 import HeaderDepth from './HeaderDepth';
 
