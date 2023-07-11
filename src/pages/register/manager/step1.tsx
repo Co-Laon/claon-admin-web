@@ -5,11 +5,12 @@ import { useForm } from 'react-hook-form';
 import {
   ChangeEvent,
   ReactElement,
+  forwardRef,
   useCallback,
   useRef,
   useState,
 } from 'react';
-import { Button } from '@mui/material';
+import { Button, TextFieldProps } from '@mui/material';
 import SearchIcon from '@/assets/SearchIcon';
 import PostCodeModal from '@/components/common/postcode/PostCodeModal';
 import ListForm from '@/components/register/ListForm';
@@ -27,7 +28,7 @@ import ColorPickerModal from '@/components/register/manager/ColorPickerModal';
 import HoldTypeSelect from '@/components/register/manager/HoldTypeSelect';
 import HoldColorFormItem from '@/components/register/manager/HoldColorFormItem';
 import SearchCenterModal from '@/components/register/manager/SearchCenterModal';
-import { useRouter } from 'next/router';
+
 import { CenterUploadPurpose } from '@/constants';
 import {
   useCenterSignUp,
@@ -132,8 +133,6 @@ function Step1() {
     unregister,
   } = useForm();
 
-  const router = useRouter();
-
   const [isStep1, setIsStep1] = useState(true);
 
   const [holdType, setHoldType] = useState<HoldType>(HoldType.COLOR);
@@ -223,7 +222,6 @@ function Step1() {
       mutateCenterImageUploadList,
       mutateCenterFeeUploadList,
       setValue,
-      router,
     ]
   );
 
@@ -338,7 +336,7 @@ function Step1() {
 
   if (isStep1)
     return (
-      <StyledForm>
+      <StyledForm onSubmit={() => {}}>
         <div>
           <Title>{`${name}님`}</Title>
           <Title>암장을 소개해주세요.</Title>
