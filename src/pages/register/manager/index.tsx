@@ -278,12 +278,9 @@ function Page() {
     setCenterImageModalOpen(false);
   }, []);
 
-  const handleCenterImageModalComplete = useCallback(
-    (centerImages: File[]) => {
-      setCenterImageList(centerImages);
-    },
-    [setValue]
-  );
+  const handleCenterImageModalComplete = useCallback((centerImages: File[]) => {
+    setCenterImageList(centerImages);
+  }, []);
 
   // 요금 이미지 추가 모달 핸들러
   const handleFeeImageAddButtonClick = useCallback(() => {
@@ -294,12 +291,9 @@ function Page() {
     setFeeImageModalOpen(false);
   }, []);
 
-  const handleFeeImageModalComplete = useCallback(
-    (feeImages: File[]) => {
-      setFeeImageList(feeImages);
-    },
-    [setValue]
-  );
+  const handleFeeImageModalComplete = useCallback((feeImages: File[]) => {
+    setFeeImageList(feeImages);
+  }, []);
 
   // 홀드 타입 변경 핸들러
   const handleHoldTypeChange = useCallback(
