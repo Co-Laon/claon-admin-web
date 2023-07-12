@@ -1,17 +1,28 @@
-import { CenterNameResponse } from '@/types/common/center';
 import {
   FieldError,
   FieldValues,
   UseFormRegister,
   UseFormRegisterReturn,
+  UseFormSetValue,
   UseFormUnregister,
 } from 'react-hook-form';
+import { HoldListResponse, WallListResponse } from '@/types/response/center';
+import { CenterNameResponse } from '../../../types/common/center';
+
+export interface TimeTablesProps {
+  day_of_week: string;
+  start_time: string;
+  end_time: string;
+}
 
 export interface OperatingTimeTableFormProps {
   register: UseFormRegister<FieldValues>;
   unregister: UseFormUnregister<FieldValues>;
   formKey: string;
   error?: FieldError<FieldValues>;
+  timeTables?: TimeTablesProps[];
+  readOnly?: boolean;
+  setValue?: UseFormSetValue<FieldValues>;
 }
 
 export interface ColorContainerProps extends OutlinedInputProps {
@@ -28,7 +39,7 @@ export interface ImageModalProps {
   title: string;
   open: boolean;
   onClose: () => void;
-  onComplete: (list: string[]) => void;
+  onComplete: (list: File[]) => void;
 }
 
 export interface HoldTypeSelectProps {
@@ -36,6 +47,7 @@ export interface HoldTypeSelectProps {
   checkboxes: string[];
   defaultValue?: number;
   onInputChange?: (idx: number) => void;
+  readOnly?: boolean;
 }
 
 export interface HoldDifficultyFormItemProps {
@@ -44,6 +56,9 @@ export interface HoldDifficultyFormItemProps {
   formKey?: string;
   error?: FieldErrors<FieldValues>;
   onClickTextField?: (key: string) => void;
+  readOnly?: boolean;
+  value?: HoldListResponse;
+  setValue?: UseFormSetValue<FieldValues>;
 }
 
 export interface ColorPickerModalProps {
@@ -61,6 +76,8 @@ export interface ChipFormProps {
   items: string[];
   formKey: string;
   setValue: UseFormSetValue<FieldValues>;
+  value?: string[];
+  readOnly?: boolean;
 }
 
 export interface FeeInfoFormItemProps {
@@ -77,6 +94,7 @@ export interface HoldColorFormItemProps {
   formKey?: string;
   error?: FieldErrors<FieldValues>;
   onClickTextField?: (key: string) => void;
+  readOnly?: boolean;
 }
 
 export interface SearchCenterModalProps {
@@ -90,4 +108,6 @@ export interface WallInfoFormItemProps {
   idx?: number;
   formKey?: string;
   error?: FieldErrors<FieldValues>;
+  value?: WallListResponse;
+  readOnly?: boolean;
 }

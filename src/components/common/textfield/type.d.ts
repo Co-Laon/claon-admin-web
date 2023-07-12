@@ -11,4 +11,5 @@ export interface TextFieldProps extends OutlinedInputProps {
   pattern?: ValidationRule<RegExp>;
   minLength?: ValidationRule<number>;
   maxLength?: ValidationRule<number>;
+  disabled?: boolean;
 }

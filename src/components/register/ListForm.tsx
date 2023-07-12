@@ -7,6 +7,7 @@ import {
   ChangeEvent,
   cloneElement,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -14,6 +15,8 @@ import {
   FieldErrors,
   FieldValues,
   UseFormRegister,
+  UseFormResetField,
+  UseFormSetValue,
   UseFormUnregister,
 } from 'react-hook-form';
 
@@ -25,6 +28,10 @@ interface ListFormProps {
   formName: string;
   unregister: UseFormUnregister<FieldValues>;
   error?: FieldErrors<FieldValues>;
+  readOnly?: boolean;
+  defaultValues?: object[];
+  setValue?: UseFormSetValue<FieldValues>;
+  resetField?: UseFormResetField<FieldValues>;
 }
 
 interface ItemType {
@@ -92,6 +99,10 @@ function ListForm({
   formName,
   unregister,
   error,
+  readOnly,
+  defaultValues,
+  setValue,
+  resetField,
 }: ListFormProps) {
   //  title 부분에 다른 컴포넌트를 넣을 수 있도록 처리
   const titleComponent =
@@ -138,33 +149,52 @@ function ListForm({
     setItemList(nItemList);
   }, [itemList, checked, formName, unregister]);
 
+  useEffect(() => {
+    if (defaultValues) {
+      unregister(formName);
+      const nItem = defaultValues.map((value, i) => ({
+        items,
+        id: i,
+      }));
+      setItemList(nItem);
+      setLastKey(defaultValues.length + lastKey);
+    }
+  }, [defaultValues, resetField]);
+
   return (
     <div>
       <TitleWrapper>
         {titleComponent}
-        <StyledIconButton buttonType={checked.length === 0 ? 'add' : 'delete'}>
-          {checked.length === 0 ? (
-            <AddIcon onClick={onClickAdd} width={24} height={24} />
-          ) : (
-            <DeleteWhiteIcon onClick={onClickRemove} />
-          )}
-        </StyledIconButton>
+        {readOnly ? null : (
+          <StyledIconButton
+            buttonType={checked.length === 0 ? 'add' : 'delete'}
+          >
+            {checked.length === 0 ? (
+              <AddIcon onClick={onClickAdd} width={24} height={24} />
+            ) : (
+              <DeleteWhiteIcon onClick={onClickRemove} />
+            )}
+          </StyledIconButton>
+        )}
       </TitleWrapper>
       <StyledUl>
         {itemList.map((item, idx) => (
           <StyledLi key={uuid4()}>
             <ItemWrapper key={uuid4()}>
-              <StyledCheckbox
-                onChange={(e) => onChangeCheckbox(e, idx)}
-                checked={checked.includes(idx)}
-              />
-
+              {readOnly ? null : (
+                <StyledCheckbox
+                  onChange={(e) => onChangeCheckbox(e, idx)}
+                  checked={checked.includes(idx)}
+                />
+              )}
               {cloneElement(item.items, {
                 register,
                 formKey: formName,
                 idx: `${item.id}`,
                 key: item.id,
                 error: errors,
+                readOnly,
+                value: defaultValues && defaultValues[idx],
               })}
             </ItemWrapper>
           </StyledLi>

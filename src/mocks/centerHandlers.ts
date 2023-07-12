@@ -1,6 +1,6 @@
 import { CenterNameResponse } from '@/types/common/center';
 import { rest } from 'msw';
-import { center, centerList, uploadedFileUrl } from './mockData';
+import { center, centerDetail, centerList, uploadedFileUrl } from './mockData';
 
 const centerHandler = [
   // find Id by center name
@@ -16,7 +16,7 @@ const centerHandler = [
 
   // find center by id
   rest.get('/centers/:center_id', (req, res, ctx) => {
-    return res(ctx.json(center));
+    return res(ctx.json(centerDetail));
   }),
 
   // upload file

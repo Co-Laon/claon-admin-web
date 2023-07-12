@@ -2,7 +2,14 @@ import ProfileButton from '@/components/common/profile/ProfileButton';
 import styled from '@emotion/styled';
 import TextField from '@/components/common/textfield/TextField';
 import { useForm } from 'react-hook-form';
-import { ReactElement, useCallback, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Button } from '@mui/material';
 import SearchIcon from '@/assets/SearchIcon';
 import PostCodeModal from '@/components/common/postcode/PostCodeModal';
@@ -21,7 +28,10 @@ import ColorPickerModal from '@/components/register/manager/ColorPickerModal';
 import HoldTypeSelect from '@/components/register/manager/HoldTypeSelect';
 import HoldColorFormItem from '@/components/register/manager/HoldColorFormItem';
 import SearchCenterModal from '@/components/register/manager/SearchCenterModal';
-import { CenterNameResponse } from '@/types/common/center';
+import { useRouter } from 'next/router';
+import { CenterUploadPurpose } from '@/constants';
+import { useCenterUploadList } from '@/hooks/queries/register/queryKey';
+import { CenterNameResponse } from '../../../types/common/center';
 
 const Title = styled.p`
   font-size: 20px;
@@ -118,7 +128,11 @@ function Step1() {
     unregister,
   } = useForm();
 
+  const router = useRouter();
+
   const [holdType, setHoldType] = useState<HoldType>(HoldType.COLOR);
+
+  const [centerProfileImage, setCenterProfileImage] = useState<File>();
 
   const [centerSearchModalOpen, setCenterSearchModalOpen] = useState(false);
 
@@ -126,11 +140,11 @@ function Step1() {
 
   const [centerImageModalOpen, setCenterImageModalOpen] = useState(false);
 
-  const [centerImageList, setCenterImageList] = useState<string[]>([]);
+  const [centerImageList, setCenterImageList] = useState<File[]>([]);
 
   const [feeImageModalOpen, setFeeImageModalOpen] = useState(false);
 
-  const [feeImageList, setFeeImageList] = useState<string[]>([]);
+  const [feeImageList, setFeeImageList] = useState<File[]>([]);
 
   const [colorPickerModalOpen, setColorPickerModalOpen] = useState(false);
 
@@ -144,9 +158,65 @@ function Step1() {
   const [holdColorTextFieldFormKey, setHoldColorTextFieldFormKey] =
     useState<string>('');
 
-  const onSubmit = useCallback(() => {}, []);
+  const { mutateAsync: mutateCenterProfileUploadList } = useCenterUploadList(
+    CenterUploadPurpose.PROFILE
+  );
 
-  const handleProfileImageChange = useCallback(() => {}, []);
+  const { mutateAsync: mutateCenterImageUploadList } = useCenterUploadList(
+    CenterUploadPurpose.IMAGE
+  );
+
+  const { mutateAsync: mutateCenterFeeUploadList } = useCenterUploadList(
+    CenterUploadPurpose.FEE
+  );
+
+  useEffect(() => {
+    const manager = localStorage.getItem('manager');
+
+    if (manager) {
+      setValue('manager', JSON.parse(manager));
+    }
+  });
+
+  const onSubmitButtonClick = useCallback(async () => {
+    try {
+      const values = await Promise.all([
+        mutateCenterProfileUploadList(
+          centerProfileImage ? [centerProfileImage] : []
+        ),
+        mutateCenterImageUploadList(centerImageList),
+        mutateCenterFeeUploadList(feeImageList),
+      ]);
+
+      const [profileImages, images, feeImages] = values;
+
+      console.dir(values);
+
+      setValue('profile_image_list', profileImages);
+      setValue('image_list', images);
+      setValue('fee_image_list', feeImages);
+
+      localStorage.setItem('manager', JSON.stringify(getValues()));
+      router.push('/register/manager/step2');
+    } catch (error) {
+      console.error(error);
+    }
+  }, [
+    mutateCenterProfileUploadList,
+    mutateCenterImageUploadList,
+    mutateCenterFeeUploadList,
+    setValue,
+    router,
+  ]);
+
+  const handleProfileImageChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        setCenterProfileImage(Array.from(e.target.files)[0]);
+      }
+    },
+    []
+  );
 
   // 기존 암장 검색 모달 관련 핸들러
   const handleCenterButtonClick = useCallback(() => {
@@ -196,8 +266,7 @@ function Step1() {
   }, []);
 
   const handleCenterImageModalComplete = useCallback(
-    (centerImages: string[]) => {
-      setValue('image_list', centerImages);
+    (centerImages: File[]) => {
       setCenterImageList(centerImages);
     },
     [setValue]
@@ -213,8 +282,7 @@ function Step1() {
   }, []);
 
   const handleFeeImageModalComplete = useCallback(
-    (feeImages: string[]) => {
-      setValue('fee_image_list', feeImages);
+    (feeImages: File[]) => {
       setFeeImageList(feeImages);
     },
     [setValue]
@@ -256,9 +324,13 @@ function Step1() {
         <Title>{`${name}님`}</Title>
         <Title>암장을 소개해주세요.</Title>
       </div>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <StyledForm onSubmit={handleSubmit(onSubmitButtonClick)}>
         <BetweenWrapper alignItems="end">
-          <ProfileButton onChange={handleProfileImageChange} />
+          <ProfileButton
+            onChange={handleProfileImageChange}
+            img={centerProfileImage}
+            isCenterProfile
+          />
           <StyledSmallButton onClick={handleCenterButtonClick}>
             <SearchIcon width={12} height={12} /> 기존 암장
           </StyledSmallButton>

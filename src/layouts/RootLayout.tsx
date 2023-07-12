@@ -13,7 +13,7 @@ const StyledHomeLayoutWrapper = styled.div`
 const StyledHomePageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: calc(100% - 300px);
 `;
 
 export default function RootLayout({ children }: { children: ReactNode }) {

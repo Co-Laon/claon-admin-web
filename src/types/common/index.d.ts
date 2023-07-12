@@ -9,18 +9,22 @@ export interface Pagination<T> {
   total_num: number;
 }
 
-export interface ServerError {
-  timestamp: string;
-  status: number;
-  error: string;
-  path: string;
+export interface CommonError {
+  code: string;
+  message: string;
 }
 
-export interface ServerBusinessError {
-  errorCode: number;
+export interface ValidationErrorMessage {
+  loc: string;
   message: string;
-  timeStamp: string;
-  violations?: string[];
+  type: string;
+}
+
+export interface ValidationError extends CommonError {
+  message: ValidationErrorMessage[];
+}
+export interface HttpValidationError {
+  detail: ValidationErrorMessage[];
 }
 
 export interface UploadFileRequest {

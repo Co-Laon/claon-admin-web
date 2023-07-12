@@ -37,7 +37,11 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['via.placeholder.com', '*'],
+    domains: [
+      'via.placeholder.com',
+      'claon-server.s3.ap-northeast-2.amazonaws.com',
+      '*',
+    ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },

@@ -1,10 +1,10 @@
 import { rest } from 'msw';
-import { SignInResponse } from '@/types/login';
+import { SignInResponse } from '../types/login';
 import {
   LectorRegister,
   ManagerRegister,
   RegisterResponse,
-} from '@/types/register';
+} from '../types/register';
 import { nickNameStore } from './mockData';
 
 const authHandler = [
