@@ -5,12 +5,11 @@ import { useForm } from 'react-hook-form';
 import {
   ChangeEvent,
   ReactElement,
-  forwardRef,
   useCallback,
   useRef,
   useState,
 } from 'react';
-import { Button, TextFieldProps } from '@mui/material';
+import { Button } from '@mui/material';
 import SearchIcon from '@/assets/SearchIcon';
 import PostCodeModal from '@/components/common/postcode/PostCodeModal';
 import ListForm from '@/components/register/ListForm';
@@ -123,7 +122,7 @@ const utilityList = [
   '트레이닝 존',
 ];
 
-function Step1() {
+function Page() {
   const {
     register,
     setValue,
@@ -197,8 +196,6 @@ function Step1() {
           mutateCenterProofUploadList(files),
         ]).then((values) => {
           const [profileImages, images, feeImages, proofImages] = values;
-
-          console.dir(values);
 
           setValue('profile_image', profileImages[0].file_url);
           setValue(
@@ -336,7 +333,7 @@ function Step1() {
 
   if (isStep1)
     return (
-      <StyledForm onSubmit={() => {}}>
+      <StyledForm onSubmit={handleSubmit(handleClickNextButton)}>
         <div>
           <Title>{`${name}님`}</Title>
           <Title>암장을 소개해주세요.</Title>
@@ -575,8 +572,8 @@ function Step1() {
   );
 }
 
-Step1.getLayout = function getLayout(page: ReactElement) {
+Page.getLayout = function getLayout(page: ReactElement) {
   return <RegisterLayout step={66}>{page}</RegisterLayout>;
 };
 
-export default Step1;
+export default Page;
