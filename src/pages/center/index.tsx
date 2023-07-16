@@ -11,11 +11,14 @@ import { ReactElement, useEffect, useState } from 'react';
 
 const StyledContainer = styled.div`
   display: flex;
+  height: calc(100% - 66px);
 `;
 
 const ListContainer = styled.div`
   padding: 20px;
   width: 62%;
+  height: 100%;
+  overflow: auto;
 `;
 
 const StyledAddButton = styled.button`
@@ -24,16 +27,21 @@ const StyledAddButton = styled.button`
   background-color: #6750a4;
   border-radius: 100px;
   margin-bottom: 12px;
+  border: none;
 `;
 
 const StyledCenterListContainer = styled.div`
-  overflow-y: auto;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const CenterDetailContainer = styled.div`
   padding: 20px;
   width: 38%;
+  height: 100%;
 `;
 
 function CenterMainPage() {

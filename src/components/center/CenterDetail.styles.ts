@@ -2,9 +2,12 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  height: 100%;
+`;
 
 export const StyledDetailContent = styled.div`
+  height: 100%;
   overflow-y: auto;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;

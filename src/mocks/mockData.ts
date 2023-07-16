@@ -73,6 +73,22 @@ export const centerList: Pagination<CenterListResponse> = {
       name: '더클라이밍 강남점',
       profile_image: `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`,
     },
+    {
+      address: '서울특별시 강남구 역삼동 115-2',
+      center_id: '0',
+      detail_address: '',
+      image_list: [
+        `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`,
+        `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`,
+        `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`,
+      ],
+      is_approved: true,
+      lector_count: 5,
+      matching_request_count: 3,
+      member_count: 150,
+      name: '더클라이밍 강남점',
+      profile_image: `${process.env.NEXT_PUBLIC_S3}/profile/default.svg`,
+    },
   ],
 };
 

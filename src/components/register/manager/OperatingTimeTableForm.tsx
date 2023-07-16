@@ -16,7 +16,7 @@ const ChipContainer = styled.div`
   gap: 8px;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr)) 2fr;
 `;
 
 const StyledChipButton = styled.div<{ isSelected: boolean }>`
