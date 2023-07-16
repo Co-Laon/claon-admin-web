@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const StyledDetailContent = styled.div`
-  height: 100%;
+  height: calc(100% - 35px);
   overflow-y: auto;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
