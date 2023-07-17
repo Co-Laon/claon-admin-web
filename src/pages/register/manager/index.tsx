@@ -6,7 +6,6 @@ import {
   ChangeEvent,
   ReactElement,
   useCallback,
-  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -28,10 +27,15 @@ import ColorPickerModal from '@/components/register/manager/ColorPickerModal';
 import HoldTypeSelect from '@/components/register/manager/HoldTypeSelect';
 import HoldColorFormItem from '@/components/register/manager/HoldColorFormItem';
 import SearchCenterModal from '@/components/register/manager/SearchCenterModal';
-import { useRouter } from 'next/router';
+
 import { CenterUploadPurpose } from '@/constants';
-import { useCenterUploadList } from '@/hooks/queries/register/queryKey';
-import { CenterNameResponse } from '../../../types/common/center';
+import {
+  useCenterSignUp,
+  useCenterUploadList,
+} from '@/hooks/queries/register/queryKey';
+import { CenterNameResponse } from '@/types/common/center';
+import { CenterAuthRequest } from '@/types/request/register';
+import Certificate from '@/components/register/Certificate';
 
 const Title = styled.p`
   font-size: 20px;
@@ -118,7 +122,7 @@ const utilityList = [
   '트레이닝 존',
 ];
 
-function Step1() {
+function Page() {
   const {
     register,
     setValue,
@@ -128,7 +132,7 @@ function Step1() {
     unregister,
   } = useForm();
 
-  const router = useRouter();
+  const [isStep1, setIsStep1] = useState(true);
 
   const [holdType, setHoldType] = useState<HoldType>(HoldType.COLOR);
 
@@ -170,44 +174,53 @@ function Step1() {
     CenterUploadPurpose.FEE
   );
 
-  useEffect(() => {
-    const manager = localStorage.getItem('manager');
+  const { mutateAsync: mutateCenterProofUploadList } = useCenterUploadList(
+    CenterUploadPurpose.PROOF
+  );
 
-    if (manager) {
-      setValue('manager', JSON.parse(manager));
-    }
-  });
+  const { mutate: mutateCenterSignUp } = useCenterSignUp();
 
-  const onSubmitButtonClick = useCallback(async () => {
-    try {
-      const values = await Promise.all([
-        mutateCenterProfileUploadList(
-          centerProfileImage ? [centerProfileImage] : []
-        ),
-        mutateCenterImageUploadList(centerImageList),
-        mutateCenterFeeUploadList(feeImageList),
-      ]);
+  const handleClickNextButton = useCallback(() => {
+    setIsStep1(false);
+  }, []);
 
-      const [profileImages, images, feeImages] = values;
+  const onSubmitButtonClick = useCallback(
+    (files: File[]) => {
+      return () =>
+        Promise.all([
+          mutateCenterProfileUploadList(
+            centerProfileImage ? [centerProfileImage] : []
+          ),
+          mutateCenterImageUploadList(centerImageList),
+          mutateCenterFeeUploadList(feeImageList),
+          mutateCenterProofUploadList(files),
+        ]).then((values) => {
+          const [profileImages, images, feeImages, proofImages] = values;
 
-      console.dir(values);
+          setValue('profile_image', profileImages[0].file_url);
+          setValue(
+            'image_list',
+            images.map((image) => image.file_url)
+          );
+          setValue(
+            'fee_image_list',
+            feeImages.map((fee) => fee.file_url)
+          );
+          setValue(
+            'proof_list',
+            proofImages.map((proof) => proof.file_url)
+          );
 
-      setValue('profile_image_list', profileImages);
-      setValue('image_list', images);
-      setValue('fee_image_list', feeImages);
-
-      localStorage.setItem('manager', JSON.stringify(getValues()));
-      router.push('/register/manager/step2');
-    } catch (error) {
-      console.error(error);
-    }
-  }, [
-    mutateCenterProfileUploadList,
-    mutateCenterImageUploadList,
-    mutateCenterFeeUploadList,
-    setValue,
-    router,
-  ]);
+          mutateCenterSignUp(getValues() as CenterAuthRequest);
+        });
+    },
+    [
+      mutateCenterProfileUploadList,
+      mutateCenterImageUploadList,
+      mutateCenterFeeUploadList,
+      setValue,
+    ]
+  );
 
   const handleProfileImageChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -265,12 +278,9 @@ function Step1() {
     setCenterImageModalOpen(false);
   }, []);
 
-  const handleCenterImageModalComplete = useCallback(
-    (centerImages: File[]) => {
-      setCenterImageList(centerImages);
-    },
-    [setValue]
-  );
+  const handleCenterImageModalComplete = useCallback((centerImages: File[]) => {
+    setCenterImageList(centerImages);
+  }, []);
 
   // 요금 이미지 추가 모달 핸들러
   const handleFeeImageAddButtonClick = useCallback(() => {
@@ -281,12 +291,9 @@ function Step1() {
     setFeeImageModalOpen(false);
   }, []);
 
-  const handleFeeImageModalComplete = useCallback(
-    (feeImages: File[]) => {
-      setFeeImageList(feeImages);
-    },
-    [setValue]
-  );
+  const handleFeeImageModalComplete = useCallback((feeImages: File[]) => {
+    setFeeImageList(feeImages);
+  }, []);
 
   // 홀드 타입 변경 핸들러
   const handleHoldTypeChange = useCallback(
@@ -318,13 +325,13 @@ function Step1() {
   // 홀드 난이도 색 변경 값
   const isHoldSetColor = holdType === 0;
 
-  return (
-    <>
-      <div>
-        <Title>{`${name}님`}</Title>
-        <Title>암장을 소개해주세요.</Title>
-      </div>
-      <StyledForm onSubmit={handleSubmit(onSubmitButtonClick)}>
+  if (isStep1)
+    return (
+      <StyledForm onSubmit={handleSubmit(handleClickNextButton)}>
+        <div>
+          <Title>{`${name}님`}</Title>
+          <Title>암장을 소개해주세요.</Title>
+        </div>
         <BetweenWrapper alignItems="end">
           <ProfileButton
             onChange={handleProfileImageChange}
@@ -510,6 +517,7 @@ function Step1() {
             }
             items={
               <HoldColorFormItem
+                formKey="hold_list"
                 getValues={getValues}
                 onClickTextField={handleColorPickerInputClick}
               />
@@ -549,14 +557,17 @@ function Step1() {
           }
           unregister={unregister}
         />
-        <StyledButton type="submit">다음</StyledButton>
+        <StyledButton onClick={handleClickNextButton}>다음</StyledButton>
       </StyledForm>
-    </>
+    );
+
+  return (
+    <Certificate type="관리자" name="" onClickNext={onSubmitButtonClick} />
   );
 }
 
-Step1.getLayout = function getLayout(page: ReactElement) {
+Page.getLayout = function getLayout(page: ReactElement) {
   return <RegisterLayout step={66}>{page}</RegisterLayout>;
 };
 
-export default Step1;
+export default Page;
