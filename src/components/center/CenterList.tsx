@@ -2,9 +2,14 @@ import { CenterListResponse } from '@/types/response/center';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 
+interface CenterListProps extends CenterListResponse {
+  onClick: (id: string) => () => void;
+}
+
 const Container = styled.div`
   border: 1px solid #c4c4c4;
   border-radius: 16px;
+  cursor: pointer;
 `;
 
 const Header = styled.div`
@@ -69,6 +74,7 @@ const StyledCountContent = styled.p`
 // =====================================================
 
 function CenterList({
+  center_id,
   profile_image,
   name,
   address,
@@ -76,9 +82,10 @@ function CenterList({
   lector_count,
   member_count,
   matching_request_count,
-}: CenterListResponse) {
+  onClick,
+}: CenterListProps) {
   return (
-    <Container>
+    <Container onClick={onClick(center_id)}>
       <Header>
         <Image src={profile_image} alt="profile" width={40} height={40} />
         <HeaderTitle>

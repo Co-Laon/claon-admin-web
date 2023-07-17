@@ -7,7 +7,7 @@ import {
 import RootLayout from '@/layouts/RootLayout';
 import { CenterDetailResponse } from '@/types/response/center';
 import styled from '@emotion/styled';
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -55,13 +55,19 @@ function CenterMainPage() {
     }
   }, [centerList]);
 
+  const onClickCenter = useCallback((id: string) => {
+    return () => {
+      setCenterId(id);
+    };
+  }, []);
+
   return (
     <StyledContainer>
       <ListContainer>
         <StyledAddButton>+ 암장 등록</StyledAddButton>
         <StyledCenterListContainer>
           {centerList?.results.map((result) => (
-            <CenterList {...result} />
+            <CenterList onClick={onClickCenter} {...result} />
           ))}
         </StyledCenterListContainer>
       </ListContainer>

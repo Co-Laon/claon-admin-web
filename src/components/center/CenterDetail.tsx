@@ -14,6 +14,7 @@ import ListForm from '../register/ListForm';
 import WallInfoFormItem from '../register/manager/WallInfoFormItem';
 
 function CenterDetail({
+  center_id,
   address,
   detail_address,
   hold_info,
@@ -37,6 +38,11 @@ function CenterDetail({
     setReadOnly(false);
     setMode('edit');
   }, []);
+
+  useEffect(() => {
+    setReadOnly(true);
+    setMode('readOnly');
+  }, [center_id]);
 
   useEffect(() => {
     if (hold_info) {
