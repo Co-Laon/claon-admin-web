@@ -60,7 +60,6 @@ function ChipForm({
 
   useEffect(() => {
     if (value) {
-      console.log(value);
       setValue(formKey, value);
       const newSelected = [...selected];
       value.forEach((v) => {

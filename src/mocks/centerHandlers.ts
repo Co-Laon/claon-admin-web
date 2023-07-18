@@ -1,7 +1,6 @@
 import { CenterNameResponse } from '@/types/common/center';
 import { rest } from 'msw';
 import {
-  center,
   centerDetail1,
   centerDetail2,
   centerDetail3,

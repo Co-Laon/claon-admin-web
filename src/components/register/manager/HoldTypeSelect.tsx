@@ -37,7 +37,6 @@ function HoldTypeSelect({
   );
 
   useEffect(() => {
-    console.log('defaultValue', defaultValue);
     setChecked(defaultValue);
   }, [defaultValue]);
 

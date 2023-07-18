@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useCallback, useEffect, useState } from 'react';
 import { utilityList } from '@/constants';
 import * as S from './CenterDetail.styles';
-import TextField from '../common/textfield/TextField';
 import BasicInfo from '../register/manager/BasicInfo';
 import ImageList from '../register/manager/ImageList';
 import OperatingTimeTableForm from '../register/manager/OperatingTimeTableForm';

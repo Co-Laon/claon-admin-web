@@ -74,14 +74,6 @@ function HoldDifficultyFormItem({
     }
   };
 
-  useEffect(() => {
-    console.log('readOnly: ', readOnly);
-  }, [readOnly]);
-
-  useEffect(() => {
-    console.log('mounte');
-  }, []);
-
   if (register && formKey && idx) {
     return (
       <ListFormItemContainer>
