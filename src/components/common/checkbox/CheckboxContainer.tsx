@@ -23,6 +23,7 @@ const StyledText = styled.span`
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
+  color: black;
 `;
 
 /**
@@ -35,6 +36,7 @@ const StyledText = styled.span`
 function CheckboxContainer({
   checked,
   text,
+  readOnly,
   ...props
 }: CheckboxContainerProps) {
   return (
@@ -43,6 +45,7 @@ function CheckboxContainer({
         value={text}
         label={<StyledText>{text}</StyledText>}
         control={<StyledCheckbox {...props} checked={checked} />}
+        disabled={readOnly}
       />
     </CheckBoxWrapper>
   );

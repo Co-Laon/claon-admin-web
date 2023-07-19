@@ -28,7 +28,12 @@ const StyledImage = styled(Image)`
 
 // 임시 프로파일 버튼
 
-function ProfileButton({ onChange, img, isCenterProfile }: ProfileButtonProps) {
+function ProfileButton({
+  onChange,
+  img,
+  isCenterProfile,
+  readOnly,
+}: ProfileButtonProps) {
   const ref = useRef<HTMLInputElement>(null);
   const [src, setSrc] = useState<string>('/');
 

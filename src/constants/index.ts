@@ -98,3 +98,28 @@ export const LNBInstructorMenu: LNBMenu = [
     ],
   },
 ];
+
+export const utilityList = [
+  '유료주차',
+  '무료주차',
+  '와이파이',
+  '사물함',
+  '샤워실',
+  '탈의실',
+  '휴게실',
+  '운동복',
+  '수건',
+  '스트레칭 존',
+  '트레이닝 존',
+];
+
+export const dayOfWeekTable: { [key: string]: number } = {
+  월: 0,
+  화: 1,
+  수: 2,
+  목: 3,
+  금: 4,
+  토: 5,
+  일: 6,
+  공휴일: 7,
+};

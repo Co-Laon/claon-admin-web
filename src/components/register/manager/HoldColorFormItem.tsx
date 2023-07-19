@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import CrayonIcon from '@/assets/CrayonIcon';
+import { css } from '@emotion/react';
 import TextField from '../../common/textfield/TextField';
 import ColorContainer from './ColorContainer';
 import { HoldColorFormItemProps } from './type';
 
 // ------------------- Style ----------------------
 
-const ListFormItemContainer = styled.div`
+const ListFormItemContainer = styled.div<{ readOnly?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -16,18 +17,26 @@ const ListFormItemContainer = styled.div`
   isolation: isolate;
 
   width: 326px;
-
-  background: linear-gradient(
-      0deg,
-      rgba(103, 80, 164, 0.12),
-      rgba(103, 80, 164, 0.12)
-    ),
-    #fffbfe;
   border-radius: 8px;
 
   flex: none;
   order: 1;
   flex-grow: 1;
+
+  ${({ readOnly }) =>
+    readOnly
+      ? css`
+          background-color: none;
+          justify-content: start;
+        `
+      : css`
+          background: linear-gradient(
+              0deg,
+              rgba(103, 80, 164, 0.12),
+              rgba(103, 80, 164, 0.12)
+            ),
+            #fffbfe;
+        `}
 `;
 
 const StyledColorContainer = styled(ColorContainer)<{ background?: string }>`
@@ -41,6 +50,15 @@ const StyledColorContainer = styled(ColorContainer)<{ background?: string }>`
 const StyledNameTextField = styled(TextField)`
   width: 200px;
   height: 36px;
+  & > input {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 17.55px;
+  }
+  & > input:disabled {
+    color: black;
+    -webkit-text-fill-color: black;
+  }
 `;
 
 // ------------------- Component ----------------------
@@ -52,6 +70,7 @@ function HoldColorFormItem({
   formKey,
   error,
   onClickTextField,
+  readOnly,
 }: HoldColorFormItemProps) {
   const errors = useMemo(() => {
     if (idx && error) {
@@ -60,22 +79,25 @@ function HoldColorFormItem({
     return undefined;
   }, [error, idx]);
 
-  const handleTextFieldClick = () => {
+  const handleTextFieldClick = useCallback(() => {
     if (onClickTextField) {
       onClickTextField(`${formKey}.${idx}.difficulty`);
     }
-  };
+  }, [formKey, idx]);
 
-  const isColorSelected = getValues(`${formKey}.${idx}.difficulty`);
+  const isColorSelected = useMemo(
+    () => getValues(`${formKey}.${idx}.difficulty`),
+    [formKey, idx, getValues]
+  );
 
   if (register && formKey && idx) {
     return (
-      <ListFormItemContainer>
+      <ListFormItemContainer readOnly={readOnly}>
         <StyledColorContainer
           label="색"
           isRequire
           {...register(`${formKey}.${idx}.difficulty`)}
-          onClick={handleTextFieldClick}
+          onClick={!readOnly ? handleTextFieldClick : () => {}}
           error={
             errors && 'difficulty' in errors ? errors.difficulty : undefined
           }
@@ -97,6 +119,7 @@ function HoldColorFormItem({
           formKey={`${formKey}.${idx}.name`}
           sx={{ width: '210px', height: '36px' }}
           error={errors && 'name' in errors ? errors.name : undefined}
+          disabled={readOnly}
         />
       </ListFormItemContainer>
     );

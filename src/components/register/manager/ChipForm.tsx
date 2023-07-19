@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { utilityList } from '@/constants';
 import { ChipFormProps } from './type';
 
 // --------------------Styles---------------
@@ -31,7 +32,13 @@ const StyledChipButton = styled.div<{ isSelected: boolean }>`
  * @param setValue: UseFormSetValue<FieldValues> - react-hook-form 의 setValue
  * @returns Chip 으로 선택 할 수 있는 form 컴포넌트
  */
-function ChipForm({ items, formKey, setValue }: ChipFormProps) {
+function ChipForm({
+  items,
+  formKey,
+  setValue,
+  value,
+  readOnly,
+}: ChipFormProps) {
   const [selected, setSelected] = React.useState<boolean[]>(
     items.map(() => false)
   );
@@ -51,12 +58,24 @@ function ChipForm({ items, formKey, setValue }: ChipFormProps) {
     );
   };
 
+  useEffect(() => {
+    if (value) {
+      setValue(formKey, value);
+      const newSelected = [...selected];
+      value.forEach((v) => {
+        const idx = utilityList.indexOf(v);
+        newSelected[idx] = true;
+      });
+      setSelected(newSelected);
+    }
+  }, [value]);
+
   return (
     <ChipContainer>
       {items.map((item, index) => (
         <StyledChipButton
           key={item}
-          onClick={() => handleChipClick(index)}
+          onClick={!readOnly ? () => handleChipClick(index) : undefined}
           isSelected={selected[index]}
         >
           {item}

@@ -4,4 +4,5 @@ export interface ProfileButtonProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   img?: File;
   isCenterProfile?: boolean;
+  readOnly?: boolean;
 }

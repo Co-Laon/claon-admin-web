@@ -25,6 +25,7 @@ function HoldTypeSelect({
   checkboxes,
   defaultValue,
   onInputChange,
+  readOnly,
 }: HoldTypeSelectProps) {
   const [checked, setChecked] = useState(defaultValue);
   const onChange = useCallback(
@@ -34,6 +35,10 @@ function HoldTypeSelect({
     },
     []
   );
+
+  useEffect(() => {
+    setChecked(defaultValue);
+  }, [defaultValue]);
 
   useEffect(() => {
     if (onInputChange) onInputChange(checked || 0);
@@ -49,6 +54,7 @@ function HoldTypeSelect({
             checked={checked === idx}
             text={checkbox}
             onChange={(e) => onChange(e, idx)}
+            readOnly={readOnly}
           />
         ))}
       </CheckboxesWrapper>
