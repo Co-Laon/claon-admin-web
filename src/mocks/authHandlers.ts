@@ -12,7 +12,7 @@ const authHandler = [
   rest.post('/auth/:provider/sign-in', (req, res, ctx) => {
     const response: SignInResponse = {
       access_token: 'access_token',
-      refresh_token: 'refresh_token',
+      refresh_key: 'refresh_key',
       is_signed_up: false,
     };
     return res(ctx.json(response));

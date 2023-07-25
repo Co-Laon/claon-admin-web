@@ -6,6 +6,7 @@ import ClaonLogo from '@/assets/claon_login_logo.svg';
 import { signIn } from 'next-auth/react';
 import { useOAuthSignIn } from '@/hooks/queries/login/useOAuthSignIn';
 import { useEffect } from 'react';
+import Loading from '@/components/common/Loading/Loading';
 
 const LoginBox = styled(Box)`
   display: flex;
@@ -33,13 +34,17 @@ const Container = styled(MContainer)`
 `;
 
 export default function Login() {
-  const { signInClaon, session } = useOAuthSignIn();
+  const { isSignInClaonLoading, signInClaon, session } = useOAuthSignIn();
   useEffect(() => {
     if (session) {
       const { provider } = session;
       signInClaon(provider);
     }
   }, [session]);
+
+  if (isSignInClaonLoading) {
+    return <Loading />;
+  }
 
   return (
     <main>
