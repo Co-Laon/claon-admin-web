@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 // axios header set 함수
-export const axiosSetAuthHeader = (refreshkey: string, token?: string) => {
+export const axiosSetAuthHeader = (token: string, refreshkey: string) => {
   axios.defaults.headers.Authorization = `Bearer ${token}`;
   axios.defaults.headers.refreshkey = refreshkey;
-  axios.defaults.headers.common.Origin = process.env.NEXT_PUBLIC_ORIGIN;
 };
 
 export const getRefreshToken = async () => {

@@ -17,6 +17,9 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { commonStepState, profileState } from '@/recoil/register/atom';
 import { useDupCheck } from '@/hooks/queries/register/queryKey';
+import { useOAuthSignIn } from '@/hooks/queries/login/useOAuthSignIn';
+import { getSession, useSession } from 'next-auth/react';
+import Loading from '@/components/common/Loading/Loading';
 
 const Title = styled.p`
   font-size: 20px;
@@ -54,6 +57,17 @@ function RegisterMainPage() {
   const [profile, setProfile] = useRecoilState(profileState);
   const [nickname, setNickname] = useState<string>('');
   const { data: dupResult } = useDupCheck(nickname);
+  const { data: session, status: sessionStatus } = useSession();
+  const isSessionLoading = sessionStatus === 'loading';
+
+  useEffect(() => {
+    async function refreshSession() {
+      await getSession();
+    }
+
+    // 페이지가 클라이언트 사이드에서 로드될 때 새로고침 시 세션 정보를 갱신
+    refreshSession();
+  }, []);
 
   const onChangeProfile = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +102,7 @@ function RegisterMainPage() {
     }
   }, [dupResult]);
 
+  if (isSessionLoading) return <Loading />;
   return (
     <>
       <Title>프로필을 등록해주세요.</Title>
@@ -100,7 +115,7 @@ function RegisterMainPage() {
           formKey="nickname"
           error={errors.nickname}
           placeholder="claon2023"
-          defaultValue={commonStep.nickname}
+          defaultValue={session?.user?.name}
           minLength={{
             value: 2,
             message: '닉네임은 2~20자 이내로 작성해주세요.',
@@ -121,7 +136,7 @@ function RegisterMainPage() {
           register={register}
           formKey="email"
           error={errors.email}
-          defaultValue={commonStep.email}
+          defaultValue={session?.user?.email}
           pattern={{
             value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
             message: '이메일을 알맞게 입력해주세요.',
