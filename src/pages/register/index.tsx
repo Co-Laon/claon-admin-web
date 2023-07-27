@@ -18,7 +18,7 @@ import { useRecoilState } from 'recoil';
 import { commonStepState, profileState } from '@/recoil/register/atom';
 import { useDupCheck } from '@/hooks/queries/register/queryKey';
 import { useOAuthSignIn } from '@/hooks/queries/login/useOAuthSignIn';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import Loading from '@/components/common/Loading/Loading';
 
 const Title = styled.p`
