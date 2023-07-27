@@ -27,7 +27,6 @@ import ListForm from '../register/ListForm';
 import WallInfoFormItem from '../register/manager/WallInfoFormItem';
 import ProfileButton from '../common/profile/ProfileButton';
 import * as S from './CenterDetail.styles';
-import CenterModal from './CenterModal';
 
 function CenterDetail({
   center_id,
@@ -64,7 +63,6 @@ function CenterDetail({
   const { mutate: mutateDeleteCenter } = useDeleteCenter();
 
   const rollBackHoldWall = useCallback(() => {
-    console.log('roolback');
     if (hold_info) {
       hold_info.hold_list.forEach((v, i) => {
         setValue(`hold_list.${i}.difficulty`, v.difficulty);

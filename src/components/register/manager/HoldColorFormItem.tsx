@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import CrayonIcon from '@/assets/CrayonIcon';
 import { css } from '@emotion/react';
 import TextField from '../../common/textfield/TextField';

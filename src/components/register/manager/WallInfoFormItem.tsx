@@ -2,7 +2,7 @@ import SelectBox from '@/components/common/selectbox/SelectBox';
 import { css } from '@emotion/react';
 import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { WallInfoFormItemProps } from './type';
 
 // ------------------- Style ----------------------

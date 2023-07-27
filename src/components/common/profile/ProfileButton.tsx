@@ -2,7 +2,6 @@ import CameraGray from '@/assets/CameraGray';
 import ProfileSkeleton from '@/assets/ProfileSkeleton';
 import { IconButton } from '@mui/material';
 import styled from '@emotion/styled';
-import ClaonProfileDefaultLogo from '@/assets/ClaonProfileDefaultLogo';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { ProfileButtonProps } from './type';
@@ -28,12 +27,7 @@ const StyledImage = styled(Image)`
 
 // 임시 프로파일 버튼
 
-function ProfileButton({
-  onChange,
-  img,
-  isCenterProfile,
-  readOnly,
-}: ProfileButtonProps) {
+function ProfileButton({ onChange, img, readOnly }: ProfileButtonProps) {
   const ref = useRef<HTMLInputElement>(null);
   const [src, setSrc] = useState<string>('/');
 

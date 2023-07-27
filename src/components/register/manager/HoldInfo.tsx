@@ -5,7 +5,6 @@ import {
   FieldValues,
   UseFormGetValues,
   UseFormRegister,
-  UseFormResetField,
   UseFormSetValue,
   UseFormUnregister,
 } from 'react-hook-form';

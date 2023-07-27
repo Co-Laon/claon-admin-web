@@ -16,8 +16,6 @@ import {
   FieldErrors,
   FieldValues,
   UseFormRegister,
-  UseFormResetField,
-  UseFormSetValue,
   UseFormUnregister,
 } from 'react-hook-form';
 
@@ -141,7 +139,6 @@ function ListForm({
   //  Remove 버튼 클릭시
   const onClickRemove = useCallback(() => {
     setChecked([]);
-    console.log('checked', checked);
     const nItemList = itemList.filter((item, idx) => !checked.includes(idx));
     checked.forEach((id) => {
       unregister(`${formName}.${id}`, {

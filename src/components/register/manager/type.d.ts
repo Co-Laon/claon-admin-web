@@ -7,9 +7,8 @@ import {
   UseFormRegisterReturn,
   UseFormSetValue,
   UseFormUnregister,
-  UseFormWatch,
 } from 'react-hook-form';
-import { HoldListResponse, WallListResponse } from '@/types/response/center';
+import { WallListResponse } from '@/types/response/center';
 import { CenterNameResponse } from '../../../types/common/center';
 
 export interface TimeTablesProps {
