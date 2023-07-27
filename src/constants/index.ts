@@ -123,3 +123,13 @@ export const dayOfWeekTable: { [key: string]: number } = {
   일: 6,
   공휴일: 7,
 };
+
+export const wallKorToEng = {
+  볼더링: 'bouldering',
+  지구력: 'endurance',
+};
+
+export const wallEngToKor = {
+  bouldering: '볼더링',
+  endurance: '지구력',
+};

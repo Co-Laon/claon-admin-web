@@ -1,5 +1,5 @@
 export interface ImageListCarouselProps {
-  images: string[] | File[];
+  images: (File | string)[];
   width: number;
   height?: number;
   deleteable?: boolean;

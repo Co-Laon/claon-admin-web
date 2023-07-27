@@ -278,9 +278,12 @@ function Page() {
     setCenterImageModalOpen(false);
   }, []);
 
-  const handleCenterImageModalComplete = useCallback((centerImages: File[]) => {
-    setCenterImageList(centerImages);
-  }, []);
+  const handleCenterImageModalComplete = useCallback(
+    (centerImages: (File | string)[]) => {
+      setCenterImageList(centerImages as File[]);
+    },
+    []
+  );
 
   // 요금 이미지 추가 모달 핸들러
   const handleFeeImageAddButtonClick = useCallback(() => {
@@ -291,15 +294,18 @@ function Page() {
     setFeeImageModalOpen(false);
   }, []);
 
-  const handleFeeImageModalComplete = useCallback((feeImages: File[]) => {
-    setFeeImageList(feeImages);
-  }, []);
+  const handleFeeImageModalComplete = useCallback(
+    (feeImages: (string | File)[]) => {
+      setFeeImageList(feeImages as File[]);
+    },
+    []
+  );
 
   // 홀드 타입 변경 핸들러
   const handleHoldTypeChange = useCallback(
     (value: number) => {
       setHoldType(value);
-      unregister('hold_list');
+      unregister('hold_list', { keepDirty: false, keepTouched: false });
     },
     [unregister]
   );

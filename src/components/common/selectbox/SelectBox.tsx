@@ -7,6 +7,7 @@ import {
   SelectProps,
 } from '@mui/material';
 import { forwardRef } from 'react';
+import { Control, Controller, FieldValues } from 'react-hook-form';
 
 const EssentialStar = styled.span`
   color: red;
@@ -30,28 +31,35 @@ const StyledInputLabel = styled(InputLabel)`
 interface SelectBoxProps extends SelectProps {
   items: string[];
   isRequire?: string | boolean;
+  control?: Control<FieldValues, any>;
+  formKey: string;
 }
 
 const SelectBox = forwardRef<Element, SelectBoxProps>(
-  ({ items, isRequire, ...props }: SelectBoxProps) => {
+  ({ items, isRequire, control, formKey, ...props }: SelectBoxProps) => {
     const { label, error } = props;
-
     return (
-      <FormControl error={error}>
-        <StyledInputLabel shrink>
-          {label}
-          {isRequire && <EssentialStar> * </EssentialStar>}
-        </StyledInputLabel>
-        <StyledSelect defaultValue="" {...props}>
-          {items.map((item) => {
-            return (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            );
-          })}
-        </StyledSelect>
-      </FormControl>
+      <Controller
+        name={formKey}
+        control={control}
+        render={({ field }) => (
+          <FormControl error={error}>
+            <StyledInputLabel shrink>
+              {label}
+              {isRequire && <EssentialStar> * </EssentialStar>}
+            </StyledInputLabel>
+            <StyledSelect defaultValue="" {...props} {...field}>
+              {items.map((item) => {
+                return (
+                  <MenuItem key={item} value={item}>
+                    {item}
+                  </MenuItem>
+                );
+              })}
+            </StyledSelect>
+          </FormControl>
+        )}
+      />
     );
   }
 );

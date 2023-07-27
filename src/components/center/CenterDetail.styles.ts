@@ -1,7 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import CenterModal from './CenterModal';
 
-export const Container = styled.div`
+export const Container = styled.form`
   height: 100%;
 `;
 
@@ -57,12 +58,15 @@ export const StyledButton = styled.button<{ primary?: boolean }>`
   line-height: 20px;
   font-weight: 700;
   color: #6750a4;
-  cursor: pointer
-    ${(props) =>
-      props.primary &&
-      css`
-        border: none;
-        background-color: #6750a4;
-        color: white;
-      `};
+  cursor: pointer;
+  ${(props) =>
+    props.primary &&
+    css`
+      border: none;
+      background-color: #6750a4;
+      color: white;
+    `};
 `;
+
+export const CancelModal = styled(CenterModal)``;
+export const DeleteModal = styled(CenterModal)``;

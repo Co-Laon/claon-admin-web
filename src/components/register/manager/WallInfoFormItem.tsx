@@ -73,6 +73,7 @@ function WallInfoFormItem({
   error,
   value,
   readOnly,
+  control,
 }: WallInfoFormItemProps) {
   const errors = useMemo(() => {
     if (idx && error) {
@@ -105,9 +106,10 @@ function WallInfoFormItem({
               label="유형"
               isRequire
               items={['볼더링', '지구력']}
-              {...register(`${formKey}.${idx}.wall_type`)}
               defaultValue={wallType}
               disabled={readOnly}
+              control={control}
+              formKey={`${formKey}.${idx}.wall_type`}
             />
           )}
           <StyledTextField

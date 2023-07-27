@@ -47,13 +47,15 @@ function BasicInfo({
   youtube_code,
 }: BasicInfoProps) {
   useEffect(() => {
-    setValue(`${formKey}.name`, name);
-    setValue(`${formKey}.address`, address);
-    setValue(`${formKey}.detail_address`, detail_address);
-    setValue(`${formKey}.tel`, tel);
-    setValue(`${formKey}.web_url`, web_url);
-    setValue(`${formKey}.instagram_name`, instagram_name);
-    setValue(`${formKey}.youtube_code`, youtube_code);
+    if (mode === 'readOnly') {
+      setValue(`${formKey}.name`, name);
+      setValue(`${formKey}.address`, address);
+      setValue(`${formKey}.detail_address`, detail_address);
+      setValue(`${formKey}.tel`, tel);
+      setValue(`${formKey}.web_url`, web_url);
+      setValue(`${formKey}.instagram_name`, instagram_name);
+      setValue(`${formKey}.youtube_code`, youtube_code);
+    }
   }, [
     name,
     address,
@@ -62,6 +64,7 @@ function BasicInfo({
     web_url,
     instagram_name,
     youtube_code,
+    mode,
   ]);
 
   return (

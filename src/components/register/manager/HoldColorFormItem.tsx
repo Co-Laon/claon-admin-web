@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import CrayonIcon from '@/assets/CrayonIcon';
 import { css } from '@emotion/react';
 import TextField from '../../common/textfield/TextField';
@@ -85,10 +85,9 @@ function HoldColorFormItem({
     }
   }, [formKey, idx]);
 
-  const isColorSelected = useMemo(
-    () => getValues(`${formKey}.${idx}.difficulty`),
-    [formKey, idx, getValues]
-  );
+  const isColorSelected = getValues
+    ? getValues(`${formKey}.${idx}.difficulty`)
+    : false;
 
   if (register && formKey && idx) {
     return (

@@ -8,8 +8,8 @@ import { HoldDifficultyFormItemProps } from './type';
 const ListFormItemContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
+  justify-content: start;
+  align-items: center;
   padding: 15px;
   isolation: isolate;
 
@@ -47,6 +47,15 @@ const StyledColorTextField = styled(TextField)<{ background?: string }>`
 const StyledNameTextField = styled(TextField)`
   width: 200px;
   height: 36px;
+  & > input {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 17.55px;
+  }
+  & > input:disabled {
+    color: black;
+    -webkit-text-fill-color: black;
+  }
 `;
 
 // ------------------- Component ----------------------
@@ -58,8 +67,6 @@ function HoldDifficultyFormItem({
   error,
   onClickTextField,
   readOnly,
-  setValue,
-  value,
 }: HoldDifficultyFormItemProps) {
   const errors = useMemo(() => {
     if (idx && error) {
@@ -79,7 +86,7 @@ function HoldDifficultyFormItem({
       <ListFormItemContainer>
         <div>
           <StyledColorTextField
-            disabled
+            disabled={readOnly}
             label="난이도"
             isRequire
             register={register}
@@ -90,7 +97,7 @@ function HoldDifficultyFormItem({
             }
           />
           <StyledNameTextField
-            disabled
+            disabled={readOnly}
             label="홀드 이름"
             isRequire
             register={register}

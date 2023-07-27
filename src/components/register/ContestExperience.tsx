@@ -23,7 +23,7 @@ const StyledYear = styled(TextField)`
   width: 60px;
   height: 36px;
   font-size: 12px;
-  line-height: 18px
+  line-height: 18px;
 
   & > input::placeholder {
     font-size: 12px;
@@ -35,7 +35,7 @@ const StyledYear = styled(TextField)`
 const StyledContestName = styled(TextField)`
   height: 36px;
   font-size: 12px;
-  line-height: 18px
+  line-height: 18px;
   & > input::placeholder {
     font-size: 12px;
     font-weight: 700;
@@ -57,7 +57,7 @@ const StyledSecond = styled.div`
 const StyledPrize = styled(TextField)`
   height: 36px;
   font-size: 12px;
-  line-height: 18px
+  line-height: 18px;
 
   & > input::placeholder {
     font-size: 12px;

@@ -38,7 +38,9 @@ function ProfileButton({
   const [src, setSrc] = useState<string>('/');
 
   useEffect(() => {
-    if (img != null) setSrc(URL.createObjectURL(img));
+    if (typeof img === 'string') setSrc(img);
+    if (img != null && typeof img !== 'string')
+      setSrc(URL.createObjectURL(img));
   }, [img]);
 
   const onClickButton = useCallback(() => {
@@ -46,18 +48,28 @@ function ProfileButton({
   }, []);
 
   return (
-    <>
-      <StyledInput type="file" onChange={onChange} accept="image/*" ref={ref} />
-      <StyledIconButton onClick={onClickButton}>
-        {img && <StyledImage src={src} width={72} height={72} alt="profile" />}
-        {!img && isCenterProfile ? (
-          <ClaonProfileDefaultLogo />
-        ) : (
-          <ProfileSkeleton />
-        )}
-        <CameraIcon />
-      </StyledIconButton>
-    </>
+    <div>
+      {!readOnly ? (
+        <>
+          <StyledInput
+            type="file"
+            onChange={onChange}
+            accept="image/*"
+            ref={ref}
+          />
+          <StyledIconButton onClick={onClickButton}>
+            {img ? (
+              <StyledImage src={src} width={72} height={72} alt="profile" />
+            ) : (
+              <ProfileSkeleton />
+            )}
+            <CameraIcon />
+          </StyledIconButton>
+        </>
+      ) : (
+        <Image src={src} width={72} height={72} alt="profile" />
+      )}
+    </div>
   );
 }
 

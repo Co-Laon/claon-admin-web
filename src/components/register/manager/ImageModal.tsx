@@ -1,5 +1,5 @@
 import { Box, Modal } from '@mui/material';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from '@emotion/styled';
 import ImageUpload from '@/components/common/file/ImageUpload';
 import ImageListCarousel from '@/components/common/carousel/ImageListCarousel';
@@ -103,8 +103,14 @@ const ImageModalEmbedImageWrapper = styled.div`
   padding: 0px;
 `;
 
-function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
-  const [imageList, setImageList] = React.useState<File[]>([]);
+function ImageModal({
+  title,
+  open,
+  onClose,
+  onComplete,
+  defaultImage,
+}: ImageModalProps) {
+  const [imageList, setImageList] = React.useState<(string | File)[]>([]);
 
   const isImageListEmpty = imageList?.length === 0;
 
@@ -129,6 +135,10 @@ function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
     onClose();
   }, [onClose]);
 
+  useEffect(() => {
+    if (defaultImage) setImageList(defaultImage as (string | File)[]);
+  }, [defaultImage]);
+
   return (
     <Modal
       open={open}
@@ -149,7 +159,7 @@ function ImageModal({ title, open, onClose, onComplete }: ImageModalProps) {
             )}
             {!isImageListEmpty && (
               <ImageListCarousel
-                images={imageList}
+                images={imageList || []}
                 deleteable
                 onClickDeleteConfirm={handleDeleteImage}
                 width={500}

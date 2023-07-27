@@ -72,8 +72,7 @@ function RegisterMainPage() {
         profile_image: '',
       });
       if (data.type[0] === '강사') router.push('/register/teacher/step1');
-      else if (data.type[0] === '암장 관리자')
-        router.push('/register/manager/step1');
+      else if (data.type[0] === '암장 관리자') router.push('/register/manager');
     },
     [router, setCommonStep]
   );
