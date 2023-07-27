@@ -8,7 +8,7 @@ import { postSignIn } from './queries';
 // 로그인 커스텀 훅
 export const useOAuthSignIn = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const {
     mutate: signInClaon,
     data: userData,
@@ -38,5 +38,6 @@ export const useOAuthSignIn = () => {
     session,
     userData,
     isSignInClaonLoading,
+    isSessionLoading: status === 'loading',
   };
 };

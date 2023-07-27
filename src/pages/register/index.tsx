@@ -57,8 +57,7 @@ function RegisterMainPage() {
   const [profile, setProfile] = useRecoilState(profileState);
   const [nickname, setNickname] = useState<string>('');
   const { data: dupResult } = useDupCheck(nickname);
-  const { data: session, status: sessionStatus } = useSession();
-  const isSessionLoading = sessionStatus === 'loading';
+  const { session, isSessionLoading } = useOAuthSignIn();
 
   useEffect(() => {
     async function refreshSession() {
