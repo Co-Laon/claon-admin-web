@@ -6,7 +6,7 @@ export interface SignInRequest {
 
 export interface SignInResponse {
   access_token: string;
-  refresh_token: string;
+  refresh_key: string;
   is_signed_up: boolean;
   profile?: Profile;
 }
