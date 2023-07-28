@@ -130,6 +130,7 @@ function Page() {
     handleSubmit,
     formState: { errors },
     unregister,
+    control,
   } = useForm();
 
   const [isStep1, setIsStep1] = useState(true);
@@ -506,6 +507,7 @@ function Page() {
           formName="fee_list"
           register={register}
           unregister={unregister}
+          control={control}
         />
         <HoldTypeSelect
           title={<NormalText>홀드 난이도를 어떻게 표현하나요?</NormalText>}
@@ -531,6 +533,7 @@ function Page() {
             formName="hold_list"
             register={register}
             unregister={unregister}
+            control={control}
           />
         )}
         {!isHoldSetColor && (
@@ -545,6 +548,7 @@ function Page() {
             formName="hold_list"
             register={register}
             unregister={unregister}
+            control={control}
           />
         )}
         <ColorPickerModal
@@ -562,6 +566,7 @@ function Page() {
             </div>
           }
           unregister={unregister}
+          control={control}
         />
         <StyledButton onClick={handleClickNextButton}>다음</StyledButton>
       </StyledForm>
