@@ -1,12 +1,14 @@
 import {
+  Control,
   FieldError,
   FieldValues,
+  UseFormGetValues,
   UseFormRegister,
   UseFormRegisterReturn,
   UseFormSetValue,
   UseFormUnregister,
 } from 'react-hook-form';
-import { HoldListResponse, WallListResponse } from '@/types/response/center';
+import { WallListResponse } from '@/types/response/center';
 import { CenterNameResponse } from '../../../types/common/center';
 
 export interface TimeTablesProps {
@@ -39,7 +41,8 @@ export interface ImageModalProps {
   title: string;
   open: boolean;
   onClose: () => void;
-  onComplete: (list: File[]) => void;
+  onComplete: (list: (string | File)[]) => void;
+  defaultImage?: string[];
 }
 
 export interface HoldTypeSelectProps {
@@ -57,8 +60,6 @@ export interface HoldDifficultyFormItemProps {
   error?: FieldErrors<FieldValues>;
   onClickTextField?: (key: string) => void;
   readOnly?: boolean;
-  value?: HoldListResponse;
-  setValue?: UseFormSetValue<FieldValues>;
 }
 
 export interface ColorPickerModalProps {
@@ -110,4 +111,5 @@ export interface WallInfoFormItemProps {
   error?: FieldErrors<FieldValues>;
   value?: WallListResponse;
   readOnly?: boolean;
+  control?: Control<FieldValues, any>;
 }

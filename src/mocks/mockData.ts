@@ -129,27 +129,22 @@ export const centerDetail1: CenterDetailResponse = {
   operating_time_list: [
     {
       day_of_week: '월',
-      start_time: '10:00',
-      end_time: '20:00',
-    },
-    {
-      day_of_week: '화',
-      start_time: '1:00',
+      start_time: '11:00',
       end_time: '20:00',
     },
     {
       day_of_week: '수',
-      start_time: '10:05',
+      start_time: '12:05',
       end_time: '20:00',
     },
     {
       day_of_week: '목',
-      start_time: '10:00',
+      start_time: '13:00',
       end_time: '20:00',
     },
     {
       day_of_week: '금',
-      start_time: '10:00',
+      start_time: '14:00',
       end_time: '21:00',
     },
   ],
@@ -174,7 +169,7 @@ export const centerDetail1: CenterDetailResponse = {
   wall_list: [
     {
       name: '1',
-      wall_type: 'bouldering',
+      wall_type: 'endurance',
     },
   ],
 };
@@ -205,7 +200,7 @@ export const centerDetail2: CenterDetailResponse = {
     },
     {
       day_of_week: '화',
-      start_time: '1:00',
+      start_time: '13:00',
       end_time: '20:00',
     },
     {
@@ -276,7 +271,7 @@ export const centerDetail3: CenterDetailResponse = {
     },
     {
       day_of_week: '화',
-      start_time: '1:00',
+      start_time: '13:00',
       end_time: '20:00',
     },
     {

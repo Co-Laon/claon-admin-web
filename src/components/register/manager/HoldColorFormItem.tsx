@@ -85,10 +85,9 @@ function HoldColorFormItem({
     }
   }, [formKey, idx]);
 
-  const isColorSelected = useMemo(
-    () => getValues(`${formKey}.${idx}.difficulty`),
-    [formKey, idx, getValues]
-  );
+  const isColorSelected = getValues
+    ? getValues(`${formKey}.${idx}.difficulty`)
+    : false;
 
   if (register && formKey && idx) {
     return (

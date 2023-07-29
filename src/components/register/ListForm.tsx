@@ -12,11 +12,10 @@ import {
   useState,
 } from 'react';
 import {
+  Control,
   FieldErrors,
   FieldValues,
   UseFormRegister,
-  UseFormResetField,
-  UseFormSetValue,
   UseFormUnregister,
 } from 'react-hook-form';
 
@@ -30,8 +29,7 @@ interface ListFormProps {
   error?: FieldErrors<FieldValues>;
   readOnly?: boolean;
   defaultValues?: object[];
-  setValue?: UseFormSetValue<FieldValues>;
-  resetField?: UseFormResetField<FieldValues>;
+  control?: Control<FieldValues, any>;
 }
 
 interface ItemType {
@@ -101,8 +99,7 @@ function ListForm({
   error,
   readOnly,
   defaultValues,
-  setValue,
-  resetField,
+  control,
 }: ListFormProps) {
   //  title 부분에 다른 컴포넌트를 넣을 수 있도록 처리
   const titleComponent =
@@ -144,14 +141,16 @@ function ListForm({
     setChecked([]);
     const nItemList = itemList.filter((item, idx) => !checked.includes(idx));
     checked.forEach((id) => {
-      unregister(`${formName}.item_${id}`);
+      unregister(`${formName}.${id}`, {
+        keepDirty: false,
+        keepTouched: false,
+      });
     });
     setItemList(nItemList);
   }, [itemList, checked, formName, unregister]);
 
   useEffect(() => {
-    if (defaultValues) {
-      unregister(formName);
+    if (defaultValues && readOnly) {
       const nItem = defaultValues.map((value, i) => ({
         items,
         id: i,
@@ -159,7 +158,7 @@ function ListForm({
       setItemList(nItem);
       setLastKey(defaultValues.length + lastKey);
     }
-  }, [defaultValues, resetField]);
+  }, [defaultValues, readOnly]);
 
   return (
     <div>
@@ -195,6 +194,7 @@ function ListForm({
                 error: errors,
                 readOnly,
                 value: defaultValues && defaultValues[idx],
+                control,
               })}
             </ItemWrapper>
           </StyledLi>

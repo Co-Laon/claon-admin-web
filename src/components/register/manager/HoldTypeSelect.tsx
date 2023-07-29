@@ -42,7 +42,7 @@ function HoldTypeSelect({
 
   useEffect(() => {
     if (onInputChange) onInputChange(checked || 0);
-  }, [checked, onInputChange]);
+  }, [checked]);
 
   return (
     <ComponentWrapper>

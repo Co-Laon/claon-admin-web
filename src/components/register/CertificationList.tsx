@@ -30,7 +30,7 @@ const StyledName = styled(TextField)`
   height: 36px;
 
   font-size: 12px;
-  line-height: 18px
+  line-height: 18px;
   & > input::placeholder {
     font-size: 12px;
     font-weight: 700;
@@ -44,7 +44,7 @@ const StyledDate = styled(TextField)`
   margin-right: 4px;
 
   font-size: 12px;
-  line-height: 18px
+  line-height: 18px;
   & > input::placeholder {
     font-size: 12px;
     font-weight: 700;
@@ -56,7 +56,7 @@ const StyledRate = styled(TextField)`
   height: 36px;
 
   font-size: 12px;
-  line-height: 18px
+  line-height: 18px;
   & > input::placeholder {
     font-size: 12px;
     font-weight: 700;
