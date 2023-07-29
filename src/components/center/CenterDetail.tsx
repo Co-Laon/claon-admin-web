@@ -7,16 +7,14 @@ import {
   wallEngToKor,
   wallKorToEng,
 } from '@/constants';
-import { useCenterUploadList } from '@/hooks/queries/register/queryKey';
 import {
   CenterUpdateRequest,
   HoldListRequest,
   WallListRequest,
 } from '@/types/request/center';
-import {
-  useDeleteCenter,
-  useUpdateCenter,
-} from '@/hooks/queries/center/queryKey';
+import { useCenterUploadList } from '@/hooks/queries/register/useCenterUploadList';
+import { useUpdateCenter } from '@/hooks/queries/center/useUpdateCenter';
+import { useDeleteCenter } from '@/hooks/queries/center/useDeleteCenter';
 
 import BasicInfo from '../register/manager/BasicInfo';
 import ImageList from '../register/manager/ImageList';

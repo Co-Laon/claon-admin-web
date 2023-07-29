@@ -1,11 +1,6 @@
 import Certificate from '@/components/register/Certificate';
 import RegisterLayout from '@/layouts/RegisterLayout';
 import {
-  useLectorRegister,
-  usePostProfile,
-  usePostProof,
-} from '@/hooks/queries/register/queryKey';
-import {
   commonStepState,
   profileState,
   proofState,
@@ -15,6 +10,9 @@ import { useRouter } from 'next/router';
 import { ReactElement, useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { LectorRegisterRequest } from '@/types/request/register';
+import { useLectorRegister } from '@/hooks/queries/register/useLectorRegister';
+import { usePostProof } from '@/hooks/queries/register/usePostProof';
+import { usePostProfile } from '@/hooks/queries/register/usePostProfile';
 
 function Step2() {
   const [proofList, setProofList] = useRecoilState(proofState);

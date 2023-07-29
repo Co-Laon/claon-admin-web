@@ -16,10 +16,10 @@ import {
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { commonStepState, profileState } from '@/recoil/register/atom';
-import { useDupCheck } from '@/hooks/queries/register/queryKey';
 import { useOAuthSignIn } from '@/hooks/queries/login/useOAuthSignIn';
 import { getSession } from 'next-auth/react';
 import Loading from '@/components/common/Loading/Loading';
+import { useDupCheck } from '@/hooks/queries/register/useDupCheck';
 
 const Title = styled.p`
   font-size: 20px;
