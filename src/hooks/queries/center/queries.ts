@@ -1,4 +1,5 @@
 import { Pagination } from '@/types/common';
+import { CenterUpdateRequest } from '@/types/request/center';
 import {
   CenterDetailResponse,
   CenterListResponse,
@@ -19,6 +20,27 @@ export const findCenters = async () => {
 export const getCenterDetail = async (id: string) => {
   try {
     const { data } = await axios.get<CenterDetailResponse>(`/centers/${id}`);
+    return data;
+  } catch (error: any) {
+    throw error.response.message;
+  }
+};
+
+export const updateCenter = async (
+  id: string,
+  requests: CenterUpdateRequest
+) => {
+  try {
+    const { data } = await axios.put(`/centers/${id}`, requests);
+    return data;
+  } catch (error: any) {
+    throw error.response.message;
+  }
+};
+
+export const deleteCenter = async (id: string) => {
+  try {
+    const { data } = await axios.delete(`/centers/${id}`);
     return data;
   } catch (error: any) {
     throw error.response.message;

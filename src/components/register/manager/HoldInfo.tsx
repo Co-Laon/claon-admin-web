@@ -5,12 +5,11 @@ import {
   FieldValues,
   UseFormGetValues,
   UseFormRegister,
-  UseFormResetField,
   UseFormSetValue,
   UseFormUnregister,
 } from 'react-hook-form';
 import { ColorResult } from 'react-color';
-import { HoldInfoResponse } from '@/types/response/center';
+import { HoldInfoResponse, HoldListResponse } from '@/types/response/center';
 import HoldTypeSelect from './HoldTypeSelect';
 import ListForm from '../ListForm';
 import HoldColorFormItem from './HoldColorFormItem';
@@ -26,7 +25,6 @@ interface HoldInfoProps {
   setValue: UseFormSetValue<FieldValues>;
   readOnly?: boolean;
   defaultValue?: HoldInfoResponse;
-  resetField?: UseFormResetField<FieldValues>;
 }
 
 enum HoldType {
@@ -54,7 +52,6 @@ function HoldInfo({
   readOnly,
   setValue,
   defaultValue,
-  resetField,
 }: HoldInfoProps) {
   const [holdType, setHoldType] = useState<HoldType>(HoldType.COLOR);
   const isHoldSetColor = holdType === 0;
@@ -63,6 +60,7 @@ function HoldInfo({
   // 홀드 난이도 색 input formKey
   const [holdColorTextFieldFormKey, setHoldColorTextFieldFormKey] =
     useState<string>('');
+  const [holdList, setHoldList] = useState<HoldListResponse[]>([]);
 
   // color picker 핸들러
   const handleColorPickerInputClick = useCallback((key: string) => {
@@ -74,9 +72,14 @@ function HoldInfo({
   const handleHoldTypeChange = useCallback(
     (value: number) => {
       setHoldType(value);
-      unregister('hold_list');
+      if (readOnly === false) {
+        unregister('hold_list', { keepDirty: false, keepTouched: false });
+        setHoldList([{ name: '', difficulty: '' }]);
+      } else {
+        setHoldList(defaultValue?.hold_list || []);
+      }
     },
-    [unregister]
+    [readOnly]
   );
 
   const handleColorPickerModalClose = useCallback(() => {
@@ -92,8 +95,20 @@ function HoldInfo({
   );
 
   useEffect(() => {
-    if (defaultValue && !defaultValue?.is_color) setHoldType(HoldType.OTHER);
-  }, [defaultValue]);
+    if (defaultValue && !defaultValue?.is_color && readOnly === true)
+      setHoldType(HoldType.OTHER);
+    else {
+      setHoldType(HoldType.COLOR);
+    }
+  }, [defaultValue, readOnly]);
+
+  useEffect(() => {
+    setHoldList(defaultValue?.hold_list || []);
+  }, [defaultValue?.hold_list]);
+
+  useEffect(() => {
+    setValue('is_color', holdType);
+  }, [holdType]);
 
   return (
     <>
@@ -117,8 +132,7 @@ function HoldInfo({
             />
           }
           readOnly={readOnly}
-          defaultValues={defaultValue?.hold_list}
-          setValue={setValue}
+          defaultValues={holdList}
         />
       )}
       {!isHoldSetColor && (
@@ -129,9 +143,7 @@ function HoldInfo({
           formName="hold_list"
           items={<HoldDifficultyFormItem />}
           readOnly={readOnly}
-          defaultValues={defaultValue?.hold_list}
-          setValue={setValue}
-          resetField={resetField}
+          defaultValues={holdList}
         />
       )}
       <ColorPickerModal

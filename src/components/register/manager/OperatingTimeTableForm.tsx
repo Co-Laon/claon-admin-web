@@ -107,10 +107,10 @@ function OperatingTimeTableForm({
 
   const handleChipClick = useCallback(
     (index: number) => {
+      unregister(formKey, { keepDirty: false, keepTouched: false });
       const newSelected = [...selected];
       newSelected[index] = !newSelected[index];
       setSelected(newSelected);
-      unregister(`${formKey}.${index}`);
     },
     [formKey, unregister, setSelected, selected]
   );
@@ -123,17 +123,18 @@ function OperatingTimeTableForm({
   }, [error, formKey]);
 
   useEffect(() => {
-    if (timeTables?.length !== 0 && setValue) {
+    if (timeTables?.length !== 0 && setValue && readOnly === true) {
       const day = [true, true, true, true, true, true, true, true];
       timeTables?.forEach((value, idx) => {
         const i = dayOfWeekTable[value.day_of_week];
         day[i] = false;
+        setValue(`${formKey}.${idx}.day_of_week`, value.day_of_week);
         setValue(`${formKey}.${idx}.start_time`, value.start_time);
         setValue(`${formKey}.${idx}.end_time`, value.end_time);
         setSelected(day);
       });
     }
-  }, [timeTables]);
+  }, [timeTables, readOnly]);
 
   return (
     <>
