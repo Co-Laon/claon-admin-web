@@ -1,9 +1,7 @@
 import CenterDetail from '@/components/center/CenterDetail';
 import CenterList from '@/components/center/CenterList';
-import {
-  useCenterDetail,
-  useFindCenter,
-} from '@/hooks/queries/center/queryKey';
+import { useFindCenter } from '@/hooks/queries/center/useFindCenter';
+import { useGetCenterDetail } from '@/hooks/queries/center/useGetCenterDetail';
 import RootLayout from '@/layouts/RootLayout';
 import { CenterDetailResponse } from '@/types/response/center';
 import styled from '@emotion/styled';
@@ -47,7 +45,7 @@ const CenterDetailContainer = styled.div`
 function CenterMainPage() {
   const [centerId, setCenterId] = useState<string>('');
   const { data: centerList } = useFindCenter();
-  const { data: centerDetail } = useCenterDetail(centerId);
+  const { data: centerDetail } = useGetCenterDetail(centerId);
 
   useEffect(() => {
     if (centerList?.results.length !== 0) {

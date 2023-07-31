@@ -29,13 +29,11 @@ import HoldColorFormItem from '@/components/register/manager/HoldColorFormItem';
 import SearchCenterModal from '@/components/register/manager/SearchCenterModal';
 
 import { CenterUploadPurpose } from '@/constants';
-import {
-  useCenterSignUp,
-  useCenterUploadList,
-} from '@/hooks/queries/register/queryKey';
 import { CenterNameResponse } from '@/types/common/center';
 import { CenterAuthRequest } from '@/types/request/register';
 import Certificate from '@/components/register/Certificate';
+import { useCenterUploadList } from '@/hooks/queries/register/useCenterUploadList';
+import { useCenterSignUp } from '@/hooks/queries/register/useCenterSignUp';
 
 const Title = styled.p`
   font-size: 20px;
