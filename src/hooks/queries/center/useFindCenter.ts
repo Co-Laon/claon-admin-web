@@ -18,3 +18,11 @@ export const findCenters = async () => {
 export const useFindCenter = () => {
   return useQuery(queryKeys.CENTER.list, findCenters);
 };
+
+export const useFindCenterNames = () => {
+  return useQuery(queryKeys.CENTER.list, () =>
+    findCenters().then((data) => {
+      return data.results.map((d) => ({ item: d.name, value: d.center_id }));
+    })
+  );
+};

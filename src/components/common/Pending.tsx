@@ -1,13 +1,15 @@
 import ImagePlaceholder from '@/assets/ImagePlaceholder';
-import Pending from '@/components/common/Pending';
-import { nickanmeState } from '@/recoil/register/teacher';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
-import { useRouter } from 'next/router';
-import { useCallback } from 'react';
-import { useRecoilValue } from 'recoil';
 
-// --------------------- Style ----------------------
+interface PendingProps {
+  title: string;
+  subTitle: string;
+  description: string;
+  buttonLabel: string;
+  onClickButton: () => void;
+}
+
 const StyledContainer = styled.div`
   height: 100%;
   display: flex;
@@ -51,22 +53,26 @@ const StyledButton = styled(Button)`
   padding-bottom: 0px;
 `;
 
-function Step3() {
-  const nickName = useRecoilValue(nickanmeState);
-  const router = useRouter();
-
-  const onClickButton = useCallback(() => {
-    router.push('/');
-  }, [router]);
+function Pending({
+  title,
+  subTitle,
+  description,
+  buttonLabel,
+  onClickButton,
+}: PendingProps) {
   return (
-    <Pending
-      title={`${nickName}님의 정보를 살펴보고 있어요.`}
-      buttonLabel="다른계정으로 로그인"
-      description="문의사항은 help.claon@gmail.com으로 연락해주세요."
-      subTitle="잠시만 기다려주세요."
-      onClickButton={onClickButton}
-    />
+    <StyledContainer>
+      <div>
+        <StyledImagePlaceholder />
+        <StyledTitle>{title}</StyledTitle>
+        <StyledTitle>{subTitle}</StyledTitle>
+        <StyledHelp>{description}</StyledHelp>
+        <StyledButtonContainer>
+          <StyledButton onClick={onClickButton}>{buttonLabel}</StyledButton>
+        </StyledButtonContainer>
+      </div>
+    </StyledContainer>
   );
 }
 
-export default Step3;
+export default Pending;

@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
 import React, { useMemo } from 'react';
+import { wallInfoItems } from '@/constants';
 import { WallInfoFormItemProps } from './type';
 
 // ------------------- Style ----------------------
@@ -105,7 +106,10 @@ function WallInfoFormItem({
             <StyledSelectBox
               label="유형"
               isRequire
-              items={['볼더링', '지구력']}
+              items={[
+                { item: '볼더링', value: '볼더링' },
+                { item: '지구력', value: '지구력' },
+              ]}
               defaultValue={wallType}
               disabled={readOnly}
               control={control}

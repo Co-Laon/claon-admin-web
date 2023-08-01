@@ -29,7 +29,7 @@ const StyledInputLabel = styled(InputLabel)`
 `;
 
 interface SelectBoxProps extends SelectProps {
-  items: string[];
+  items: { item: string; value: string }[];
   isRequire?: string | boolean;
   control?: Control<FieldValues, any>;
   formKey: string;
@@ -51,8 +51,8 @@ const SelectBox = forwardRef<Element, SelectBoxProps>(
             <StyledSelect defaultValue="" {...props} {...field}>
               {items.map((item) => {
                 return (
-                  <MenuItem key={item} value={item}>
-                    {item}
+                  <MenuItem key={item.item} value={item.value}>
+                    {item.item}
                   </MenuItem>
                 );
               })}

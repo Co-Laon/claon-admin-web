@@ -133,3 +133,25 @@ export const wallEngToKor = {
   bouldering: '볼더링',
   endurance: '지구력',
 };
+
+export const wallInfoItems = [
+  {
+    item: '볼더링',
+    value: '볼더링',
+  },
+  { item: '지구력', value: '지구력' },
+];
+
+export const feeTypeItems = [
+  {
+    item: '패키지',
+    value: 'package',
+  },
+  { item: '이용권', value: 'member' },
+  { item: '수강권', value: 'course' },
+];
+
+export const feePeriodItems = [
+  { item: '일', value: 'day' },
+  { item: '개월', value: 'month' },
+];
