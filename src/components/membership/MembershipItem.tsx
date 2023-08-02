@@ -38,21 +38,27 @@ const PeriodContainer = styled.div`
 const StyledTextField = styled(TextField)<{ width: string }>`
   width: ${({ width }) => width};
   height: 36px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
   & > input[type='number']::-webkit-inner-spin-button,
   & > input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
+  & > div > p {
+    font-size: 12px;
+    color: black;
+    font-weight: 700;
+    line-height: 18px;
+  }
 `;
 
-const FeeTypeSelectBox = styled(SelectBox)`
-  width: 84px;
+const StyledSelectBox = styled(SelectBox)<{ width: string }>`
+  width: ${({ width }) => width};
   height: 36px;
-`;
-
-const PeriodTypeSelectBox = styled(SelectBox)`
-  width: 72px;
-  height: 36px;
+  font-size: 12px;
+  font-weight: 700;
 `;
 
 function MembershipItem({
@@ -65,12 +71,13 @@ function MembershipItem({
     return (
       <Container>
         <FirstRow>
-          <FeeTypeSelectBox
+          <StyledSelectBox
             items={feeTypeItems}
             formKey={`${formKey}.${idx}.fee_type`}
             control={control}
             label="구분"
             isRequire
+            width="84px"
           />
           <StyledTextField
             width="347px"
@@ -90,13 +97,14 @@ function MembershipItem({
               register={register}
               type="number"
             />
-            <PeriodTypeSelectBox
+            <StyledSelectBox
               formKey={`${formKey}.${idx}.period_type`}
               items={feePeriodItems}
               control={control}
               label="기간 단위"
               isRequire
               inputProps={{ inputProps: { min: 1 } }}
+              width="72px"
             />
             <StyledTextField
               width="60px"

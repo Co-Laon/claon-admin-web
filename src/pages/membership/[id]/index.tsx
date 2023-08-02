@@ -1,12 +1,16 @@
 import Pending from '@/components/common/Pending';
-import { useFindCenterNames } from '@/hooks/queries/center/useFindCenter';
 import { useGetCenterFees } from '@/hooks/queries/membership/useGetCenterFees';
 import MembershipLayout from '@/layouts/MembershipLayout';
 import RootLayout from '@/layouts/RootLayout';
 import { currentCenterInfo } from '@/recoil/membership/atom';
+import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { ReactElement, useCallback, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
+
+const Container = styled.div`
+  height: 100%;
+`;
 
 function MembershipDetail() {
   const router = useRouter();
@@ -18,24 +22,19 @@ function MembershipDetail() {
     router.push(`/membership/${id}/register`);
   }, []);
 
-  useEffect(() => {
-    console.log('currentCenter', currentCenter);
-  }, [currentCenter]);
-
   return (
-    <div>
+    <Container>
       {centerFees?.center_fee.length === 0 ? (
         <Pending
           title={`${currentCenter.name}`}
           buttonLabel="회원권 정보 등록하기"
-          description="문의사항은 help.claon@gmail.com으로 연락해주세요."
           subTitle="암장에 등록된 회원권이 없어요."
           onClickButton={onClickButton}
         />
       ) : (
         <div />
       )}
-    </div>
+    </Container>
   );
 }
 

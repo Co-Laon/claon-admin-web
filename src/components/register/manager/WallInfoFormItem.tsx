@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import TextField from '@/components/common/textfield/TextField';
 import styled from '@emotion/styled';
 import React, { useMemo } from 'react';
-import { wallInfoItems } from '@/constants';
 import { WallInfoFormItemProps } from './type';
 
 // ------------------- Style ----------------------

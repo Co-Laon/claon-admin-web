@@ -3,12 +3,14 @@ import { useRouter } from 'next/router';
 import { useFindCenterNames } from '@/hooks/queries/center/useFindCenter';
 import styled from '@emotion/styled';
 import { SelectChangeEvent } from '@mui/material';
-import { ReactElement, ReactNode, useCallback, useEffect } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { currentCenterInfo } from '@/recoil/membership/atom';
 
 const Container = styled.div`
   padding: 30px;
+  width: 100%;
+  height: calc(100% - 126px);
 `;
 
 const StyledSelectbox = styled(NormalSelectBox)`
@@ -25,7 +27,7 @@ function MembershipLayout({ children }: { children: ReactNode }) {
   const { data } = useFindCenterNames();
   const [centerInfo, setCenterInfo] = useRecoilState(currentCenterInfo);
   const onChangeSelectBox = useCallback(
-    (e: SelectChangeEvent<unknown>, child: ReactNode) => {
+    (e: SelectChangeEvent<unknown>) => {
       router.push(`/membership/${e.target.value}`);
     },
     [data]

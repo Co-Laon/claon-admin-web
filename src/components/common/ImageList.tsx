@@ -4,7 +4,6 @@ import Image from 'next/image';
 import PhotoEmptyIcon from '@/assets/PhotoEmptyIcon';
 import { useCallback, useEffect, useState } from 'react';
 import ImageModal from '../register/manager/ImageModal';
-import { SubTitle } from '../center/CenterDetail.styles';
 
 interface ImageListProps {
   images: (string | File)[];
@@ -12,6 +11,7 @@ interface ImageListProps {
   onChangeImageList: (imgs: (string | File)[]) => void;
   title?: string;
   subTitle?: string;
+  className?: string;
 }
 
 const Container = styled.div``;
@@ -57,6 +57,7 @@ function ImageList({
   onChangeImageList,
   title,
   subTitle,
+  className,
 }: ImageListProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [imgs, setImgs] = useState<string[]>([]);
@@ -80,7 +81,7 @@ function ImageList({
   }, [images]);
 
   return (
-    <Container>
+    <Container className={className}>
       <TitleContainer>
         <StyledTitle>{title || '대표 사진'}</StyledTitle>
         {!readOnly ? (

@@ -5,9 +5,9 @@ import { Button } from '@mui/material';
 interface PendingProps {
   title: string;
   subTitle: string;
-  description: string;
   buttonLabel: string;
   onClickButton: () => void;
+  className?: string;
 }
 
 const StyledContainer = styled.div`
@@ -35,6 +35,12 @@ const StyledHelp = styled.p`
   margin-bottom: 20px;
 `;
 
+const StyledHelpEng = styled.span`
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+`;
+
 const StyledButtonContainer = styled.div`
   width: 100%;
   display: flex;
@@ -56,17 +62,20 @@ const StyledButton = styled(Button)`
 function Pending({
   title,
   subTitle,
-  description,
   buttonLabel,
   onClickButton,
+  className,
 }: PendingProps) {
   return (
-    <StyledContainer>
+    <StyledContainer className={className}>
       <div>
         <StyledImagePlaceholder />
         <StyledTitle>{title}</StyledTitle>
         <StyledTitle>{subTitle}</StyledTitle>
-        <StyledHelp>{description}</StyledHelp>
+        <StyledHelp>
+          문의사항은 <StyledHelpEng>help.claon@gmail.com</StyledHelpEng>으로
+          연락주세요.
+        </StyledHelp>
         <StyledButtonContainer>
           <StyledButton onClick={onClickButton}>{buttonLabel}</StyledButton>
         </StyledButtonContainer>

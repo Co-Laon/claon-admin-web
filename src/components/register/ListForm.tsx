@@ -30,6 +30,7 @@ interface ListFormProps {
   readOnly?: boolean;
   defaultValues?: object[];
   control?: Control<FieldValues, any>;
+  className?: string;
 }
 
 interface ItemType {
@@ -100,6 +101,7 @@ function ListForm({
   readOnly,
   defaultValues,
   control,
+  className,
 }: ListFormProps) {
   //  title 부분에 다른 컴포넌트를 넣을 수 있도록 처리
   const titleComponent =
@@ -161,7 +163,7 @@ function ListForm({
   }, [defaultValues, readOnly]);
 
   return (
-    <div>
+    <div className={className}>
       <TitleWrapper>
         {titleComponent}
         {readOnly ? null : (
