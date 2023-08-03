@@ -4,6 +4,7 @@ import {
   CenterDetailResponse,
   CenterListResponse,
 } from '@/types/response/center';
+import { FeeResponse } from '@/types/response/membership';
 
 const nickNameList: string[] = ['test', 'test1', 'test2'];
 export const nickNameStore = new Set(nickNameList);
@@ -314,4 +315,9 @@ export const centerDetail3: CenterDetailResponse = {
       wall_type: 'bouldering',
     },
   ],
+};
+
+export const feeData: FeeResponse = {
+  center_fee: [],
+  fee_img: [],
 };

@@ -17,7 +17,7 @@ import { useUpdateCenter } from '@/hooks/queries/center/useUpdateCenter';
 import { useDeleteCenter } from '@/hooks/queries/center/useDeleteCenter';
 
 import BasicInfo from '../register/manager/BasicInfo';
-import ImageList from '../register/manager/ImageList';
+import ImageList from '../common/ImageList';
 import OperatingTimeTableForm from '../register/manager/OperatingTimeTableForm';
 import ChipForm from '../register/manager/ChipForm';
 import HoldInfo from '../register/manager/HoldInfo';
