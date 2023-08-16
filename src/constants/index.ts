@@ -11,10 +11,9 @@ export const LNBManagerMenu: LNBMenu = [
   {
     name: '암장 관리',
     icon: 'CenterManage',
-    url: '',
+    url: 'center',
     children: [
-      { name: '암장 정보 관리', url: '' },
-      { name: '게시글', url: '' },
+      { name: '암장 정보 관리', url: 'centerInfo' },
       { name: '리뷰 관리', url: '' },
     ],
   },
